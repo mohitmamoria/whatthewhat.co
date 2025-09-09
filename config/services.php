@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'whatsapp' => [
+        'verification_token' => env('WHATSAPP_WEBHOOK_VERIFICATION_TOKEN'),
+        'access_token' => env('WHATSAPP_ACCESS_TOKEN'),
+    ]
 ];

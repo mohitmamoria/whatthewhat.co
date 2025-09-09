@@ -10,7 +10,8 @@
                     </p>
                     <div class="mt-10 flex items-center gap-x-6">
                         <a
-                            href="#"
+                            href="https://wa.me/message/DQFIRJWQGDNQC1"
+                            target="_blank"
                             class="rounded-md bg-violet-700 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >Click here to open WhatsApp</a
                         >
