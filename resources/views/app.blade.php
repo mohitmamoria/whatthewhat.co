@@ -5,20 +5,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title inertia>{{ config('app.name', 'Laravel') }}</title>
+    <title inertia>{{ config('app.name', 'What The What?!') }}</title>
 
     <!-- Open Graph Tags -->
-    <meta property="og:title" content="{{ config('app.name', 'Laravel') }}">
+    <meta property="og:title" content="{{ config('app.name', 'What The What?!') }}">
     <meta property="og:description"
         content="From everyday oddities to mind-bending wonders, every page will make you go: What The What?!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image" content="{{ url('/open-graph.png') }}">
-    <meta property="og:site_name" content="{{ config('app.name', 'Laravel') }}">
+    <meta property="og:site_name" content="{{ config('app.name', 'What The What?!') }}">
 
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ config('app.name', 'Laravel') }}">
+    <meta name="twitter:title" content="{{ config('app.name', 'What The What?!') }}">
     <meta name="twitter:description"
         content="From everyday oddities to mind-bending wonders, every page will make you go: What The What?!">
     <meta name="twitter:image" content="{{ url('/open-graph.png') }}">
