@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CTA from '@/partials/CTA.vue';
 import Features from '@/partials/Features.vue';
 import Hero from '@/partials/Hero.vue';
 import { Head } from '@inertiajs/vue3';
@@ -14,5 +15,6 @@ import { Head } from '@inertiajs/vue3';
         />
     </Head>
     <Hero />
+    <CTA />
     <Features />
 </template>

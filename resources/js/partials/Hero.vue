@@ -1,19 +1,10 @@
-<script setup>
-import { ref } from 'vue';
-
-const navigation = [
-    { name: 'Product', href: '#' },
-    { name: 'Features', href: '#' },
-    { name: 'Marketplace', href: '#' },
-    { name: 'Company', href: '#' },
-];
-
-const mobileMenuOpen = ref(false);
-</script>
+<script setup></script>
 
 <template>
-    <div class="bg-white">
-        <header class="absolute inset-x-0 top-0 z-50">header</header>
+    <div class="bg-linear-to-b from-purple-300 to-white">
+        <header class="absolute inset-x-0 top-0 z-50">
+            <img src="/images/what-the-what-logo.svg" alt="What The What?! Logo" class="mx-auto mt-6 h-16 w-auto sm:h-18" />
+        </header>
 
         <div class="relative isolate pt-14">
             <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
@@ -41,17 +32,15 @@ const mobileMenuOpen = ref(false);
                     "
                 />
             </div>
-            <div class="py-24 sm:py-32 lg:pb-40">
+            <div class="py-24 sm:py-32">
                 <div class="mx-auto max-w-7xl px-6 lg:px-8">
                     <div class="mx-auto max-w-2xl text-center">
                         <h1 class="font-brand text-4xl tracking-tight text-balance text-gray-900 sm:text-5xl">
                             Curious Questions. <br />
                             Even Curiouser Answers.
                         </h1>
-                        <p class="mt-8 text-lg font-medium text-pretty text-gray-700 sm:text-xl/8">
-                            This is not a book of quizzes. This is not a book of facts.
-                        </p>
-                        <p class="mt-8 text-lg font-medium text-pretty text-gray-700 sm:text-xl/8">It's both — and so much more!</p>
+                        <p class="mt-8 text-lg font-medium text-pretty text-gray-700 sm:text-xl/8">Not a quiz book. Not a fact book.</p>
+                        <p class="mt-8 text-lg font-medium text-pretty text-gray-700 sm:text-xl/8">It's both—and more!</p>
                     </div>
 
                     <img src="/images/mockup-1.png" alt="What The What?!" class="mx-auto mt-8 w-xl rounded-md" />
