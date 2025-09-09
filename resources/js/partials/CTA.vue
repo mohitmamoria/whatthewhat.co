@@ -4,7 +4,7 @@
             <div class="flex flex-col items-center justify-between gap-y-16 sm:flex-row">
                 <div>
                     <h2 class="max-w-2xl text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">Download the bonus pages</h2>
-                    <p class="mt-6 max-w-xl text-lg/8 text-pretty text-gray-600">
+                    <p class="mt-6 max-w-xl font-serif text-lg/8 text-pretty text-gray-600">
                         Read these free bonus pages, and be the first one to claim free goodies <strong>(🎁 limited!!!)</strong> when the book comes
                         out.
                     </p>

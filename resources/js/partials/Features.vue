@@ -6,8 +6,8 @@
             <div class="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
                 <div class="lg:pr-4">
                     <div class="lg:max-w-lg">
-                        <p class="text-base/7 font-semibold text-indigo-600">The Sound of Curiosity</p>
-                        <h1 class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">What The... Whaaaaat?!</h1>
+                        <p class="text-base/7 font-semibold text-purple-600">Let's make curiosity cool again!</p>
+                        <h1 class="mt-2 font-brand text-4xl tracking-tight text-pretty text-gray-900 sm:text-5xl">What The... Whaaaaat?!</h1>
                     </div>
                     <div class="mt-8 max-w-xl font-serif text-lg text-gray-800 lg:max-w-lg">
                         <p>Somewhere along the way, we let curiosity fade. We began saying things like “it's like that only.”</p>

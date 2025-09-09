@@ -39,8 +39,8 @@
                             Curious Questions. <br />
                             Even Curiouser Answers.
                         </h1>
-                        <p class="mt-8 text-lg font-medium text-pretty text-gray-700 sm:text-xl/8">Not a quiz book. Not a fact book.</p>
-                        <p class="mt-8 text-lg font-medium text-pretty text-gray-700 sm:text-xl/8">It's both—and more!</p>
+                        <p class="mt-8 font-serif text-lg font-medium text-pretty text-gray-700 sm:text-xl/8">Not a quiz book. Not a fact book.</p>
+                        <p class="mt-8 font-serif text-lg font-medium text-pretty text-gray-700 sm:text-xl/8">It's both—and more!</p>
                     </div>
 
                     <img src="/images/mockup-1.png" alt="What The What?!" class="mx-auto mt-8 w-xl rounded-md" />
