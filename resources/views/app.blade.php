@@ -7,6 +7,18 @@
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="{{ config('app.name', 'Laravel') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ url('/open-graph.png') }}">
+    <meta property="og:site_name" content="{{ config('app.name', 'Laravel') }}">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ config('app.name', 'Laravel') }}">
+    <meta name="twitter:image" content="{{ url('/open-graph.png') }}">
+
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
