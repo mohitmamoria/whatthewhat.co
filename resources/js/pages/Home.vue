@@ -2,6 +2,7 @@
 import CTA from '@/partials/CTA.vue';
 import Features from '@/partials/Features.vue';
 import Hero from '@/partials/Hero.vue';
+import Sticky from '@/partials/Sticky.vue';
 import { Head } from '@inertiajs/vue3';
 </script>
 
@@ -17,4 +18,5 @@ import { Head } from '@inertiajs/vue3';
     <Hero />
     <CTA />
     <Features />
+    <Sticky />
 </template>
