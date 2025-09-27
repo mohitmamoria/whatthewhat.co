@@ -95,7 +95,7 @@ class WhatsappWebhookController extends Controller
                     ],
                 ]);
 
-            // Log::info('WEBHOOK_RESPONSE', [$response->body()]);
+            Log::info('WEBHOOK_RESPONSE', [$response->body()]);
             return;
         }
     }
