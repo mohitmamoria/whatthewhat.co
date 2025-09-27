@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\Player;
+use App\Models\Qr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class WhatsappWebhookController extends Controller
 {
     public function verify(Request $request)
     {
+        Log::info('WEBHOOK_VERIFICATION_PAYLOAD', $request->toArray());
+
         if ($request->input('hub_verify_token') === config('services.whatsapp.verification_token')) {
             return $request->input('hub_challenge');
         }
@@ -27,6 +32,7 @@ class WhatsappWebhookController extends Controller
         $number = data_get($value, 'messages.0.from');
         $body = data_get($value, 'messages.0.text.body');
 
+        Log::info('WEBHOOK_PAYLOAD', [$name, $number, $body]);
         $this->sendRequiredInfo($name, $number, $body);
 
 
@@ -38,15 +44,7 @@ class WhatsappWebhookController extends Controller
         $body = str($body);
 
         // When sending downloadable
-        if ($body->startsWith('Send ')) {
-            $qrName = $body->chopStart('Send ');
-            $qr = Qr::where('name', $qrName)->first();
-
-            // Do nothing if no such QR exists
-            if (!$qr) {
-                return;
-            }
-
+        if ($body->startsWith('WTW Bonus Pages')) {
             Player::sync($name, $number);
             $response = Http::baseUrl('https://graph.facebook.com/v20.0/311137638760111')
                 ->withToken(config('services.whatsapp.access_token'))
@@ -56,7 +54,7 @@ class WhatsappWebhookController extends Controller
                     "to" => $number,
                     "type" => "template",
                     "template" => [
-                        "name" => "link_to_episode_quiz_questions",
+                        "name" => "wtw_bonus",
                         "language" => [
                             "code" => "en",
                         ],
@@ -77,13 +75,15 @@ class WhatsappWebhookController extends Controller
                                 "parameters" => [
                                     [
                                         "type" => "text",
-                                        "text" => $qr->download_path,
+                                        "text" => 'wtw-bonus', // this will be applied after aph.to/<here> by Meta
                                     ],
                                 ],
                             ],
                         ],
                     ],
                 ]);
+
+            // Log::info('WEBHOOK_RESPONSE', [$response->body()]);
             return;
         }
     }
