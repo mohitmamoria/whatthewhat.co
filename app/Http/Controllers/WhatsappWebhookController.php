@@ -39,6 +39,18 @@ class WhatsappWebhookController extends Controller
         return 'OK';
     }
 
+    public function forceSend(Request $request)
+    {
+        $name = data_get($request->input(), 'from_name', 'Player');
+        $number = data_get($request->input(), 'from', '919716313713');
+        $body = data_get($request->input(), 'body', 'WTW Bonus Pages');
+        Log::info('WEBHOOK_PAYLOAD', [$name, $number, $body]);
+        $this->sendRequiredInfo($name, $number, $body);
+
+
+        return 'OK';
+    }
+
     private function sendRequiredInfo($name, $number, $body)
     {
         $body = str($body);

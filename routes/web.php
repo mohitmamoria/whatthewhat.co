@@ -14,6 +14,7 @@ Route::get('/', function () {
 
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
 Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
+Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
 
 if (app()->environment('local')) {
     Route::get('/test', function () {
