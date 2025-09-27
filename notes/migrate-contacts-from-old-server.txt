@@ -1,0 +1,7 @@
+mysqldump -h 47.129.169.137 -u forge -p aphcommunity contacts > contacts.sql
+nCtXRxr3oE6aaYk3ZAL4
+
+sed -e 's/`contacts`/`players`/g' -e 's/`contacts_number_unique`/`players_number_unique`/g' contacts.sql > players.sql
+
+mysql -u forge -p whatthewhat < players.sql
+TAUvVYA5xpvJw0wXntH8
