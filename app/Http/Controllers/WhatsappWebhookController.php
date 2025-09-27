@@ -6,7 +6,7 @@ use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class WebhookController extends Controller
+class WhatsappWebhookController extends Controller
 {
     public function verify(Request $request)
     {

@@ -1,0 +1,27 @@
+query getProduct($id: ID!) {
+    product(id: $id) {
+        id
+        title
+        handle
+        description
+        variants(first: 20) {
+            edges {
+                node {
+                    id
+                    title
+                    price
+                    sku
+                    availableForSale
+                }
+            }
+        }
+        images(first: 5) {
+            edges {
+                node {
+                    src
+                    altText
+                }
+            }
+        }
+    }
+}

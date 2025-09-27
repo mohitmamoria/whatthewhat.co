@@ -1,0 +1,38 @@
+mutation createCart($input: CartInput!) {
+    cartCreate(input: $input) {
+        cart {
+            id
+            checkoutUrl
+            buyerIdentity {
+                email
+                phone
+                countryCode
+            }
+            attributes {
+                key
+                value
+            }
+            lines(first: 5) {
+                edges {
+                    node {
+                        id
+                        quantity
+                        merchandise {
+                            ... on ProductVariant {
+                                id
+                                title
+                                product {
+                                    title
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        userErrors {
+            field
+            message
+        }
+    }
+}
