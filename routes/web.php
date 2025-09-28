@@ -13,7 +13,11 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/count', function () {
-    return App\Models\Player::where('updated_at', '>=', Carbon\Carbon::parse('09 Sept 2025')->startOfDay())->count();
+    return sprintf(
+        "%d of %d",
+        App\Models\Player::where('updated_at', '>=', Carbon\Carbon::parse('09 Sept 2025')->startOfDay())->count(),
+        App\Models\Player::count(),
+    );
 });
 
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
