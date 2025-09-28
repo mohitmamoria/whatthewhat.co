@@ -12,6 +12,10 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
+Route::get('/count', function () {
+    return App\Models\Player::where('updated_at', '>=', Carbon\Carbon::parse('09 Sept 2025')->startOfDay())->count();
+});
+
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
 Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
 Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
