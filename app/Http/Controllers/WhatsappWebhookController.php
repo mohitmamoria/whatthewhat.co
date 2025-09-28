@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contact;
 use App\Models\Player;
-use App\Models\Qr;
-use App\Services\Whatsapp\Whatsapp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
