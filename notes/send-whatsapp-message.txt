@@ -1,0 +1,10 @@
+<?php
+
+$players = App\Models\Player::where('id', '<', 10479)->where('updated_at', '>=', Carbon\Carbon::parse('09 Sept 2025'))->latest()->limit(100)->get();
+foreach ($players as $player) {
+    echo $player->id . PHP_EOL;
+    dump(App\Services\Whatsapp\Whatsapp::send($player->number, 'preorders_soon')->json());
+    usleep(100_000);
+}
+
+    //sent until ID: 10479 (reverse)
