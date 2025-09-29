@@ -15,7 +15,9 @@ Route::get('/', function () {
 Route::get('/count', function () {
     return sprintf(
         "%d of %d",
-        App\Models\Player::where('updated_at', '>=', Carbon\Carbon::parse('09 Sept 2025')->startOfDay())->count(),
+        App\Models\Player::whereHas('wallet', function ($q) {
+            $q->where('balance', '>', 0);
+        })->count(),
         App\Models\Player::count(),
     );
 });
