@@ -36,7 +36,6 @@ if (!function_exists('get_unique_referrer_code')) {
     {
         $random = '';
         do {
-            dump($random);
             $name = normalize_text($player->name);
             $code = str($name)
                 ->before(' ')->replaceMatches('/[^a-zA-Z0-9]/', '')->substr(0, 7) // first name part, max 7 chars
