@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gamification_activities', function (Blueprint $table) {
+        Schema::create('gamification_transactions', function (Blueprint $table) {
             $table->id();
             $table->morphs('owner');
             $table->string('idempotency_key')->nullable()->unique();
-            $table->string('type');
+            $table->string('direction'); // credit or debit
+            $table->unsignedBigInteger('amount');
+            $table->string('reason', 255);
             $table->json('meta')->nullable();
-            $table->timestamp('occurred_at')->useCurrent()->index();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('activities');
+        Schema::dropIfExists('transactions');
     }
 };
