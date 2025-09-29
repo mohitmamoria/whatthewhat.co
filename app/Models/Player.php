@@ -11,7 +11,11 @@ class Player extends Model
     public static function sync($name, $number)
     {
         static::upsert([
-            ['name' => $name, 'number' => $number],
+            [
+                'name' => $name,
+                'number' => $number,
+                'referrer_code' => get_unique_referrer_code(new static(compact('name', 'number')))
+            ],
         ], ['number'], ['name']);
     }
 }
