@@ -37,13 +37,10 @@ if (!function_exists('get_unique_referrer_code')) {
         $random = '';
         do {
             $name = normalize_text($player->name);
-            // if name is less than 4 chars, generate random letter to fill in the gap
-            if (strlen($name) < 5) {
-                $name .= Str::random(5 - strlen($name));
-            }
 
             $code = str($name)
                 ->before(' ')->replaceMatches('/[^a-zA-Z0-9]/', '')->substr(0, 7) // first name part, max 7 chars
+                ->padRight(5, Str::random(5)) // pad with random if name is too short
                 ->append(strlen($player->number) >= 4 ? substr($player->number, -4) : $player->number) // last 4 digits of phone number
                 ->append($random);
 
