@@ -17,9 +17,9 @@ class Player extends Model
 
     protected $fillable = ['name', 'number', 'referrer_code'];
 
-    public static function sync($name, $number)
+    public static function sync($name, $number): Player
     {
-        DB::transaction(function () use ($name, $number) {
+        return DB::transaction(function () use ($name, $number) {
             $player = static::updateOrCreate(
                 ['number' => $number],
                 ['name' => $name]
@@ -33,6 +33,8 @@ class Player extends Model
                 // Set an empty balance account
                 $player->wallet()->firstOrCreate();
             }
+
+            return $player->fresh();
         });
     }
 

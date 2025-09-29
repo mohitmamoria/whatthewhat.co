@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gamification\ActivityType;
 use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -55,7 +56,8 @@ class WhatsappWebhookController extends Controller
 
         // When sending downloadable
         if ($body->startsWith('WTW Bonus Pages')) {
-            Player::sync($name, $number);
+            $player = Player::sync($name, $number);
+            $player->acted(ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
             $response = Http::baseUrl('https://graph.facebook.com/v20.0/311137638760111')
                 ->withToken(config('services.whatsapp.access_token'))
                 ->acceptJson()
