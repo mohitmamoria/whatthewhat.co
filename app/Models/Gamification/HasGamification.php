@@ -4,9 +4,9 @@ namespace App\Models\Gamification;
 
 trait HasGamification
 {
-    public function balance()
+    public function wallet()
     {
-        return $this->morphOne(Balance::class, 'owner');
+        return $this->morphOne(Wallet::class, 'owner');
     }
 
     public function activities()

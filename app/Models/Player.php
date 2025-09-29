@@ -26,7 +26,7 @@ class Player extends Model
                 $player->save();
 
                 // Set an empty balance account
-                $player->balance()->firstOrCreate();
+                $player->wallet()->firstOrCreate();
             }
         });
     }

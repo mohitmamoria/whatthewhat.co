@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gamification_balances', function (Blueprint $table) {
+        Schema::create('gamification_wallets', function (Blueprint $table) {
             $table->id();
             $table->morphs('owner');
             $table->bigInteger('balance')->default(0);
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('balances');
+        Schema::dropIfExists('gamification_wallets');
     }
 };

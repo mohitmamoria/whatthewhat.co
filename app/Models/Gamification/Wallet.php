@@ -4,9 +4,9 @@ namespace App\Models\Gamification;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Balance extends Model
+class Wallet extends Model
 {
-    protected $table = 'gamification_balances';
+    protected $table = 'gamification_wallets';
 
     protected $fillable = [
         'owner_type',
