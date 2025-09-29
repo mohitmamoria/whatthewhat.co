@@ -23,8 +23,8 @@ class Transaction extends Model
         'direction' => TransactionDirection::class,
     ];
 
-    public function owner()
+    public function wallet()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Wallet::class);
     }
 }

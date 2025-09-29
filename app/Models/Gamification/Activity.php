@@ -13,12 +13,13 @@ class Activity extends Model
         'owner_id',
         'idempotency_key',
         'type',
-        'data',
+        'meta',
         'occurred_at',
     ];
 
     protected $casts = [
-        'data' => 'array',
+        'type' => ActivityType::class,
+        'meta' => 'array',
         'occurred_at' => 'datetime',
     ];
 

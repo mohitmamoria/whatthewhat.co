@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
+use App\Actions\Gamification\ProcessTransactionsForAnActivity;
+use App\Models\Gamification\Activity;
+use App\Models\Gamification\ActivityType;
 use App\Models\Gamification\HasGamification;
+use App\Services\Idempotency\Idempotency;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class Player extends Model
@@ -28,6 +33,33 @@ class Player extends Model
                 // Set an empty balance account
                 $player->wallet()->firstOrCreate();
             }
+        });
+    }
+
+    public function acted(ActivityType $type, array $meta = [], ?Carbon $occuredAt = null): Activity
+    {
+        if ($occuredAt === null) {
+            $occuredAt = now();
+        }
+
+        return DB::transaction(function () use ($type, $meta, $occuredAt) {
+            $idempotencyKey = Idempotency::key($type->value, [...$meta, 'player_id' => $this->id]);
+
+            $existing = Activity::where('idempotency_key', $idempotencyKey)->first();
+            if ($existing) {
+                return $existing;
+            }
+
+            $activity = $this->activities()->create([
+                'idempotency_key' => Idempotency::key($type->value, [...$meta, 'player_id' => $this->id]),
+                'type' => $type->value,
+                'meta' => $meta,
+                'occurred_at' => $occuredAt,
+            ]);
+
+            (new ProcessTransactionsForAnActivity)($activity);
+
+            return $activity;
         });
     }
 }
