@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Gamification\HasGamification;
 use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
+    use HasGamification;
+
     protected $fillable = ['name', 'number'];
 
     public static function sync($name, $number)
