@@ -4,6 +4,7 @@ query getProduct($id: ID!) {
         title
         handle
         description
+        descriptionHtml
         variants(first: 20) {
             edges {
                 node {
@@ -11,13 +12,19 @@ query getProduct($id: ID!) {
                     title
                     price
                     sku
+                    image {
+                        id
+                        url
+                    }
                     availableForSale
+                    inventoryQuantity
                 }
             }
         }
         images(first: 5) {
             edges {
                 node {
+                    id
                     src
                     altText
                 }
