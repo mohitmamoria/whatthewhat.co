@@ -1,0 +1,16 @@
+/buy
+    - guest (verify using OTP?)
+    - player
+    - referred guest
+
+/refer (can be done via WhatsApp actually)
+
+/gift
+    - guest (verify using OTP?)
+    - player
+
+
+** GAME **
+/play (shows all stats of the logged in players)
+/play/leaderboard (shows overall leaderboard with the logged in player's position highlighted)
+/play/leaderboard/weekly (shows a weekly resetted leaderboard)

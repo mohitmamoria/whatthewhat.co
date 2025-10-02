@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\WhatsappWebhookController;
 use App\Services\Shopify\Shopify;
@@ -11,6 +13,8 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
+
+Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
 
 Route::get('/count', function () {
     return sprintf(
