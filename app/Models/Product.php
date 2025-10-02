@@ -18,8 +18,11 @@ class Product extends Model
         'images',
     ];
 
-    protected $casts = [
-        'variants' => AsCollection::of(ProductVariant::class),
-        'images' => AsCollection::of(ProductImage::class),
-    ];
+    protected function casts(): array
+    {
+        return  [
+            'variants' => AsCollection::of(ProductVariant::class),
+            'images' => AsCollection::of(ProductImage::class),
+        ];
+    }
 }

@@ -10,6 +10,7 @@ class ProductVariant implements Arrayable, JsonSerializable
     public function __construct(
         public string $id,
         public string $title,
+        public string $image_id,
         public string $image_src,
         public string $price,
         public string $sku,
@@ -22,6 +23,7 @@ class ProductVariant implements Arrayable, JsonSerializable
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'image_id' => $this->image_id,
             'image_src' => $this->image_src,
             'price' => $this->price,
             'sku' => $this->sku,

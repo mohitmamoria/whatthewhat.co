@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description_text')->nullable();
             $table->text('description_html')->nullable();
-            $table->json('variants')->default('[]');
-            $table->json('images')->default('[]');
+            $table->json('variants')->nullable();
+            $table->json('images')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

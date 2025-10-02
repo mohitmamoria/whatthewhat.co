@@ -14,7 +14,7 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
-Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
+// Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
 
 Route::get('/count', function () {
     return sprintf(
