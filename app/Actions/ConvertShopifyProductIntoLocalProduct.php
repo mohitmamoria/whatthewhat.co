@@ -7,6 +7,7 @@ use App\Models\Gamification\Activity;
 use App\Models\Gamification\Transaction;
 use App\Models\Product;
 use App\Services\Idempotency\Idempotency;
+use App\Services\Shopify\ShopifyRichText;
 use App\ValueObjects\ProductImage;
 use App\ValueObjects\ProductVariant;
 
@@ -20,6 +21,7 @@ class ConvertShopifyProductIntoLocalProduct
                 'title' => data_get($variant, 'node.title'),
                 'image_id' => data_get($variant, 'node.image.id'),
                 'image_src' => data_get($variant, 'node.image.url'),
+                'description' => ShopifyRichText::render(data_get($variant, 'node.variantDescription.value')),
                 'sku' => data_get($variant, 'node.sku'),
                 'price' => data_get($variant, 'node.price'),
                 'is_available' => data_get($variant, 'node.availableForSale', false),

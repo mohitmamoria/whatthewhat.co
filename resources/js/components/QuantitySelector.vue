@@ -1,6 +1,6 @@
 <script setup>
 import { MinusIcon, PlusIcon } from '@heroicons/vue/16/solid';
-import { defineEmits } from 'vue';
+import { defineEmits, ref } from 'vue';
 
 const props = defineProps({
     modelValue: {
@@ -9,6 +9,8 @@ const props = defineProps({
     },
 });
 const emit = defineEmits(['update:modelValue']);
+
+var quantity = ref(props.modelValue);
 
 var increment = () => {
     if (quantity.value < 10) {

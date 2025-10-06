@@ -38,7 +38,6 @@ class SyncProductsFromShopify extends Command
         $response = Shopify::admin()->call('admin/getProduct', ['id' => 'gid://shopify/Product/' . $id]);
 
         $product = (new ConvertShopifyProductIntoLocalProduct)($response);
-
         $product = DB::transaction(function () use ($response, $product) {
             return Product::updateOrCreate(
                 ['shopify_id' => data_get($response, 'product.id')],
@@ -46,8 +45,6 @@ class SyncProductsFromShopify extends Command
             );
         });
 
-        dd($product);
-
-        dd($response);
+        $this->info('Success!');
     }
 }

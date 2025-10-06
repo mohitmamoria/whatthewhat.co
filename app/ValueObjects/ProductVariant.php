@@ -11,6 +11,7 @@ class ProductVariant implements Arrayable, JsonSerializable
     public string $title;
     public ?string $image_id;
     public ?string $image_src;
+    public ?string $description;
     public float $price;
     public string $sku;
     public bool $is_available;
@@ -23,6 +24,7 @@ class ProductVariant implements Arrayable, JsonSerializable
         $this->title = $data['title'];
         $this->image_id = $data['image_id'];
         $this->image_src = $data['image_src'];
+        $this->description = $data['description'];
         $this->price = $data['price'];
         $this->sku = $data['sku'];
         $this->is_available = $data['is_available'];
@@ -36,6 +38,7 @@ class ProductVariant implements Arrayable, JsonSerializable
             'title' => $this->title,
             'image_id' => $this->image_id,
             'image_src' => $this->image_src,
+            'description' => $this->description,
             'price' => $this->price,
             'sku' => $this->sku,
             'is_available' => $this->is_available,

@@ -18,6 +18,9 @@ query getProduct($id: ID!) {
                     }
                     availableForSale
                     inventoryQuantity
+                    variantDescription: metafield(namespace: "custom", key: "variant_description") {
+                        value
+                    }
                 }
             }
         }

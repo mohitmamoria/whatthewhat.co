@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
+use App\Models\Player;
 use App\Models\Product;
 use App\Services\Shopify\Shopify;
 use Illuminate\Http\Request;
@@ -13,6 +14,16 @@ class ShopController extends Controller
 {
     public function buy(Request $request)
     {
+        $ref = $request->input('ref');
+        if (is_null($ref)) {
+            return redirect()->route('home');
+        }
+
+        $referrer = Player::byReferrerCode($ref);
+        if (is_null($referrer)) {
+            return redirect()->route('home');
+        }
+
         $product = Product::first();
 
         return inertia('Shop/Buy', [
@@ -22,6 +33,16 @@ class ShopController extends Controller
 
     public function checkout(Request $request)
     {
+        $ref = $request->input('ref');
+        if (is_null($ref)) {
+            return redirect()->route('home');
+        }
+
+        $referrer = Player::byReferrerCode($ref);
+        if (is_null($referrer)) {
+            return redirect()->route('home');
+        }
+
         $validated = request()->validate([
             'variant' => ['required'],
             'quantity' => ['required', 'integer', 'min:1', 'max:10'],
@@ -38,8 +59,7 @@ class ShopController extends Controller
         $response = Shopify::storefront()->call('storefront/createCart', [
             'input' => [
                 'attributes' => [
-                    ['key' => 'ref', 'value' => 'preorder-campaign'],
-                    ['key' => 'note', 'value' => 'Yay!'],
+                    ['key' => 'ref', 'value' => $ref]
                 ],
                 'lines' => [
                     [

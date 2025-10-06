@@ -26,15 +26,15 @@ Route::get('/count', function () {
     );
 });
 
+Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
+Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
+
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
 Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
 Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
 
 if (app()->environment('local')) {
     Route::get('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
-
-    Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
-    Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
 
     Route::post('/webhooks/shopify', function (Request $request) {
         $hmacHeader = $request->header('X-Shopify-Hmac-Sha256');

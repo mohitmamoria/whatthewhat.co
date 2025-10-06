@@ -22,6 +22,11 @@ class Player extends Model
         return $this->hasMany(Message::class);
     }
 
+    public static function byReferrerCode(string $code)
+    {
+        return static::where('referrer_code', $code)->first();
+    }
+
     public static function sync($name, $number): Player
     {
         return DB::transaction(function () use ($name, $number) {

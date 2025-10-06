@@ -19,7 +19,7 @@ class ProductResource extends JsonResource
             'title' => $this->title,
             'description_text' => $this->description_text,
             'description_html' => $this->description_html,
-            'variants' => collect($this->variants)->select(['id', 'title', 'image_src', 'price', 'sku', 'is_available'])->toArray(),
+            'variants' => collect($this->variants)->select(['id', 'title', 'image_src', 'description', 'price', 'sku', 'is_available'])->toArray(),
             'images' => collect($this->images)->select(['src', 'alt_text'])->toArray(),
         ];
     }
