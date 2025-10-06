@@ -17,6 +17,11 @@ class Player extends Model
 
     protected $fillable = ['name', 'number', 'referrer_code'];
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
     public static function sync($name, $number): Player
     {
         return DB::transaction(function () use ($name, $number) {
