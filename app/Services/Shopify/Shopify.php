@@ -14,7 +14,7 @@ class Shopify
         protected string $domain,
         protected string $token,
         protected string $mode = 'admin',
-        protected string $apiVersion = '2025-07'
+        protected string $apiVersion = '2025-10'
     ) {}
 
     /** Factory for Admin GraphQL */

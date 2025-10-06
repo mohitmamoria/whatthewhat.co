@@ -1,0 +1,56 @@
+query OrdersByVariantQuery($query: String!, $first: Int = 5, $after: String) {
+    orders(first: $first, after: $after, query: $query, sortKey: PROCESSED_AT, reverse: true) {
+        edges {
+            node {
+                id
+                name
+                processedAt
+                customAttributes {
+                    key
+                    value
+                }
+                phone
+                customer {
+                    id
+                    displayName
+                    email
+                    firstName
+                    lastName
+                    tags
+                    defaultAddress {
+                        address1
+                        address2
+                        phone
+                        city
+                        province
+                        provinceCode
+                        country
+                        countryCodeV2
+                        zip
+                    }
+                }
+                lineItems(first: 100) {
+                    edges {
+                        node {
+                            quantity
+                            sku
+                            product {
+                                id
+                                title
+                            }
+                            variant {
+                                id
+                                title
+                                sku
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        pageInfo {
+            hasNextPage
+            endCursor
+        }
+    }
+}
