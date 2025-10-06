@@ -10,6 +10,7 @@ use App\Models\Message;
 use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class WhatsappWebhookController extends Controller
 {
@@ -37,18 +38,7 @@ class WhatsappWebhookController extends Controller
 
         Log::info('WEBHOOK_PAYLOAD', [$name, $messageId, $number, $body]);
 
-        $player = Player::sync($name, $number);
-
-        (new RecordMessageExchange)->incoming(
-            $player,
-            MessagePlatform::WHATSAPP,
-            $messageId,
-            [
-                'content' => $body,
-            ]
-        );
-
-        $this->sendRequiredInfo($name, $number, $body);
+        $this->sendRequiredInfo($name, $number, $body, $messageId);
 
 
         return 'OK';
@@ -60,19 +50,29 @@ class WhatsappWebhookController extends Controller
         $number = data_get($request->input(), 'from', '919716313713');
         $body = data_get($request->input(), 'body', 'WTW Bonus Pages');
         Log::info('WEBHOOK_PAYLOAD', [$name, $number, $body]);
-        $this->sendRequiredInfo($name, $number, $body);
+        $this->sendRequiredInfo($name, $number, $body, Str::random(11));
 
 
         return 'OK';
     }
 
-    private function sendRequiredInfo($name, $number, $body)
+    private function sendRequiredInfo($name, $number, $body, $messageId)
     {
         $body = str($body);
 
         // When sending downloadable
         if ($body->startsWith('WTW Bonus Pages')) {
             $player = Player::sync($name, $number);
+
+            (new RecordMessageExchange)->incoming(
+                $player,
+                MessagePlatform::WHATSAPP,
+                $messageId,
+                [
+                    'content' => $body,
+                ]
+            );
+
             $player->acted(ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
             (new SendMessageOnWhatsapp)($player, Message::TEMPLATE_PREFIX . 'wtw_bonus', [
                 [
