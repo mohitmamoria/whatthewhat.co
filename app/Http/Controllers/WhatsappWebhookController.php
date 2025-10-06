@@ -59,11 +59,9 @@ class WhatsappWebhookController extends Controller
     private function sendRequiredInfo($name, $number, $body, $messageId)
     {
         $body = str($body);
+        $player = Player::sync($name, $number);
 
-        // When sending downloadable
-        if ($body->startsWith('WTW Bonus Pages')) {
-            $player = Player::sync($name, $number);
-
+        if ($body->length() > 0) {
             (new RecordMessageExchange)->incoming(
                 $player,
                 MessagePlatform::WHATSAPP,
@@ -72,7 +70,10 @@ class WhatsappWebhookController extends Controller
                     'content' => $body,
                 ]
             );
+        }
 
+        // When sending downloadable
+        if ($body->startsWith('WTW Bonus Pages')) {
             $player->acted(ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
             (new SendMessageOnWhatsapp)($player, Message::TEMPLATE_PREFIX . 'wtw_bonus', [
                 [
