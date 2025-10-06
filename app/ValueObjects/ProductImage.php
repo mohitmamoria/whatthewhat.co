@@ -7,18 +7,24 @@ use JsonSerializable;
 
 class ProductImage implements Arrayable, JsonSerializable
 {
+    public string $id;
+    public string $src;
+    public string $alt_text;
+
     public function __construct(
-        public string $id,
-        public string $src,
-        public string $alt_text = '',
-    ) {}
+        array $data,
+    ) {
+        $this->id = $data['id'];
+        $this->src = $data['src'];
+        $this->alt_text = $data['alt_text'];
+    }
 
     public function toArray(): array
     {
         return [
             'id' => $this->id,
             'src' => $this->src,
-            'altText' => $this->alt_text,
+            'alt_text' => $this->alt_text,
         ];
     }
 
