@@ -16,9 +16,6 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
-Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
-Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
-
 Route::get('/count', function () {
     return sprintf(
         "%d of %d",
@@ -34,6 +31,10 @@ Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
 Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
 
 if (app()->environment('local')) {
+    Route::get('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
+
+    Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
+    Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
 
     Route::post('/webhooks/shopify', function (Request $request) {
         $hmacHeader = $request->header('X-Shopify-Hmac-Sha256');

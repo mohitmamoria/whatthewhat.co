@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\RecordMessageExchange;
+use App\Actions\SendMessageOnWhatsapp;
+use App\Enums\MessagePlatform;
 use App\Models\Gamification\ActivityType;
+use App\Models\Message;
 use App\Models\Player;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class WhatsappWebhookController extends Controller
@@ -29,9 +32,22 @@ class WhatsappWebhookController extends Controller
 
         $name = data_get($value, 'contacts.0.profile.name');
         $number = data_get($value, 'messages.0.from');
+        $messageId = data_get($value, 'messages.0.id');
         $body = data_get($value, 'messages.0.text.body');
 
-        Log::info('WEBHOOK_PAYLOAD', [$name, $number, $body]);
+        Log::info('WEBHOOK_PAYLOAD', [$name, $messageId, $number, $body]);
+
+        $player = Player::sync($name, $number);
+
+        (new RecordMessageExchange)->incoming(
+            $player,
+            MessagePlatform::WHATSAPP,
+            $messageId,
+            [
+                'content' => $body,
+            ]
+        );
+
         $this->sendRequiredInfo($name, $number, $body);
 
 
@@ -58,42 +74,28 @@ class WhatsappWebhookController extends Controller
         if ($body->startsWith('WTW Bonus Pages')) {
             $player = Player::sync($name, $number);
             $player->acted(ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
-            $response = Http::baseUrl('https://graph.facebook.com/v20.0/311137638760111')
-                ->withToken(config('services.whatsapp.access_token'))
-                ->acceptJson()
-                ->post('messages', [
-                    "messaging_product" => "whatsapp",
-                    "to" => $number,
-                    "type" => "template",
-                    "template" => [
-                        "name" => "wtw_bonus",
-                        "language" => [
-                            "code" => "en",
-                        ],
-                        "components" => [
-                            [
-                                "type" => "body",
-                                "parameters" => [
-                                    [
-                                        "type" => "text",
-                                        "text" => $name,
-                                    ],
-                                ],
-                            ],
-                            [
-                                "type" => "button",
-                                "sub_type" => "url",
-                                "index" => 0,
-                                "parameters" => [
-                                    [
-                                        "type" => "text",
-                                        "text" => 'wtw-bonus', // this will be applied after aph.to/<here> by Meta
-                                    ],
-                                ],
-                            ],
+            (new SendMessageOnWhatsapp)($player, Message::TEMPLATE_PREFIX . 'wtw_bonus', [
+                [
+                    "type" => "body",
+                    "parameters" => [
+                        [
+                            "type" => "text",
+                            "text" => $name,
                         ],
                     ],
-                ]);
+                ],
+                [
+                    "type" => "button",
+                    "sub_type" => "url",
+                    "index" => 0,
+                    "parameters" => [
+                        [
+                            "type" => "text",
+                            "text" => 'wtw-bonus', // this will be applied after aph.to/<here> by Meta
+                        ],
+                    ],
+                ],
+            ]);
 
             // Log::info('WEBHOOK_RESPONSE', [$response->body()]);
             return;

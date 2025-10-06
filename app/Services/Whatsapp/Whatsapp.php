@@ -16,7 +16,7 @@ class Whatsapp
         $this->token = config('services.whatsapp.access_token');
     }
 
-    public static function send($number, $template, $components = []): Response
+    public static function sendTemplate(string $number, string $template, $components = []): Response
     {
         return (new static)->client()->post('messages', [
             "messaging_product" => "whatsapp",
@@ -29,6 +29,19 @@ class Whatsapp
                 ],
                 "components" => $components,
             ],
+        ]);
+    }
+
+    public static function sendText(string $number, string $message): Response
+    {
+        return (new static)->client()->post('messages', [
+            "messaging_product" => "whatsapp",
+            "to" => $number,
+            "type" => "text",
+            "text" => [
+                "preview_url" => true,
+                "body" => $message,
+            ]
         ]);
     }
 
