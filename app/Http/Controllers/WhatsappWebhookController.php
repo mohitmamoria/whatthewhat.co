@@ -101,5 +101,15 @@ class WhatsappWebhookController extends Controller
             // Log::info('WEBHOOK_RESPONSE', [$response->body()]);
             return;
         }
+
+        // When sending downloadable
+        if ($body->startsWith('GET PREORDER LINK')) {
+            $url = 'https://whatthewhat.co';
+            $message = sprintf("Here's your unique link to pre-order What The What?! 👇 \n\n %s", $url);
+
+            (new SendMessageOnWhatsapp)($player, $message);
+
+            return;
+        }
     }
 }
