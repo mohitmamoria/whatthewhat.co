@@ -25,7 +25,7 @@ var props = defineProps({
                 <div class="mx-auto max-w-2xl text-center">
                     <h2 class="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">25 November 2025</h2>
                     <p class="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-gray-600">
-                        The book releases in november, and the shipping starts on Nov 19, so that it reaches in your hands on time.
+                        The book releases in November, and the shipping starts on Nov 19, so that it reaches in your hands on time.
                     </p>
                 </div>
             </div>

@@ -38,7 +38,7 @@ const features = [
     },
     {
         name: '🎪 Special Quizwiz',
-        description: 'A free ticket to a very special Quizwiz show in January 2025. A show like nothing before!',
+        description: 'A free ticket to a very special Quizwiz show in January 2026. A show like nothing before!',
     },
 ];
 </script>
