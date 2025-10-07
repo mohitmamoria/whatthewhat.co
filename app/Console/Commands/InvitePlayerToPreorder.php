@@ -53,7 +53,12 @@ class InvitePlayerToPreorder extends Command
             //         ],
             //     ],
             // ]);
-            $this->info($messageModel->__toString());
+            // $this->info($messageModel->__toString());
         }
+        dd(Player::whereHas('activities', function ($query) {
+            $query->where('type', ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
+        })->whereDoesntHave('messages', function ($query) use ($message) {
+            $query->where('body->content', $message);
+        })->oldest()->count());
     }
 }
