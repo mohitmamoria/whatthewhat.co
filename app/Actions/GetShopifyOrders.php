@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Analytics;
+namespace App\Actions;
 
 use App\Models\Product;
 use App\Services\Shopify\Shopify;
