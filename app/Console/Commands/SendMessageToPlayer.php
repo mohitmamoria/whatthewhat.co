@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\SendMessageOnWhatsapp;
 use App\Enums\MessagePlatform;
 use App\Models\Message;
 use App\Models\Player;
@@ -50,6 +51,20 @@ class SendMessageToPlayer extends Command
             $query->where('body->content', $message);
         })->get();
 
-        dd($players, $message);
+        foreach ($players as $player) {
+            $this->info(sprintf('Player:: %d: %s (%s)', $player->id, $player->name, $player->number));
+            // $message = (new SendMessageOnWhatsapp)($player, $message, [
+            //     [
+            //         "type" => "body",
+            //         "parameters" => [
+            //             [
+            //                 "type" => "text",
+            //                 "text" => $player->name,
+            //             ],
+            //         ],
+            //     ],
+            // ]);
+            // $this->info($message->__toString());
+        }
     }
 }
