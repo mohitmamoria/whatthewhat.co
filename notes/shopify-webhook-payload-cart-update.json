@@ -1,0 +1,71 @@
+{
+    "headers": {
+        "x-shopify-webhook-id": ["1208b9dd-5a14-4d0f-80e7-0c6b9cbf81ad"],
+        "x-shopify-triggered-at": ["2025-10-05T08:58:52.194764854Z"],
+        "x-shopify-topic": ["carts/update"],
+        "x-shopify-shop-domain": ["38c240-69.myshopify.com"],
+        "x-shopify-hmac-sha256": ["FAQMvlpjrA7E/QEMmQLGb/LbCPV0uMQSbNgW9PsSf5A="],
+        "x-shopify-event-id": ["973d77c1-1626-407d-bf49-4d8ce5aaa23e"],
+        "x-shopify-api-version": ["2025-10"],
+        "x-forwarded-proto": ["https"],
+        "x-forwarded-host": ["wtw.ngrok.dev"],
+        "x-forwarded-for": ["35.202.17.88"],
+        "content-type": ["application/json"],
+        "accept-encoding": ["gzip;q=1.0,deflate;q=0.6,identity;q=0.3"],
+        "accept": ["*/*"],
+        "content-length": ["1354"],
+        "user-agent": ["Shopify-Captain-Hook"],
+        "host": ["wtw.ngrok.dev"]
+    },
+    "body": {
+        "id": "hWN3ezNxnrPMzrYK1DR5niTZ",
+        "token": "hWN3ezNxnrPMzrYK1DR5niTZ",
+        "line_items": [
+            {
+                "id": 44126685921459,
+                "properties": null,
+                "quantity": 3,
+                "variant_id": 44126685921459,
+                "key": "44126685921459:d62af6d23920cba99e062f386ebfa4e6",
+                "discounted_price": "799.00",
+                "discounts": [],
+                "gift_card": false,
+                "grams": 0,
+                "line_price": "2397.00",
+                "original_line_price": "2397.00",
+                "original_price": "799.00",
+                "price": "799.00",
+                "product_id": 8059798814899,
+                "sku": "66f8dd3d3016b",
+                "taxable": false,
+                "title": "Wanted Dead AND Alive (Unisex) - Black / S",
+                "total_discount": "0.00",
+                "vendor": "Printrove",
+                "discounted_price_set": {
+                    "shop_money": { "amount": "799.0", "currency_code": "INR" },
+                    "presentment_money": { "amount": "799.0", "currency_code": "INR" }
+                },
+                "line_price_set": {
+                    "shop_money": { "amount": "2397.0", "currency_code": "INR" },
+                    "presentment_money": { "amount": "2397.0", "currency_code": "INR" }
+                },
+                "original_line_price_set": {
+                    "shop_money": { "amount": "2397.0", "currency_code": "INR" },
+                    "presentment_money": { "amount": "2397.0", "currency_code": "INR" }
+                },
+                "price_set": {
+                    "shop_money": { "amount": "799.0", "currency_code": "INR" },
+                    "presentment_money": { "amount": "799.0", "currency_code": "INR" }
+                },
+                "total_discount_set": {
+                    "shop_money": { "amount": "0.0", "currency_code": "INR" },
+                    "presentment_money": { "amount": "0.0", "currency_code": "INR" }
+                },
+                "parent_relationship": null
+            }
+        ],
+        "note": "",
+        "updated_at": "2025-10-05T08:58:52.191Z",
+        "created_at": "2025-10-02T18:53:42.187Z"
+    }
+}
