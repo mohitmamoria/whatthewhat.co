@@ -42,23 +42,18 @@ class InvitePlayerToPreorder extends Command
 
         foreach ($players as $player) {
             $this->info(sprintf('Player:: %d: %s (%s)', $player->id, $player->name, $player->number));
-            // $messageModel = (new SendMessageOnWhatsapp)($player, $message, [
-            //     [
-            //         "type" => "body",
-            //         "parameters" => [
-            //             [
-            //                 "type" => "text",
-            //                 "text" => $player->name,
-            //             ],
-            //         ],
-            //     ],
-            // ]);
-            // $this->info($messageModel->__toString());
+            $messageModel = (new SendMessageOnWhatsapp)($player, $message, [
+                [
+                    "type" => "body",
+                    "parameters" => [
+                        [
+                            "type" => "text",
+                            "text" => $player->name,
+                        ],
+                    ],
+                ],
+            ]);
+            $this->info($messageModel->__toString());
         }
-        dd(Player::whereHas('activities', function ($query) {
-            $query->where('type', ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
-        })->whereDoesntHave('messages', function ($query) use ($message) {
-            $query->where('body->content', $message);
-        })->oldest()->count());
     }
 }
