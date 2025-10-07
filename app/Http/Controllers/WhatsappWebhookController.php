@@ -58,6 +58,10 @@ class WhatsappWebhookController extends Controller
 
     private function sendRequiredInfo($name, $number, $body, $messageId)
     {
+        if (is_null($number)) {
+            return;
+        }
+
         $body = str($body);
         $player = Player::sync($name, $number);
 
