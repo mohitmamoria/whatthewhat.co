@@ -28,7 +28,7 @@ var props = defineProps({
                 <div class="mx-auto max-w-2xl text-center">
                     <h2 class="font-serif text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">Thank You!</h2>
                     <p class="mx-auto mt-6 max-w-xl font-serif text-lg/8 text-pretty text-gray-600">
-                        Buying this book doesnt just support us—it fuels the hope that curiosity can light up the world again.
+                        Buying this book doesn't just support us—it fuels the hope that curiosity can light up the world again.
                     </p>
                     <p class="mx-auto mt-6 max-w-xl font-serif text-lg/8 text-pretty text-gray-600">
                         For bulk orders (100+ books), please write to us at
