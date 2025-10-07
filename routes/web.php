@@ -86,27 +86,28 @@ Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
 Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
 Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
 
+Route::post('/webhooks/shopify', function (Request $request) {
+    $hmacHeader = $request->header('X-Shopify-Hmac-Sha256');
+    $data = $request->getContent();
+
+    $calculated = base64_encode(
+        hash_hmac('sha256', $data, config('services.shopify.webhook_verify_token'), true)
+    );
+
+    Log::info('SHOPIFY_WEBHOOK_1', [$hmacHeader, $calculated]);
+
+    // Decode it for easier logging
+    $payload = json_decode($data, true);
+
+    Log::info('SHOPIFY_WEBHOOK_2',  [
+        'headers' => $request->headers->all(),
+        'body' => $payload,
+    ]);
+});
+
 if (app()->environment('local')) {
     Route::get('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
 
-    Route::post('/webhooks/shopify', function (Request $request) {
-        $hmacHeader = $request->header('X-Shopify-Hmac-Sha256');
-        $data = $request->getContent();
-
-        $calculated = base64_encode(
-            hash_hmac('sha256', $data, 'f2fda8925c4b471472641405ea3b6d463a0b039b9d6d155898721d6cd63e4554', true)
-        );
-
-        Log::info('Shopify webhook verification', [$hmacHeader, $calculated]);
-
-        // Decode it for easier logging
-        $payload = json_decode($data, true);
-
-        Log::info('Shopify Webhook Received: ',  [
-            'headers' => $request->headers->all(),
-            'body' => $payload,
-        ]);
-    });
 
     Route::get('/test', function () {
         try {

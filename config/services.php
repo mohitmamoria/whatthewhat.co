@@ -44,5 +44,6 @@ return [
         'domain' => env('SHOPIFY_DOMAIN'),
         'admin_access_token' => env('SHOPIFY_ADMIN_ACCESS_TOKEN'),
         'storefront_access_token' => env('SHOPIFY_STOREFRONT_ACCESS_TOKEN'),
+        'webhook_verify_token' => env('SHOPIFY_WEBHOOK_VERIFY_TOKEN'),
     ],
 ];
