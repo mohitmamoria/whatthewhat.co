@@ -80,7 +80,7 @@ Route::get('/count', function () {
         return $count;
     });
 
-    return nl2br(sprintf("Total Players: %d \n\n Players With Bonus Pages: %d \n\n Players invited to order: %d \n\n Books Sold: %d \n\n Calendars Sold: %d", $total, $withWallet, $invitedPlayers, $booksSold, $calendarsSold));
+    return nl2br(sprintf("Total Players: %d \n\n Players With Bonus Pages: %d \n\n Players invited to order: %d \n\n Books Sold: %d (%d without Brainiest) \n\n Calendars Sold: %d", $total, $withWallet, $invitedPlayers, $booksSold, $booksSold - 74, $calendarsSold));
 
     return compact('total', 'withWallet', 'booksSold', 'calendarsSold');
 });
