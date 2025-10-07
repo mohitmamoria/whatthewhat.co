@@ -53,7 +53,7 @@ class SendMessageToPlayer extends Command
 
         foreach ($players as $player) {
             $this->info(sprintf('Player:: %d: %s (%s)', $player->id, $player->name, $player->number));
-            $message = (new SendMessageOnWhatsapp)($player, $message, [
+            $messageModel = (new SendMessageOnWhatsapp)($player, $message, [
                 [
                     "type" => "body",
                     "parameters" => [
@@ -64,7 +64,7 @@ class SendMessageToPlayer extends Command
                     ],
                 ],
             ]);
-            $this->info($message->__toString());
+            $this->info($messageModel->__toString());
         }
     }
 }
