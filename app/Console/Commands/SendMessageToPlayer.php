@@ -43,5 +43,11 @@ class SendMessageToPlayer extends Command
             $this->error(sprintf('ERROR: Invalid platform. Supported platforms are %s.', $validPlatforms->join(', ')));
             return 1;
         }
+
+        $players = Player::whereDoesntHave('messages', function ($query) {
+            $query->where('body->content', '__t:wtw_bonus');
+        })->get();
+
+        dd($players);
     }
 }

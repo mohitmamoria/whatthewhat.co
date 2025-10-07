@@ -31,7 +31,7 @@ const props = defineProps({
                         </h3>
                         <article class="prose prose-sm" v-html="variant.description"></article>
                         <div class="flex flex-1 flex-col justify-end">
-                            <VariantCheckout :variant="variant.id"></VariantCheckout>
+                            <VariantCheckout :variant="variant"></VariantCheckout>
                         </div>
                     </div>
                 </div>

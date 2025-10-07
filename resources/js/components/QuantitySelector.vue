@@ -29,7 +29,7 @@ var decrement = () => {
 
 <template>
     <div class="w-32">
-        <label for="quantity" class="block text-sm/6 font-medium text-gray-900">Quantity</label>
+        <!-- <label for="quantity" class="block text-sm/6 font-medium text-gray-900">Quantity</label> -->
         <div class="mt-2 flex">
             <button
                 type="button"
@@ -67,5 +67,8 @@ input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+button {
+    touch-action: manipulation;
 }
 </style>

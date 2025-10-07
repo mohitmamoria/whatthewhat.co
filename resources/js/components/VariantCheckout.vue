@@ -4,7 +4,7 @@ import QuantitySelector from './QuantitySelector.vue';
 
 const props = defineProps({
     variant: {
-        type: String,
+        type: Object,
         required: true,
     },
     quantity: {
@@ -15,7 +15,7 @@ const props = defineProps({
 
 var form = useForm({
     ref: usePage().props.ref,
-    variant: props.variant,
+    variant: props.variant.id,
     quantity: props.quantity,
 });
 
@@ -27,14 +27,14 @@ var checkout = () => {
 </script>
 
 <template>
-    {{}}
-    <form @submit.prevent="checkout" class="text-center">
-        <QuantitySelector class="mx-auto" v-model="form.quantity" />
+    <form @submit.prevent="checkout" class="flex items-end justify-between">
+        <QuantitySelector v-model="form.quantity" />
+
         <button
             type="submit"
-            class="mt-4 rounded-md bg-violet-700 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="mt-4 rounded-md bg-pink-600 px-2.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-pink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
-            Checkout
+            Buy {{ form.quantity }} for ₹{{ form.quantity * variant.price }} &rarr;
         </button>
     </form>
 </template>
