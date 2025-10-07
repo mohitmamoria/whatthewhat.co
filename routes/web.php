@@ -23,6 +23,12 @@ Route::get('/count', function () {
         $q->where('balance', '>', 0);
     })->count();
 
+    $invitedPlayers = App\Models\Player::whereHas('activities', function ($query) {
+        $query->where('type', App\Models\Gamification\ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
+    })->whereHas('messages', function ($query) {
+        $query->where('body->content', '__t:preorders_invite');
+    })->count();
+
     try {
         $response = Shopify::admin()->call('admin/getAnalytics', [
             'query' => "FROM sales
@@ -74,7 +80,7 @@ Route::get('/count', function () {
         return $count;
     });
 
-    return nl2br(sprintf("Total Players: %d \n\n Players With Bonus Pages: %d \n\n Books Sold: %d \n\n Calendars Sold: %d", $total, $withWallet, $booksSold, $calendarsSold));
+    return nl2br(sprintf("Total Players: %d \n\n Players With Bonus Pages: %d \n\n Players invited to order: %d \n\n Books Sold: %d \n\n Calendars Sold: %d", $total, $withWallet, $invitedPlayers, $booksSold, $calendarsSold));
 
     return compact('total', 'withWallet', 'booksSold', 'calendarsSold');
 });
