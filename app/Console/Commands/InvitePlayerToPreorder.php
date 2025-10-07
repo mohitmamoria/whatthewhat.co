@@ -35,7 +35,7 @@ class InvitePlayerToPreorder extends Command
 
         $players = Player::whereDoesntHave('messages', function ($query) use ($message) {
             $query->where('body->content', $message);
-        })->oldest()->get();
+        })->oldest()->limit($count)->get();
 
         foreach ($players as $player) {
             $this->info(sprintf('Player:: %d: %s (%s)', $player->id, $player->name, $player->number));
