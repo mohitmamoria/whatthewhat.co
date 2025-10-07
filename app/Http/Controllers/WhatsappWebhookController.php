@@ -112,7 +112,7 @@ class WhatsappWebhookController extends Controller
         // When sending downloadable
         if ($body->startsWith('GET PREORDER LINK')) {
             $url = route('shop.buy', ['ref' => $player->referrer_code]);
-            $message = sprintf("Here's your unique link to pre-order What The What?! 👇 \n\n %s", $url);
+            $message = sprintf("Here's your unique link to pre-order What The What?! 👇 \n\n%s", $url);
 
             (new SendMessageOnWhatsapp)($player, $message);
 
