@@ -113,6 +113,7 @@ Route::post('/webhooks/shopify', function (Request $request) {
 
 if (app()->environment('local')) {
     Route::get('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
+    Route::get('/webhooks/whatsapp/test', [WhatsappWebhookController::class, 'test']);
 
 
     Route::get('/test', function () {

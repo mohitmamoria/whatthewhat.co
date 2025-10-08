@@ -1,0 +1,72 @@
+// Error when sending message
+{
+  "messaging_product": "whatsapp",
+  "metadata": {
+    "display_phone_number": "918595361136",
+    "phone_number_id": "311137638760111"
+  },
+  "statuses": [
+    {
+      "id": "wamid.HBgMOTE5MTY3NzY2MTg5FQIAERgSMkM4OEI0RjM0QjU0NjlCMTE4AA==",
+      "status": "failed",
+      "timestamp": "1759868660",
+      "recipient_id": "919167766189",
+      "errors": [
+        {
+          "code": 131049,
+          "title": "This message was not delivered to maintain healthy ecosystem engagement.",
+          "message": "This message was not delivered to maintain healthy ecosystem engagement.",
+          "error_data": {
+            "details": "In order to maintain a healthy ecosystem engagement, the message failed to be delivered."
+          }
+        }
+      ]
+    }
+  ]
+}
+
+// Successful status update of a message
+{
+  "messaging_product": "whatsapp",
+  "metadata": {
+    "display_phone_number": "918595361136",
+    "phone_number_id": "311137638760111"
+  },
+  "statuses": [
+    {
+      "id": "wamid.HBgMOTE3MDIwNDgwMDIyFQIAERgSM0Q3MjM3NjMyRDJBNjE3NkU2AA==",
+      "status": "delivered",
+      "timestamp": "1759873998",
+      "recipient_id": "917020480022",
+      "conversation": {
+        "id": "6dcd4620cc45d2b564257251933845a4",
+        "origin": { "type": "marketing" }
+      },
+      "pricing": {
+        "billable": true,
+        "pricing_model": "PMP",
+        "category": "marketing",
+        "type": "regular"
+      }
+    }
+  ]
+}
+
+// When new message arrives
+{
+  "messaging_product": "whatsapp",
+  "metadata": {
+    "display_phone_number": "918595361136",
+    "phone_number_id": "311137638760111"
+  },
+  "contacts": [{ "profile": { "name": "Sam_18" }, "wa_id": "919740070929" }],
+  "messages": [
+    {
+      "from": "919740070929",
+      "id": "wamid.HBgMOTE5NzQwMDcwOTI5FQIAEhggQUM4NjQ0ODhGMTkzREZBRkUyNUUyRUNEODM2M0QyMjUA",
+      "timestamp": "1759872356",
+      "text": { "body": "WTW Bonus Pages" },
+      "type": "text"
+    }
+  ]
+}

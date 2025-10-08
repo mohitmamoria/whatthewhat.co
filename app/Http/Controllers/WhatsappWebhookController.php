@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\RecordMessageExchange;
 use App\Actions\SendMessageOnWhatsapp;
 use App\Enums\MessagePlatform;
+use App\Enums\MessageStatus;
 use App\Models\Gamification\ActivityType;
 use App\Models\Message;
 use App\Models\Player;
@@ -31,20 +32,13 @@ class WhatsappWebhookController extends Controller
 
         $value = data_get($input, 'entry.0.changes.0.value');
 
-        $name = data_get($value, 'contacts.0.profile.name');
-        $number = data_get($value, 'messages.0.from');
-        $messageId = data_get($value, 'messages.0.id');
-        $body = data_get($value, 'messages.0.text.body');
-        if (is_null($body)) {
-            $body = data_get($value, 'messages.0.button.text');
+        if (data_get($value, 'messages')) {
+            return $this->handleMessages($value);
         }
 
-        Log::info('WEBHOOK_PAYLOAD', [$name, $messageId, $number, $body, $value]);
-
-        $this->sendRequiredInfo($name, $number, $body, $messageId);
-
-
-        return 'OK';
+        if (data_get($value, 'statuses')) {
+            return $this->handleStatuses($value);
+        }
     }
 
     public function forceSend(Request $request)
@@ -55,6 +49,90 @@ class WhatsappWebhookController extends Controller
         Log::info('WEBHOOK_PAYLOAD', [$name, $number, $body]);
         $this->sendRequiredInfo($name, $number, $body, Str::random(11));
 
+
+        return 'OK';
+    }
+
+    public function test()
+    {
+        $value = json_decode('
+{
+  "messaging_product": "whatsapp",
+  "metadata": {
+    "display_phone_number": "918595361136",
+    "phone_number_id": "311137638760111"
+  },
+  "statuses": [
+    {
+      "id": "wamid.HBgMOTE5NzE2MzEzNzEzFQIAERgSN0Y0QjAwRDNEQUMyQzI3NDRCAA==",
+      "status": "failed",
+      "timestamp": "1759868660",
+      "recipient_id": "919167766189",
+      "errors": [
+        {
+          "code": 131049,
+          "title": "This message was not delivered to maintain healthy ecosystem engagement.",
+          "message": "This message was not delivered to maintain healthy ecosystem engagement.",
+          "error_data": {
+            "details": "In order to maintain a healthy ecosystem engagement, the message failed to be delivered."
+          }
+        }
+      ]
+    }
+  ]
+}
+', true);
+
+        if (data_get($value, 'messages')) {
+            dd('message');
+        }
+
+        if (data_get($value, 'statuses')) {
+            return $this->handleStatuses($value);
+        }
+    }
+
+    protected function handleMessages(array $value)
+    {
+        $name = data_get($value, 'contacts.0.profile.name');
+        $number = data_get($value, 'messages.0.from');
+        $messageId = data_get($value, 'messages.0.id');
+        $body = data_get($value, 'messages.0.text.body');
+        if (is_null($body)) {
+            $body = data_get($value, 'messages.0.button.text');
+        }
+
+        Log::info('WEBHOOK_PAYLOAD', [$name, $messageId, $number, $body]);
+        $this->sendRequiredInfo($name, $number, $body, $messageId);
+        return 'OK';
+    }
+
+    protected function handleStatuses(array $value)
+    {
+        $messageId = data_get($value, 'statuses.0.id');
+        $platformStatus = data_get($value, 'statuses.0.status');
+
+        // Only handling these status updates
+        if (!in_array($platformStatus, ['delivered', 'read', 'failed'])) {
+            return 'OK';
+        }
+
+        $toUpdate = [
+            'status' => match ($platformStatus) {
+                'delivered' => MessageStatus::DELIVERED,
+                'read' => MessageStatus::READ,
+                'failed' => MessageStatus::FAILED,
+            }
+        ];
+
+        if ($toUpdate['status'] === MessageStatus::FAILED) {
+            $toUpdate['body->errors'] = data_get($value, 'statuses.0.errors.0');
+        };
+
+        Message::query()
+            ->where('platform', MessagePlatform::WHATSAPP)
+            ->where('platform_message_id', $messageId)
+            ->update($toUpdate);
 
         return 'OK';
     }
