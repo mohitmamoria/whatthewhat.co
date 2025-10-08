@@ -94,7 +94,7 @@ class WhatsappWebhookController extends Controller
 
     protected function handleMessages(array $value)
     {
-        $name = data_get($value, 'contacts.0.profile.name');
+        $name = data_get($value, 'contacts.0.profile.name', 'Curious Cat');
         $number = data_get($value, 'messages.0.from');
         $messageId = data_get($value, 'messages.0.id');
         $body = data_get($value, 'messages.0.text.body');
