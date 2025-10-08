@@ -19,6 +19,18 @@ var props = defineProps({
         <!-- <Goodies></Goodies> -->
         <GoodiesV1></GoodiesV1>
 
+        <div class="aspect-video">
+            <iframe
+                class="h-full w-full"
+                src="https://www.youtube.com/embed/v-QqGdc0Bao?si=xToHMf3oC2ssKj9a"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+            ></iframe>
+        </div>
+
         <BookVariantsV2 :variants="product.variants"></BookVariantsV2>
 
         <!-- <BookVariants :variants="product.variants"></BookVariants> -->

@@ -26,9 +26,9 @@ const badges = {
             <div class="mx-auto max-w-2xl lg:text-center">
                 <h2 class="text-sm font-semibold text-indigo-600">Shipping starts 19 Nov 2025</h2>
                 <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance">
-                    Reserve your signed copy now
+                    Get your signed copy now
                 </p>
-                <p class="mt-6 text-lg/8 text-balance text-gray-600">And the price of the book along with all the Good Good Goodies?</p>
+                <p class="mt-6 text-lg/8 text-balance text-gray-600">Price that fits every pocket, including students!</p>
             </div>
 
             <div class="relative isolate mt-4 overflow-hidden bg-white">
@@ -68,8 +68,13 @@ const badges = {
                             class="flex flex-col gap-10 py-12 first:pt-0 last:pb-0 sm:flex-row"
                         >
                             <img
-                                class="aspect-3/2 w-full flex-none rounded object-cover outline-1 -outline-offset-1 outline-black/5 sm:w-32"
-                                :src="variant.image_src"
+                                class="hidden w-full flex-none rounded object-cover outline-1 -outline-offset-1 outline-black/5 sm:inline-block sm:w-32"
+                                :src="'/images/' + variant.sku + '-desktop.jpg'"
+                                :alt="variant.title"
+                            />
+                            <img
+                                class="w-full flex-none rounded object-cover outline-1 -outline-offset-1 outline-black/5 sm:hidden sm:w-32"
+                                :src="'/images/' + variant.sku + '-mobile.jpg'"
                                 :alt="variant.title"
                             />
                             <div class="max-w-xl flex-auto">
