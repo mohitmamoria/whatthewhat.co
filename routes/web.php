@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Analytics\GetShopifyOrders;
+use App\Enums\MessageStatus;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WebhookController;
@@ -26,7 +27,8 @@ Route::get('/count', function () {
     $invitedPlayers = App\Models\Player::whereHas('activities', function ($query) {
         $query->where('type', App\Models\Gamification\ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
     })->whereHas('messages', function ($query) {
-        $query->where('body->content', '__t:preorders_invite');
+        $query->where('body->content', '__t:preorders_invite')
+            ->whereNot('status', MessageStatus::FAILED);
     })->count();
 
     try {
