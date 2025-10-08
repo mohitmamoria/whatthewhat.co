@@ -134,6 +134,8 @@ class WhatsappWebhookController extends Controller
             ->where('platform_message_id', $messageId)
             ->update($toUpdate);
 
+        Log::info('WEBHOOK_PAYLOAD_STATUS', [$messageId, $toUpdate]);
+
         return 'OK';
     }
 
