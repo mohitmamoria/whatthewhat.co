@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="relative isolate mt-4 overflow-hidden bg-white">
+            <div class="relative isolate mt-4 bg-white">
                 <div class="px-6 lg:px-8">
                     <div class="mx-auto max-w-2xl text-center">
                         <h2 class="text-2xl tracking-tight text-balance text-gray-600">Total worth ₹997</h2>
@@ -52,6 +52,11 @@
                             <p class="mx-auto mt-6 max-w-xl font-serif text-5xl font-bold text-pretty text-gray-900 sm:text-7xl">FOR FREE!!!</p>
                             <p class="mx-auto mt-2 max-w-xl font-serif text-2xl font-bold text-pretty text-gray-900">on first 500 pre-orders</p>
                         </div>
+                        <p
+                            class="mx-auto inline max-w-xl rounded-full bg-yellow-300 px-4 py-2 font-serif text-sm font-bold text-pretty text-gray-900"
+                        >
+                            🚨 SELLING OUT FAAAASSSTTT!
+                        </p>
                     </div>
                 </div>
             </div>
