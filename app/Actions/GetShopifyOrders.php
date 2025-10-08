@@ -29,8 +29,9 @@ class GetShopifyOrders
             $after = data_get($response, 'orders.pageInfo.endCursor');
         } while (data_get($response, 'orders.pageInfo.hasNextPage'));
 
-        dd($processed);
-
+        dd(collect($processed)->reject(function ($referral) {
+            return $referral[1] == $referral[3];
+        })->toArray());
 
         return [];
     }
