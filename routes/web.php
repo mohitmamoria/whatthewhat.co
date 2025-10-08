@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Analytics\GetShopifyOrders;
+use App\Actions\CalculateAdminStats;
 use App\Enums\MessageStatus;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\ShopController;
@@ -19,72 +20,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/count', function () {
-    $total = App\Models\Player::count();
-    $withWallet = App\Models\Player::whereHas('wallet', function ($q) {
-        $q->where('balance', '>', 0);
-    })->count();
-
-    $invitedPlayers = App\Models\Player::whereHas('activities', function ($query) {
-        $query->where('type', App\Models\Gamification\ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
-    })->whereHas('messages', function ($query) {
-        $query->where('body->content', '__t:preorders_invite')
-            ->whereNot('status', MessageStatus::FAILED);
-    })->count();
-
-    try {
-        $response = Shopify::admin()->call('admin/getAnalytics', [
-            'query' => "FROM sales
-                SHOW net_items_sold, gross_sales, discounts, returns, net_sales, taxes,
-                    total_sales
-                WHERE product_title = 'What The What?!'
-                GROUP BY product_title, product_variant_title, product_variant_sku
-                    WITH TOTALS, CURRENCY 'INR'
-                SINCE startOfDay(-90d) UNTIL today
-                ORDER BY total_sales DESC
-                LIMIT 1000
-                VISUALIZE total_sales TYPE horizontal_bar"
-        ]);
-    } catch (ShopifyException $e) {
-        dd($e->context());
-    }
-
-    $rows = data_get(
-        $response,
-        'shopifyqlQuery.tableData.rows'
-    );
-
-    $rows = collect($rows)->select(['product_variant_sku', 'net_items_sold']);
-
-    $booksSold = $rows->sum(function ($row) {
-        $count = (int) $row['net_items_sold'];
-
-        // duo variant counts as 2 books per sale
-        if (str_contains($row['product_variant_sku'], 'duo')) {
-            $count *= 2;
-        }
-
-        return $count;
-    });
-
-    $calendarsSold = $rows->sum(function ($row) {
-        // only calendar variant counts
-        if (!str_contains($row['product_variant_sku'], 'calendar')) {
-            return 0;
-        }
-
-        $count = (int) $row['net_items_sold'];
-
-        // duo variant counts as 2 calendarts per sale
-        if (str_contains($row['product_variant_sku'], 'duo')) {
-            $count *= 2;
-        }
-
-        return $count;
-    });
-
-    return nl2br(sprintf("Total Players: %d \n\n Players With Bonus Pages: %d \n\n Players invited to order: %d \n\n Books Sold: %d (%d without Brainiest – %.2f%%) \n\n Calendars Sold: %d", $total, $withWallet, $invitedPlayers, $booksSold, $booksSold - 74, (($booksSold - 74) / $invitedPlayers) * 100, $calendarsSold));
-
-    return compact('total', 'withWallet', 'booksSold', 'calendarsSold');
+    return (new CalculateAdminStats)();
 });
 
 Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
