@@ -1,4 +1,4 @@
-query OrdersByVariantQuery($query: String!, $first: Int = 5, $after: String) {
+query OrdersByVariantQuery($query: String!, $first: Int = 50, $after: String) {
     orders(first: $first, after: $after, query: $query, sortKey: PROCESSED_AT, reverse: true) {
         edges {
             node {
