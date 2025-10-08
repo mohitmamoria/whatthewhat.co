@@ -26,8 +26,13 @@
                             class="flex flex-col gap-10 py-12 first:pt-0 last:pb-0 sm:flex-row"
                         >
                             <img
-                                class="aspect-3/2 w-full flex-none rounded object-cover outline-1 -outline-offset-1 outline-black/5 sm:w-32"
-                                :src="feature.image"
+                                class="hidden aspect-3/2 w-full flex-none rounded object-cover outline-1 -outline-offset-1 outline-black/5 sm:inline-block sm:w-32"
+                                :src="feature.imagePortrait"
+                                alt=""
+                            />
+                            <img
+                                class="aspect-3/2 w-full flex-none rounded object-cover outline-1 -outline-offset-1 outline-black/5 sm:hidden sm:w-32"
+                                :src="feature.imageLandscape"
                                 alt=""
                             />
                             <div class="max-w-xl flex-auto">
@@ -69,19 +74,22 @@ const features = [
     {
         name: 'Jumbo Crossword',
         description: 'A beginner-friendly crossword—only giant-sized! A whopping 23×33 inches of pure puzzle JUMBO!',
-        image: '/images/jumbo-puzzle.png',
+        imageLandscape: '/images/jumbo-crossword-landscape.jpg',
+        imagePortrait: '/images/jumbo-crossword-portrait.jpg',
         worth: '399.00',
     },
     {
-        name: 'Exclusive Bookmarks',
+        name: '2 × Mystery Bookmarks',
         description: "A limited-edition pair of bookmarks—available only during this pre-order. Once it's over, they're gone for good!",
-        image: '/images/bookmarks.jpg',
+        imageLandscape: '/images/bookmarks-landscape.jpg',
+        imagePortrait: '/images/bookmarks-portrait.jpg',
         worth: '99.00',
     },
     {
         name: 'Special Quizwiz',
         description: 'A special Quizwiz show that will run multiple times in January 2026, and you can join any one, using your free ticket.',
-        image: '/images/special-quizwiz-show.png',
+        imageLandscape: '/images/quizwiz-landscape.jpg',
+        imagePortrait: '/images/quizwiz-portrait.jpg',
         worth: '499.00',
     },
 ];
