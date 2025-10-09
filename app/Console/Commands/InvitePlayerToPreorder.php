@@ -16,7 +16,7 @@ class InvitePlayerToPreorder extends Command
      *
      * @var string
      */
-    protected $signature = 'app:invite-to-preorder {count : How many invites to send?}';
+    protected $signature = 'app:invite-to-preorder {count : How many invites to send?} {phone? : Phone number of the player to invite}';
 
     /**
      * The console command description.
@@ -33,6 +33,19 @@ class InvitePlayerToPreorder extends Command
         $message = Message::TEMPLATE_PREFIX . 'preorders_invite';
 
         $count = (int) $this->argument('count');
+        $phone = $this->argument('phone');
+
+        if ($phone) {
+            $player = Player::where('number', $phone)->first();
+
+            if (!$player) {
+                $this->error('Player with the given phone number not found.');
+                return;
+            }
+
+            $this->sendInvite($player, $message);
+            return;
+        }
 
         $players = Player::whereHas('activities', function ($query) {
             $query->where('type', ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
@@ -42,19 +55,27 @@ class InvitePlayerToPreorder extends Command
 
         foreach ($players as $player) {
             usleep(100_000); // pause for 100ms
-            $this->info(sprintf('Player:: %d: %s (%s)', $player->id, $player->name, $player->number));
-            $messageModel = (new SendMessageOnWhatsapp)($player, $message, [
-                [
-                    "type" => "body",
-                    "parameters" => [
-                        [
-                            "type" => "text",
-                            "text" => $player->name,
-                        ],
+            $this->sendInvite($player, $message);
+        }
+    }
+
+    /**
+     * Send an invite to the given player.
+     */
+    private function sendInvite(Player $player, string $message): void
+    {
+        $this->info(sprintf('Player:: %d: %s (%s)', $player->id, $player->name, $player->number));
+        $messageModel = (new SendMessageOnWhatsapp)($player, $message, [
+            [
+                "type" => "body",
+                "parameters" => [
+                    [
+                        "type" => "text",
+                        "text" => $player->name,
                     ],
                 ],
-            ]);
-            $this->info($messageModel->__toString());
-        }
+            ],
+        ]);
+        $this->info($messageModel->__toString());
     }
 }
