@@ -41,6 +41,7 @@ class InvitePlayerToPreorder extends Command
         })->oldest()->limit($count)->get();
 
         foreach ($players as $player) {
+            usleep(100_000); // pause for 100ms
             $this->info(sprintf('Player:: %d: %s (%s)', $player->id, $player->name, $player->number));
             $messageModel = (new SendMessageOnWhatsapp)($player, $message, [
                 [
