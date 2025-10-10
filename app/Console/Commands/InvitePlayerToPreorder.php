@@ -53,8 +53,9 @@ class InvitePlayerToPreorder extends Command
             $query->where('body->content', $message);
         })->oldest()->limit($count)->get();
 
-        foreach ($players as $player) {
+        foreach ($players as $index => $player) {
             usleep(100_000); // pause for 100ms
+            $this->info($index + 1 . '/' . $players->count());
             $this->sendInvite($player, $message);
         }
     }
