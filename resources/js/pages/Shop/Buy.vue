@@ -2,6 +2,7 @@
 import Shop from '@/layouts/Shop.vue';
 import AboutBook from '@/partials/AboutBook.vue';
 import BookVariantsV2 from '@/partials/BookVariantsV2.vue';
+import FAQ from '@/partials/FAQ.vue';
 import GoodiesV1 from '@/partials/GoodiesV1.vue';
 
 var props = defineProps({
@@ -33,7 +34,7 @@ var props = defineProps({
 
         <BookVariantsV2 :variants="product.variants"></BookVariantsV2>
 
-        <!-- <BookVariants :variants="product.variants"></BookVariants> -->
+        <FAQ />
 
         <div class="bg-white">
             <div class="px-6 py-24 lg:px-8">
