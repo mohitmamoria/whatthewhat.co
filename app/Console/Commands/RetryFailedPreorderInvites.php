@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\SendMessageOnWhatsapp;
 use App\Enums\MessageStatus;
 use App\Models\Message;
 use App\Models\Player;
@@ -33,15 +34,19 @@ class RetryFailedPreorderInvites extends Command
         $daysThreshold = $this->argument('threshold_days');
         $thresholdDate = now()->subDays($daysThreshold);
 
-        $invitesFailed = Player::whereHas('messages', function ($query) use ($message, $thresholdDate) {
+        $players = Player::whereHas('messages', function ($query) use ($message, $thresholdDate) {
             $query->where('body->content', $message)
                 ->where('status', MessageStatus::FAILED)
                 ->whereRaw('created_at = (SELECT MAX(created_at) FROM messages WHERE player_id = players.id AND status = ?)', [MessageStatus::FAILED])
                 ->where('created_at', '<', $thresholdDate);
         })->whereDoesntHave('messages', function ($query) use ($message) {
             $query->where('body->content', $message)->whereNot('status', MessageStatus::FAILED);
-        })->count();
+        })->get();
 
-        $this->info("Total failed invites: $invitesFailed");
+        foreach ($players as $index => $player) {
+            usleep(100_000); // pause for 100ms
+            $this->info($index + 1 . '/' . $players->count());
+            $this->call('app:invite-to-preorder', ['phone' => $player->number, 'count' => 1]);
+        }
     }
 }
