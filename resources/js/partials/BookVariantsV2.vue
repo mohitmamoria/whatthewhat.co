@@ -60,7 +60,7 @@ const badges = {
             </div>
 
             <p class="mx-auto block max-w-xl rounded-full bg-yellow-300 px-4 py-2 text-center font-serif text-sm font-bold text-pretty text-gray-900">
-                Maximum 10 books per order is allowed.
+                At max, only 10 books per order is allowed.
             </p>
             <div class="mt-6 overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
