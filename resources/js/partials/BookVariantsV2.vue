@@ -18,6 +18,11 @@ const badges = {
         color: 'bg-green-50 text-green-700 ',
     },
 };
+
+const cutoutPrice = {
+    'wtw-book-calendar': 899,
+    'wtw-book-calendar-duo': 1798,
+};
 </script>
 
 <template>
@@ -88,7 +93,12 @@ const badges = {
                                     >{{ badges[variant.sku].label }}</span
                                 >
                                 <h3 class="text-lg/8 font-semibold tracking-tight text-gray-900">For {{ variant.title }}</h3>
-                                <p class="font-xs text-gray-500">₹{{ variant.price }} only</p>
+                                <p class="font-xs font-bold text-gray-700">
+                                    <span class="font-normal line-through decoration-gray-500" v-if="cutoutPrice[variant.sku]"
+                                        >₹{{ cutoutPrice[variant.sku] }}</span
+                                    >
+                                    ₹{{ variant.price }} only
+                                </p>
                                 <article class="prose prose-sm mt-2" v-html="variant.description"></article>
                                 <VariantCheckout :variant="variant"></VariantCheckout>
                             </div>
