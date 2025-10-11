@@ -15,7 +15,7 @@ class RetryFailedPreorderInvites extends Command
      *
      * @var string
      */
-    protected $signature = 'app:retry-failed-invites {threshold_days=2 : Only retry invites that failed more than this many days ago}';
+    protected $signature = 'app:retry-failed-invites {threshold_days=2 : Only retry invites that failed more than this many days ago} {--dry-run : If set, will only print the players that would be retried}';
 
     /**
      * The console command description.
@@ -40,8 +40,16 @@ class RetryFailedPreorderInvites extends Command
                 ->whereRaw('created_at = (SELECT MAX(created_at) FROM messages WHERE player_id = players.id AND status = ?)', [MessageStatus::FAILED])
                 ->where('created_at', '<', $thresholdDate);
         })->whereDoesntHave('messages', function ($query) use ($message) {
-            $query->where('body->content', $message)->whereNot('status', MessageStatus::FAILED);
+            $query->where(function ($query) use ($message) {
+                $query->where('body->content', $message)->whereNot('status', MessageStatus::FAILED);
+            })->orWhere('body->content', 'GET PREORDER LINK');
         })->get();
+
+        if ($this->option('dry-run')) {
+            $this->info('Players to be retried: ' . $players->count());
+            $this->info($players->pluck('number')->join(', '));
+            return;
+        }
 
         foreach ($players as $index => $player) {
             usleep(100_000); // pause for 100ms
