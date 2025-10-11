@@ -10,6 +10,7 @@ use App\Models\Gamification\ActivityType;
 use App\Models\Message;
 use App\Models\Player;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -195,6 +196,13 @@ class WhatsappWebhookController extends Controller
             $message = sprintf("Here's your unique link to pre-order What The What?! 👇 \n\n%s", $url);
 
             (new SendMessageOnWhatsapp)($player, $message);
+
+            return;
+        }
+
+        // When sending waitlist status
+        if ($body->startsWith('Check Status')) {
+            Artisan::call('app:invite-to-preorder', ['phone' => $player->number, 'count' => 1]);
 
             return;
         }
