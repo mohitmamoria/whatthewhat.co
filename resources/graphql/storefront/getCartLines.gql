@@ -1,0 +1,10 @@
+query getCartLines($cartId: ID!) {
+    cart(id: $cartId) {
+        id
+        lines(first: 250) {
+            nodes {
+                id
+            }
+        }
+    }
+}
