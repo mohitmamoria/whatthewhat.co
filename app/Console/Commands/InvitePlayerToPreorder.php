@@ -72,11 +72,17 @@ class InvitePlayerToPreorder extends Command
                 "parameters" => [
                     [
                         "type" => "text",
-                        "text" => $player->name,
+                        "text" => normalize_text($player->name) ?? 'there!',
                     ],
                 ],
             ],
         ]);
-        $this->info($messageModel->__toString());
+
+        if ($messageModel) {
+            $this->info('Message sent successfully.');
+            $this->info($messageModel->toJson());
+        } else {
+            $this->error('Failed to send message.');
+        }
     }
 }
