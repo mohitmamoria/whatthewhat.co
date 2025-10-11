@@ -26,8 +26,11 @@ class SendMessageOnWhatsapp
         return $this->recordMessage($response, $player, $message, $components);
     }
 
-    protected function recordMessage(Response $response, Player $player, string $message, array $components = []): Message
+    protected function recordMessage(Response $response, Player $player, string $message, array $components = []): ?Message
     {
+        if (! data_get($response->json(), 'messages.0.id')) {
+            return null;
+        }
         return (new RecordMessageExchange)->outgoing(
             $player,
             MessagePlatform::WHATSAPP,
