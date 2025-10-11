@@ -47,7 +47,7 @@ class RetryFailedPreorderInvites extends Command
 
         if ($this->option('dry-run')) {
             $this->info('Players to be retried: ' . $players->count());
-            $this->info($players->pluck('number')->join(', '));
+            $this->info($players->pluck('number')->join(','));
             return;
         }
 
