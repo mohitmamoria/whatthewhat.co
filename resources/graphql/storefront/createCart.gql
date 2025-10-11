@@ -3,32 +3,32 @@ mutation createCart($input: CartInput!) {
         cart {
             id
             checkoutUrl
-            buyerIdentity {
-                email
-                phone
-                countryCode
-            }
-            attributes {
-                key
-                value
-            }
-            lines(first: 5) {
-                edges {
-                    node {
-                        id
-                        quantity
-                        merchandise {
-                            ... on ProductVariant {
-                                id
-                                title
-                                product {
-                                    title
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            # buyerIdentity {
+            #     email
+            #     phone
+            #     countryCode
+            # }
+            # attributes {
+            #     key
+            #     value
+            # }
+            # lines(first: 5) {
+            #     edges {
+            #         node {
+            #             id
+            #             quantity
+            #             merchandise {
+            #                 ... on ProductVariant {
+            #                     id
+            #                     title
+            #                     product {
+            #                         title
+            #                     }
+            #                 }
+            #             }
+            #         }
+            #     }
+            # }
         }
         userErrors {
             field
