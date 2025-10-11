@@ -8,6 +8,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopifyWebhookController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\WhatsappWebhookController;
+use App\Http\Middleware\QuickHttpBasicAuth;
 use App\Services\Shopify\Shopify;
 use App\Services\Shopify\ShopifyException;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ Route::get('/', function () {
 
 Route::get('/count', function () {
     return (new CalculateAdminStats)();
-});
+})->middleware(QuickHttpBasicAuth::class);
 
 Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
 Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');

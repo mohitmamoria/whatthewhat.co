@@ -10,8 +10,6 @@ use App\Services\Shopify\ShopifyException;
 
 class CalculateAdminStats
 {
-    protected const BRAINIEST_BOUGHT_BOOKS_COUNT = 74;
-
     public function __invoke()
     {
         $funnelStats = $this->playerFunnelStats();
@@ -23,18 +21,18 @@ class CalculateAdminStats
             \n
             Players With Bonus Pages: %d
             \n
-            Players invited to order: %d (failed: %d)
+            Players invited to order: %d (failed: %d -- %.2f%%)
             \n
-            Books Sold: %d (%d without Brainiest - %.2f%%)
+            Books Sold: %d (@ %.2f%%)
             \n
             Calendars Sold: %d",
             $funnelStats['totalPlayers'],
             $funnelStats['playersWithBonusPages'],
             $funnelStats['invitedPlayers'],
             $funnelStats['invitesFailed'],
+            ($funnelStats['invitesFailed'] / ($funnelStats['invitedPlayers'] + $funnelStats['invitesFailed'])) * 100,
             $shopifyStats['booksSold'],
-            $shopifyStats['booksSold'] - static::BRAINIEST_BOUGHT_BOOKS_COUNT,
-            (($shopifyStats['booksSold'] - static::BRAINIEST_BOUGHT_BOOKS_COUNT) / $funnelStats['invitedPlayers']) * 100,
+            ($shopifyStats['booksSold'] / $funnelStats['invitedPlayers']) * 100,
             $shopifyStats['calendarsSold'],
         ));
     }
