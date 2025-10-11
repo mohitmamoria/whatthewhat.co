@@ -146,6 +146,10 @@ class WhatsappWebhookController extends Controller
             return;
         }
 
+        if (is_null($name)) {
+            $name = 'Curious Cat';
+        }
+
         $body = str($body);
         $player = Player::sync($name, $number);
 
