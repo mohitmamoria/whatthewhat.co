@@ -72,7 +72,7 @@ class InvitePlayerToPreorder extends Command
                 "parameters" => [
                     [
                         "type" => "text",
-                        "text" => normalize_text($player->name) ?? 'there!',
+                        "text" => normalize_text($player->name) ?: 'there!',
                     ],
                 ],
             ],
