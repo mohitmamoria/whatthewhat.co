@@ -42,7 +42,8 @@ class RetryFailedPreorderInvites extends Command
         })->whereDoesntHave('messages', function ($query) use ($message) {
             $query->where(function ($query) use ($message) {
                 $query->where('body->content', $message)->whereNot('status', MessageStatus::FAILED);
-            })->orWhere('body->content', 'GET PREORDER LINK');
+            })->orWhere('body->content', 'GET PREORDER LINK')
+                ->orWhere('body->content', Message::TEMPLATE_PREFIX . 'waitlist_status');
         })->get();
 
         if ($this->option('dry-run')) {
