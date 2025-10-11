@@ -15,7 +15,7 @@ class RetryFailedPreorderInvites extends Command
      *
      * @var string
      */
-    protected $signature = 'app:retry-failed-invites {threshold_days=2 : Only retry invites that failed more than this many days ago} {--dry-run : If set, will only print the players that would be retried}';
+    protected $signature = 'app:retry-failed-invites {threshold_days=2 : Only retry invites that failed more than this many days ago} {phone? : Phone number of the player to invite} {--utility : If set, will send the utility message} {--dry-run : If set, will only print the players that would be retried}';
 
     /**
      * The console command description.
@@ -54,7 +54,7 @@ class RetryFailedPreorderInvites extends Command
         foreach ($players as $index => $player) {
             usleep(100_000); // pause for 100ms
             $this->info($index + 1 . '/' . $players->count());
-            $this->call('app:invite-to-preorder', ['phone' => $player->number, 'count' => 1]);
+            $this->call('app:invite-to-preorder', ['phone' => $player->number, 'count' => 1, '--utility' => $this->option('utility')]);
         }
     }
 }
