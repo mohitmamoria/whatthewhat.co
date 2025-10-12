@@ -15,7 +15,7 @@ class RetryFailedPreorderInvites extends Command
      *
      * @var string
      */
-    protected $signature = 'app:retry-failed-invites {threshold_days=2 : Only retry invites that failed more than this many days ago} {phone? : Phone number of the player to invite} {--utility : If set, will send the utility message} {--dry-run : If set, will only print the players that would be retried}';
+    protected $signature = 'app:retry-failed-invites {threshold_days=2 : Only retry invites that failed more than this many days ago} {phone? : Phone number of the player to invite} {--utility : If set, will send the utility message} {--dry-run : If set, will only print the players that would be retried} {--skip-waitlist-updates : If set, will skip players who have received waitlist updates}';
 
     /**
      * The console command description.
@@ -42,8 +42,11 @@ class RetryFailedPreorderInvites extends Command
         })->whereDoesntHave('messages', function ($query) use ($message) {
             $query->where(function ($query) use ($message) {
                 $query->where('body->content', $message)->whereNot('status', MessageStatus::FAILED);
-            })->orWhere('body->content', 'GET PREORDER LINK')
-                ->orWhere('body->content', Message::TEMPLATE_PREFIX . 'waitlist_status');
+            })->orWhere('body->content', 'GET PREORDER LINK');
+
+            if (!$this->option('skip-waitlist-updates')) {
+                $query->orWhere('body->content', Message::TEMPLATE_PREFIX . 'waitlist_status');
+            }
         })->get();
 
         if ($this->option('dry-run')) {
