@@ -13,7 +13,7 @@
                     <svg class="size-1.5 animate-ping fill-red-500" viewBox="0 0 6 6" aria-hidden="true">
                         <circle cx="3" cy="3" r="3" />
                     </svg>
-                    Only 500 packs available.
+                    Only 2000 packs available.
                 </span>
             </div>
 
@@ -55,12 +55,12 @@
                         <h2 class="text-2xl tracking-tight text-balance text-gray-600">Total worth ₹997</h2>
                         <div class="-rotate-6 py-6">
                             <p class="mx-auto mt-6 max-w-xl font-serif text-5xl font-bold text-pretty text-gray-900 sm:text-7xl">FOR FREE!!!</p>
-                            <p class="mx-auto mt-2 max-w-xl font-serif text-2xl font-bold text-pretty text-gray-900">on every order</p>
+                            <p class="mx-auto mt-2 max-w-xl font-serif text-2xl font-bold text-pretty text-gray-900">on the first 1500 orders</p>
                         </div>
                         <p
                             class="mx-auto inline max-w-xl rounded-full bg-yellow-300 px-4 py-2 font-serif text-sm font-bold text-pretty text-gray-900"
                         >
-                            🚨 SELLING OUT FAAASTTTT
+                            🚨 LESS THAN 250 LEFT NOW
                         </p>
                     </div>
                 </div>
