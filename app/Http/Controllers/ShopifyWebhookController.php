@@ -34,9 +34,9 @@ class ShopifyWebhookController extends Controller
     {
         $id = data_get($payload, 'admin_graphql_api_id');
 
-        $order = Shopify::admin()->call('admin/getOrder', compact('id'));
+        $response = Shopify::admin()->call('admin/getOrder', compact('id'));
 
-        (new RecordShopifyOrderForPlayer)($order);
+        (new RecordShopifyOrderForPlayer)(data_get($response, 'order'));
     }
 
     protected function isVerified(Request $request)

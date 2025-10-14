@@ -17,7 +17,7 @@ class RecordShopifyOrderForPlayer
     public function __invoke(array $order)
     {
         // Finding the referrer
-        $attributes = data_get($order, 'order.customAttributes');
+        $attributes = data_get($order, 'customAttributes');
         $ref = collect($attributes)->where('key', 'ref')->first()['value'];
         $referrer = Player::byReferrerCode($ref);
 
@@ -26,7 +26,7 @@ class RecordShopifyOrderForPlayer
         }
 
         // Processing line items
-        $lines = data_get($order, 'order.lineItems.edges', []);
+        $lines = data_get($order, 'lineItems.edges', []);
         foreach ($lines as $line) {
             $sku = data_get($line, 'node.sku');
             $activity = $this->identifyActivity($sku);
@@ -40,10 +40,10 @@ class RecordShopifyOrderForPlayer
             }
 
             $referrer->acted($activity, [
-                'order_id' => data_get($order, 'order.id'),
+                'order_id' => data_get($order, 'id'),
                 'sku' => $sku,
                 'quantity' => $quantity,
-            ], Carbon::parse(data_get($order, 'order.processedAt')));
+            ], Carbon::parse(data_get($order, 'processedAt')));
         }
     }
 
