@@ -109,6 +109,9 @@ class ShopController extends Controller
                         'quantity' => $quantity
                     ],
                 ],
+                // 'giftCardCodes' => [
+                //     //
+                // ]
             ]
         ]);
 
