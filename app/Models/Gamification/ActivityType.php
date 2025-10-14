@@ -25,10 +25,10 @@ enum ActivityType: string
     {
         return match ($this) {
             self::WTW_BONUS_PAGES_DOWNLOADED => 150,
-            self::WTW_BONUS_PAGES_DOWNLOADED => 150,
             self::QOTD_PLAYED => 10,
             self::QOTD_ANSWERED => 20,
             self::QOTD_HINT_TAKEN => -10,
+            default => 0,
         };
     }
 }

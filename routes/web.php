@@ -32,11 +32,10 @@ Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
 Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
 Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
 
-Route::get('/webhooks/shopify/test', ShopifyWebhookController::class);
-
-Route::post('/webhooks/shopify', function (Request $request) {});
+Route::post('/webhooks/shopify', ShopifyWebhookController::class);
 
 if (app()->environment('local')) {
+    Route::get('/webhooks/shopify/test', ShopifyWebhookController::class);
     Route::get('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
     Route::get('/webhooks/whatsapp/test', [WhatsappWebhookController::class, 'test']);
 
