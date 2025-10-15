@@ -30,27 +30,28 @@ class RemindPlayersToPreorder extends Command
     public function handle()
     {
         $count = (int) $this->argument('count');
+        $message = Message::TEMPLATE_PREFIX . $this->argument('template');
 
         $players = Player::whereHas('activities', function ($query) {
             $query->where('type', ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
         })->whereDoesntHave('activities', function ($query) {
             $query->where('type', ActivityType::WTW_PURCHASED);
+        })->whereDoesntHave('messages', function ($query) use ($message) {
+            $query->where('body->content', $message);
         })->oldest()->limit($count)->get();
 
         foreach ($players as $index => $player) {
             usleep(100_000); // pause for 100ms
             $this->info($index + 1 . '/' . $players->count());
-            $this->sendReminder($player);
+            $this->sendReminder($player, $message);
         }
     }
 
     /**
      * Send a reminder to the given player.
      */
-    private function sendReminder(Player $player): void
+    private function sendReminder(Player $player, string $message): void
     {
-        $message = Message::TEMPLATE_PREFIX . $this->argument('template');
-
         $this->info(sprintf('Player:: %d: %s (%s)', $player->id, $player->name, $player->number));
         $messageModel = (new SendMessageOnWhatsapp)($player, $message);
 
