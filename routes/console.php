@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command(InvitePlayerToPreorder::class, ['1000'])->dailyAt('10:00')->withoutOverlapping();
+Schedule::command(InvitePlayerToPreorder::class, ['1000'])->hourly()->withoutOverlapping();
