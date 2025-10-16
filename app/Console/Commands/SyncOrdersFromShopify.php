@@ -47,7 +47,7 @@ class SyncOrdersFromShopify extends Command
                 try {
                     $response = Shopify::admin()->call('admin/getOrders', ['query' => $query, 'after' => $after]);
                 } catch (\App\Services\Shopify\ShopifyException $e) {
-                    $this->error('Error fetching orders: ' . $e->context());
+                    dd($e->context());
                     return 1;
                 }
 
