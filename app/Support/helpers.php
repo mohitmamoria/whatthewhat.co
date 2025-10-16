@@ -52,3 +52,13 @@ if (!function_exists('get_unique_referrer_code')) {
         return $code;
     }
 }
+
+if (! function_exists('normalize_phone')) {
+    function normalize_phone(string $phone): string
+    {
+        // Replaces any character that is not a digit with an empty string
+        // +91 98765 43210 -> 919876543210
+        // +1 (123) 456-7890 -> 11234567890
+        return preg_replace('/\D/', '', $phone);
+    }
+}
