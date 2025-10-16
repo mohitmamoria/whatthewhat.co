@@ -23,6 +23,6 @@ class SendOrderStatus
 
         $player = Player::where('number', $buyerPhone)->first();
 
-        return [$referrer->phone ?? null, $player->phone ?? null];
+        return [$referrer->number ?? null, $player->number ?? null];
     }
 }

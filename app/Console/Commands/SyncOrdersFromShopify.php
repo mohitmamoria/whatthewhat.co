@@ -53,9 +53,8 @@ class SyncOrdersFromShopify extends Command
                     [$referrer, $player] = (new \App\Actions\SendOrderStatus)($order['node']);
                     $this->info(sprintf('Referrer: %s, Player: %s', $referrer, $player));
                     if ($referrer || $player) {
-                        $this->info(sprintf('Referrer: %s, Player: %s', $referrer, $player));
                         if ($referrer != $player) {
-                            $this->info('Referrer and Player are not the same.');
+                            $this->info('Referrer and Player are NOT SAME.');
                         }
                     } else {
                         $this->info('No referrer or player found.');
