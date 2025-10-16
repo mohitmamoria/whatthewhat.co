@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Models\Gamification\ActivityType;
 use App\Models\Player;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class RecordShopifyOrderForPlayer
 {
@@ -16,39 +17,44 @@ class RecordShopifyOrderForPlayer
 
     public function __invoke(array $order)
     {
-        // Finding the referrer
-        $attributes = data_get($order, 'customAttributes');
-        $ref = data_get(collect($attributes)->where('key', 'ref')->first(), 'value');
-        if (is_null($ref)) {
-            return;
-        }
+        DB::transaction(function () use ($order) {
+            // Finding the referrer
+            $attributes = data_get($order, 'customAttributes');
+            $ref = data_get(collect($attributes)->where('key', 'ref')->first(), 'value');
 
-        $referrer = Player::byReferrerCode($ref);
-        if (is_null($referrer)) {
-            return;
-        }
+            $buyerPhone = data_get($order, 'billingAddress.phone');
 
-        // Processing line items
-        $lines = data_get($order, 'lineItems.edges', []);
-        foreach ($lines as $line) {
-            $sku = data_get($line, 'node.sku');
-            $activity = $this->identifyActivity($sku);
-            if (is_null($activity)) {
-                continue;
+            $player = Player::where('number', $buyerPhone)->first();
+            if (is_null($player)) {
+                $player = Player::sync(
+                    name: data_get($order, 'customer.displayName'),
+                    number: $buyerPhone,
+                );
             }
 
-            $quantity = $this->identifyQuantities($sku, data_get($line, 'node.quantity', 0));
-            if ($quantity <= 0) {
-                continue;
-            }
+            // Processing line items
+            $lines = data_get($order, 'lineItems.edges', []);
+            foreach ($lines as $line) {
+                $sku = data_get($line, 'node.sku');
+                $activity = $this->identifyActivity($sku);
+                if (is_null($activity)) {
+                    continue;
+                }
 
-            $referrer->acted($activity, [
-                'order_id' => data_get($order, 'id'),
-                'order_name' => data_get($order, 'name'),
-                'sku' => $sku,
-                'quantity' => $quantity,
-            ], Carbon::parse(data_get($order, 'processedAt')));
-        }
+                $quantity = $this->identifyQuantities($sku, data_get($line, 'node.quantity', 0));
+                if ($quantity <= 0) {
+                    continue;
+                }
+
+                $player->acted($activity, [
+                    'order_id' => data_get($order, 'id'),
+                    'order_name' => data_get($order, 'name'),
+                    'sku' => $sku,
+                    'quantity' => $quantity,
+                    'ref' => $ref,
+                ], Carbon::parse(data_get($order, 'processedAt')));
+            }
+        });
     }
 
     protected function identifyActivity(string $sku)

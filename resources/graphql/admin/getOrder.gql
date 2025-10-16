@@ -7,6 +7,12 @@ query getOrder($id: ID!) {
             key
             value
         }
+        shippingAddress {
+            phone
+        }
+        billingAddress {
+            phone
+        }
         customer {
             id
             displayName
