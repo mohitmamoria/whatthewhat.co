@@ -6,9 +6,12 @@ use App\ValueObjects\ProductImage;
 use App\ValueObjects\ProductVariant;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'shopify_id',
         'title',

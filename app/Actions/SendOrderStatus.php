@@ -2,16 +2,15 @@
 
 namespace App\Actions;
 
-use App\Models\Gamification\ActivityType;
 use App\Models\Player;
 use Illuminate\Support\Carbon;
 
-class RecordShopifyOrderForPlayer
+class SendOrderStatus
 {
-    protected array $skuToActivity = [
-        'wtw-book-solo' => ActivityType::WTW_PURCHASED,
-        'wtw-book-calendar' => ActivityType::WTW_PURCHASED,
-        'wtw-book-calendar-duo' => ActivityType::WTW_PURCHASED,
+    protected array $skuToProduct = [
+        'wtw-book-solo' => 'What The What?! (Curious)',
+        'wtw-book-calendar' => 'What The What?! (Curiouser)',
+        'wtw-book-calendar-duo' => 'What The What?! (Curiouser and Curiouser)',
     ];
 
     public function __invoke(array $order)

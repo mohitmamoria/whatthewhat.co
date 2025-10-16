@@ -3,10 +3,13 @@
 namespace App\Models\Gamification;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class Wallet extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'gamification_wallets';
 
     protected $fillable = [
