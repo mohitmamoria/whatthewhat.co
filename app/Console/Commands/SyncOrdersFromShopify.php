@@ -51,6 +51,7 @@ class SyncOrdersFromShopify extends Command
                     $this->info(sprintf('Processing order [%d/%d]: %s', $index + 1, $total, data_get($order, 'node.id')));
                     // (new RecordShopifyOrderForPlayer)($order['node']);
                     [$referrer, $player] = (new \App\Actions\SendOrderStatus)($order['node']);
+                    $this->info(sprintf('Referrer: %s, Player: %s', $referrer, $player));
                     if ($referrer || $player) {
                         $this->info(sprintf('Referrer: %s, Player: %s', $referrer, $player));
                         if ($referrer != $player) {
