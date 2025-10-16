@@ -21,7 +21,7 @@ class SendOrderStatus
 
         $buyerPhone = data_get($order, 'billingAddress.phone');
 
-        $player = Player::where('number', $buyerPhone)->first();
+        $player = Player::where('number', normalize_phone($buyerPhone))->first();
 
         return [$referrer->number ?? null, $player->number ?? null];
     }
