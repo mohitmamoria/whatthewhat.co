@@ -63,7 +63,7 @@ class Player extends Model
             }
 
             $activity = $this->activities()->create([
-                'idempotency_key' => Idempotency::key($type->value, [...$meta, 'player_id' => $this->id]),
+                'idempotency_key' => $idempotencyKey,
                 'type' => $type->value,
                 'meta' => $meta,
                 'occurred_at' => $occuredAt,
