@@ -44,7 +44,12 @@ class SyncOrdersFromShopify extends Command
             do {
                 $this->info(sprintf('Fetching page %d', $page++));
 
-                $response = Shopify::admin()->call('admin/getOrders', ['query' => $query, 'after' => $after]);
+                try {
+                    $response = Shopify::admin()->call('admin/getOrders', ['query' => $query, 'after' => $after]);
+                } catch (\App\Services\Shopify\ShopifyException $e) {
+                    $this->error('Error fetching orders: ' . $e->context());
+                    return 1;
+                }
 
                 $total = data_get($response, 'orders.edges') ? count(data_get($response, 'orders.edges')) : 0;
                 foreach (data_get($response, 'orders.edges') as $index => $order) {
