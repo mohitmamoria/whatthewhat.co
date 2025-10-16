@@ -67,6 +67,7 @@ class SyncOrdersFromShopify extends Command
                 }
 
                 $after = data_get($response, 'orders.pageInfo.endCursor');
+                sleep(1); // 1 second pause between each page
             } while (data_get($response, 'orders.pageInfo.hasNextPage'));
         }
 
