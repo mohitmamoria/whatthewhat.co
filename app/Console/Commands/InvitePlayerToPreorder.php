@@ -45,16 +45,17 @@ class InvitePlayerToPreorder extends Command
             return;
         }
 
-        $players = Player::query()
-            ->whereHas('activities', function ($query) {
-                if (!$this->option('skip-bonus-condition')) {
-                    $query->where('type', ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
-                }
-            })
-            ->whereDoesntHave('messages', function ($query) {
-                $query->where('body->content', Message::TEMPLATE_PREFIX . 'preorders_invite');
-            })
-            ->oldest()->limit($count)->get();
+        $query = Player::query();
+
+        if (!$this->option('skip-bonus-condition')) {
+            $query->whereHas('activities', function ($query) {
+                $query->where('type', ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
+            });
+        }
+
+        $players = $query->whereDoesntHave('messages', function ($query) {
+            $query->where('body->content', Message::TEMPLATE_PREFIX . 'preorders_invite');
+        })->oldest()->limit($count)->get();
 
         foreach ($players as $index => $player) {
             usleep(100_000); // pause for 100ms
