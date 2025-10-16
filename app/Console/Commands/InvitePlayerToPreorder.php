@@ -16,7 +16,7 @@ class InvitePlayerToPreorder extends Command
      *
      * @var string
      */
-    protected $signature = 'app:invite-to-preorder {count : How many invites to send?} {phone? : Phone number of the player to invite} {--utility : If set, will send the utility message}';
+    protected $signature = 'app:invite-to-preorder {count : How many invites to send?} {phone? : Phone number of the player to invite} {--utility : If set, will send the utility message} {--skip-bonus-condition : If set, will skip the condition of having downloaded bonus pages}';
 
     /**
      * The console command description.
@@ -45,11 +45,16 @@ class InvitePlayerToPreorder extends Command
             return;
         }
 
-        $players = Player::whereHas('activities', function ($query) {
-            $query->where('type', ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
-        })->whereDoesntHave('messages', function ($query) {
-            $query->where('body->content', Message::TEMPLATE_PREFIX . 'preorders_invite');
-        })->oldest()->limit($count)->get();
+        $players = Player::query()
+            ->whereHas('activities', function ($query) {
+                if (!$this->option('skip-bonus-condition')) {
+                    $query->where('type', ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
+                }
+            })
+            ->whereDoesntHave('messages', function ($query) {
+                $query->where('body->content', Message::TEMPLATE_PREFIX . 'preorders_invite');
+            })
+            ->oldest()->limit($count)->get();
 
         foreach ($players as $index => $player) {
             usleep(100_000); // pause for 100ms
