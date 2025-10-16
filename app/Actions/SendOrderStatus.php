@@ -20,6 +20,9 @@ class SendOrderStatus
         $referrer = Player::where('referrer_code', $ref)->first();
 
         $buyerPhone = data_get($order, 'billingAddress.phone');
+        if (is_null($buyerPhone)) {
+            $buyerPhone = data_get($order, 'shippingAddress.phone');
+        }
 
         $player = Player::where('number', normalize_phone($buyerPhone))->first();
 
