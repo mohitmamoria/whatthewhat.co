@@ -52,7 +52,7 @@
             <div class="relative isolate mt-4 bg-white">
                 <div class="px-6 lg:px-8">
                     <div class="mx-auto max-w-2xl text-center">
-                        <h2 class="text-2xl tracking-tight text-balance text-gray-600">Total worth ₹997</h2>
+                        <h2 class="text-2xl tracking-tight text-balance text-gray-600">Goodies worth ₹498</h2>
                         <div class="-rotate-6 py-6">
                             <p class="mx-auto mt-6 max-w-xl font-serif text-5xl font-bold text-pretty text-gray-900 sm:text-7xl">FOR FREE!!!</p>
                             <p class="mx-auto mt-2 max-w-xl font-serif text-2xl font-bold text-pretty text-gray-900">on the first 1500 orders</p>
@@ -85,12 +85,12 @@ const features = [
         imagePortrait: '/images/bookmarks-portrait.jpg',
         worth: '99.00',
     },
-    {
-        name: 'Special Quizwiz',
-        description: 'A special Quizwiz show that will run multiple times in January 2026, and you can join any one, using your free ticket.',
-        imageLandscape: '/images/quizwiz-landscape.jpg',
-        imagePortrait: '/images/quizwiz-portrait.jpg',
-        worth: '499.00',
-    },
+    // {
+    //     name: 'Special Quizwiz',
+    //     description: 'A special Quizwiz show that will run multiple times in January 2026, and you can join any one, using your free ticket.',
+    //     imageLandscape: '/images/quizwiz-landscape.jpg',
+    //     imagePortrait: '/images/quizwiz-portrait.jpg',
+    //     worth: '499.00',
+    // },
 ];
 </script>
