@@ -8,9 +8,12 @@ use App\Enums\MessageStatus;
 use App\ValueObjects\MessageBody;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends Model
 {
+    use SoftDeletes;
+
     const TEMPLATE_PREFIX = '__t:';
 
     protected $fillable = [

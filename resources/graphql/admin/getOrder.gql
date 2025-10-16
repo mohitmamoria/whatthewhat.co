@@ -7,7 +7,6 @@ query getOrder($id: ID!) {
             key
             value
         }
-        phone
         customer {
             id
             displayName
