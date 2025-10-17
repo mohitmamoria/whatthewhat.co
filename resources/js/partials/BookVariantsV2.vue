@@ -1,5 +1,6 @@
 <script setup>
 import VariantCheckout from '@/components/VariantCheckout.vue';
+import BonusPages from '@/partials/BonusPages.vue';
 
 const props = defineProps({
     variants: {
@@ -64,9 +65,8 @@ const cutoutPrice = {
                 </div>
             </div>
 
-            <p class="mx-auto block max-w-xl rounded-full bg-yellow-300 px-4 py-2 text-center font-serif text-sm font-bold text-pretty text-gray-900">
-                At max, only 10 books per order is allowed.
-            </p>
+            <BonusPages />
+
             <div class="mt-6 overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <ul role="list" class="divide-y divide-gray-200 xl:col-span-3">

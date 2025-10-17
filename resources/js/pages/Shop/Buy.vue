@@ -32,7 +32,9 @@ var props = defineProps({
             ></iframe>
         </div>
 
-        <BookVariantsV2 :variants="product.variants"></BookVariantsV2>
+        <div id="buy">
+            <BookVariantsV2 :variants="product.variants"></BookVariantsV2>
+        </div>
 
         <FAQ />
 

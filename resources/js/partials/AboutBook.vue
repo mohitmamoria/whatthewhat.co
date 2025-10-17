@@ -19,9 +19,15 @@
                     <p>It's not a quiz book. It's not a fact book.</p>
 
                     <p class="mt-4">It's both&mdash;and more!</p>
+                    <a
+                        href="#buy"
+                        type="submit"
+                        class="mt-4 inline-block rounded-md bg-pink-600 px-2.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-pink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                        Buy Now &rarr;
+                    </a>
                 </div>
             </div>
-            <!-- <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5 max-lg:rounded-t-4xl" /> -->
         </div>
     </div>
     <article class="prose mt-12 prose-stone prose-p:font-serif">
