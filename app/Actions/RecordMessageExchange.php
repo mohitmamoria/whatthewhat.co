@@ -7,6 +7,7 @@ use App\Enums\MessagePlatform;
 use App\Enums\MessageStatus;
 use App\Models\Message;
 use App\Models\Player;
+use Illuminate\Database\UniqueConstraintViolationException;
 
 class RecordMessageExchange
 {
@@ -23,12 +24,16 @@ class RecordMessageExchange
 
     public function incoming(Player $player, MessagePlatform $platform, string $platformMessageId, array $body): Message
     {
-        return $player->messages()->create([
-            'platform' => $platform,
-            'platform_message_id' => $platformMessageId,
-            'body' => $body,
-            'direction' => MessageDirection::INCOMING,
-            'status' => MessageStatus::RECEIVED,
-        ]);
+        try {
+            return $player->messages()->create([
+                'platform' => $platform,
+                'platform_message_id' => $platformMessageId,
+                'body' => $body,
+                'direction' => MessageDirection::INCOMING,
+                'status' => MessageStatus::RECEIVED,
+            ]);
+        } catch (UniqueConstraintViolationException $e) {
+            //
+        }
     }
 }
