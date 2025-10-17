@@ -58,8 +58,6 @@ class RecordShopifyOrderForPlayer
                 'ref' => $referrer?->referrer_code,
                 'ref_type' => $referralType,
             ], Carbon::parse(data_get($order, 'processedAt')));
-
-            (new SendOrderConfirmationOnWhatsapp)($activity);
         }
     }
 

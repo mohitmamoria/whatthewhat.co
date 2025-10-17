@@ -26,7 +26,7 @@ class Activity extends Model
         'occurred_at' => 'datetime',
     ];
 
-    protected function owner()
+    public function owner()
     {
         return $this->morphTo();
     }
