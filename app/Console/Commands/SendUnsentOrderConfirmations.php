@@ -34,6 +34,7 @@ class SendUnsentOrderConfirmations extends Command
             ->whereDoesntHave('owner.messages', function ($query) {
                 $query->where('body->content', Message::TEMPLATE_PREFIX . SendOrderConfirmationOnWhatsapp::TEMPLATE_ORDER_CONFIRMATION);
             })
+            ->orderBy('occurred_at', 'asc')
             ->get();
 
         $this->info(sprintf("Pending: %d", $pendingActivities->count()));
