@@ -56,6 +56,7 @@ class RecordShopifyOrderForPlayer
             $buyer->acted($activity, [
                 ...$meta,
                 'ref' => $referrer?->referrer_code,
+                'ref_type' => $referralType,
             ], Carbon::parse(data_get($order, 'processedAt')));
         }
     }
@@ -85,8 +86,8 @@ class RecordShopifyOrderForPlayer
 
     protected function identifyBuyer(array $order)
     {
-        $phone = data_get($order, 'shippingAddress.phone');
-        $buyer = Player::where('number', normalize_phone($phone))->first();
+        $phone = normalize_phone(data_get($order, 'shippingAddress.phone'));
+        $buyer = Player::where('number', $phone)->first();
         if (is_null($buyer)) {
             $buyer = Player::sync(
                 name: data_get($order, 'customer.displayName'),

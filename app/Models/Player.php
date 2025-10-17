@@ -32,7 +32,7 @@ class Player extends Model
     {
         return DB::transaction(function () use ($name, $number) {
             $player = static::updateOrCreate(
-                ['number' => $number],
+                ['number' => normalize_phone($number)],
                 ['name' => $name]
             );
 

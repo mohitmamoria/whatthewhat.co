@@ -55,15 +55,6 @@ class SyncOrdersFromShopify extends Command
                 foreach (data_get($response, 'orders.edges') as $index => $order) {
                     $this->info(sprintf('Processing order [%d/%d]: %s', $index + 1, $total, data_get($order, 'node.id')));
                     (new RecordShopifyOrderForPlayer)($order['node']);
-                    [$referrer, $player] = (new \App\Actions\SendOrderStatus)($order['node']);
-                    if ($referrer || $player) {
-                        if ($referrer != $player) {
-                            $this->info(sprintf('Referrer: %s, Player: %s', $referrer, $player));
-                            $this->info('Referrer and Player are NOT SAME.');
-                        }
-                    } else {
-                        $this->info('No referrer or player found.');
-                    }
                 }
 
                 $after = data_get($response, 'orders.pageInfo.endCursor');
