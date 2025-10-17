@@ -53,11 +53,13 @@ class RecordShopifyOrderForPlayer
             }
 
             // Record purchase activity for buyer
-            $buyer->acted($activity, [
+            $activity = $buyer->acted($activity, [
                 ...$meta,
                 'ref' => $referrer?->referrer_code,
                 'ref_type' => $referralType,
             ], Carbon::parse(data_get($order, 'processedAt')));
+
+            (new SendOrderConfirmationOnWhatsapp)($activity);
         }
     }
 
