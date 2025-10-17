@@ -22,7 +22,7 @@ class RecordMessageExchange
         ]);
     }
 
-    public function incoming(Player $player, MessagePlatform $platform, string $platformMessageId, array $body): Message
+    public function incoming(Player $player, MessagePlatform $platform, string $platformMessageId, array $body): ?Message
     {
         try {
             return $player->messages()->create([
@@ -33,7 +33,7 @@ class RecordMessageExchange
                 'status' => MessageStatus::RECEIVED,
             ]);
         } catch (UniqueConstraintViolationException $e) {
-            //
+            return null;
         }
     }
 }
