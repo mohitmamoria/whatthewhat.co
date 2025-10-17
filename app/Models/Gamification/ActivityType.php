@@ -5,6 +5,7 @@ namespace App\Models\Gamification;
 enum ActivityType: string
 {
     case WTW_BONUS_PAGES_DOWNLOADED = 'wtw_bonus';
+    case WTW_REFERRED = 'wtw_referred';
     case WTW_PURCHASED = 'wtw_purchased';
     case QOTD_PLAYED = 'qotd_played';
     case QOTD_ANSWERED = 'qotd_answered';
@@ -14,6 +15,7 @@ enum ActivityType: string
     {
         return match ($this) {
             self::WTW_BONUS_PAGES_DOWNLOADED => 'What The What?! Bonus Pages Downloaded',
+            self::WTW_REFERRED => 'What The What?! Book Referred',
             self::WTW_PURCHASED => 'What The What?! Book Purchased',
             self::QOTD_PLAYED => 'QOTD Played',
             self::QOTD_ANSWERED => 'QOTD Answered',
