@@ -31,7 +31,7 @@ class RecordShopifyOrderForPlayer
                 continue;
             }
 
-            $quantity = $this->identifyQuantities($sku, data_get($line, 'node.quantity', 0));
+            $quantity = data_get($line, 'node.quantity', 0);
             if ($quantity <= 0) {
                 continue;
             }
@@ -103,14 +103,5 @@ class RecordShopifyOrderForPlayer
         if (str($sku)->startsWith('wtw-book-')) {
             return ActivityType::WTW_PURCHASED;
         }
-    }
-
-    protected function identifyQuantities(string $sku, int $quantity)
-    {
-        if (str($sku)->contains('-duo')) {
-            return $quantity * 2;
-        }
-
-        return $quantity;
     }
 }
