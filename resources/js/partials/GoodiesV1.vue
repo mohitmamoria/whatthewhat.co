@@ -55,12 +55,12 @@
                         <h2 class="text-2xl tracking-tight text-balance text-gray-600">Goodies worth ₹498</h2>
                         <div class="-rotate-6 py-6">
                             <p class="mx-auto mt-6 max-w-xl font-serif text-5xl font-bold text-pretty text-gray-900 sm:text-7xl">FOR FREE!!!</p>
-                            <p class="mx-auto mt-2 max-w-xl font-serif text-2xl font-bold text-pretty text-gray-900">on the first 1500 orders</p>
+                            <p class="mx-auto mt-2 max-w-xl font-serif text-2xl font-bold text-pretty text-gray-900">on the pre-orders</p>
                         </div>
                         <p
                             class="mx-auto inline max-w-xl rounded-full bg-yellow-300 px-4 py-2 font-serif text-sm font-bold text-pretty text-gray-900"
                         >
-                            🚨 LESS THAN 80 LEFT NOW
+                            🚨 SELLING OUT FAAAAAAST
                         </p>
                     </div>
                 </div>

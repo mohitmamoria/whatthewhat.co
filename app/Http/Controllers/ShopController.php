@@ -16,16 +16,6 @@ class ShopController extends Controller
 {
     public function buy(Request $request)
     {
-        $ref = $request->input('ref');
-        if (is_null($ref)) {
-            return redirect()->route('home');
-        }
-
-        $referrer = Player::byReferrerCode($ref);
-        if (is_null($referrer)) {
-            return redirect()->route('home');
-        }
-
         $product = Product::first();
 
         return inertia('Shop/Buy', [
@@ -36,13 +26,9 @@ class ShopController extends Controller
     public function checkout(Request $request)
     {
         $ref = $request->input('ref');
-        if (is_null($ref)) {
-            return redirect()->route('home');
-        }
-
-        $referrer = Player::byReferrerCode($ref);
-        if (is_null($referrer)) {
-            return redirect()->route('home');
+        $referrer = null;
+        if ($ref) {
+            $referrer = Player::byReferrerCode($ref);
         }
 
         $validated = request()->validate([
@@ -64,7 +50,7 @@ class ShopController extends Controller
             $checkoutUrl = $this->reuseCachedCart($cachedCart, $validated['variant'], $validated['quantity']);
             return Inertia::location($checkoutUrl);
         } else {
-            $checkoutUrl = $this->createFreshCart($referrer->referrer_code, $validated['variant'], $validated['quantity']);
+            $checkoutUrl = $this->createFreshCart($validated['variant'], $validated['quantity'], $referrer?->referrer_code);
             return Inertia::location($checkoutUrl);
         }
     }
@@ -96,22 +82,22 @@ class ShopController extends Controller
         return data_get($response, 'cartLinesAdd.cart.checkoutUrl');
     }
 
-    private function createFreshCart(string $ref, string $variantId, int $quantity): string
+    private function createFreshCart(string $variantId, int $quantity, ?string $ref): string
     {
+        $attributes = [];
+        if ($ref) {
+            $attributes[] = ['key' => 'ref', 'value' => $ref];
+        }
+
         $response = Shopify::storefront()->call('storefront/createCart', [
             'input' => [
-                'attributes' => [
-                    ['key' => 'ref', 'value' => $ref]
-                ],
+                'attributes' => $attributes,
                 'lines' => [
                     [
                         'merchandiseId' => $variantId,
                         'quantity' => $quantity
                     ],
                 ],
-                // 'giftCardCodes' => [
-                //     //
-                // ]
             ]
         ]);
 

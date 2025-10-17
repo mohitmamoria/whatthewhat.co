@@ -17,15 +17,17 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-})->name('home');
+Route::get('/', [ShopController::class, 'buy'])->name('home');
 
 Route::get('/count', function () {
     return (new CalculateAdminStats)();
 })->middleware(QuickHttpBasicAuth::class);
 
-Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
+Route::get('/buy', function (Request $request) {
+    return redirect()->route('home', $request->query());
+})->name('shop.buy');
+
+// Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
 Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
 
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);

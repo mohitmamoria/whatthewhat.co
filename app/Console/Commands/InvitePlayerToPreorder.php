@@ -46,7 +46,7 @@ class InvitePlayerToPreorder extends Command
         }
 
         $query = Player::query()->whereDoesntHave('activities', function ($query) {
-            $query->where('type', ActivityType::WTW_PURCHASED);
+            $query->whereIn('type', [ActivityType::WTW_PURCHASED, ActivityType::WTW_REFERRED]);
         });
 
         if (!$this->option('skip-bonus-condition')) {
