@@ -13,32 +13,12 @@ class RecordShopifyOrderForPlayer
     public function __invoke(array $order)
     {
         DB::transaction(function () use ($order) {
-            // Finding the referrer
-            $attributes = data_get($order, 'customAttributes');
-            $ref = data_get(collect($attributes)->where('key', 'ref')->first(), 'value');
-            $referrer = $ref ? Player::where('referrer_code', $ref)->first() : null;
-
-            $buyerPhones = collect([
-                data_get($order, 'billingAddress.phone'),
-                data_get($order, 'shippingAddress.phone'),
-                data_get($order, 'customer.defaultAddress.phone'),
-            ])->filter()->map(fn($p) => normalize_phone($p));
-
-            if ($buyerPhones->contains($referrer->number)) {
-                $this->recordReferredActivity($order, $referrer, ReferralType::SELF);
-            } else {
-                $this->recordReferredActivity($order, $referrer, ReferralType::OTHER);
+            [$referrer, $referralType] = $this->identifyReferral($order);
+            if ($referrer) {
+                $this->recordReferredActivity($order, $referrer, $referralType);
             }
 
-            $buyerPhone = data_get($order, 'shippingAddress.phone');
-            $buyer = Player::where('number', normalize_phone($buyerPhone))->first();
-            if (is_null($buyer)) {
-                $buyer = Player::sync(
-                    name: data_get($order, 'customer.displayName'),
-                    number: $buyerPhone,
-                );
-            }
-
+            $buyer = $this->identifyBuyer($order);
             $this->recordPurchasedActivity($order, $buyer, $referrer?->referrer_code);
         });
     }
@@ -94,6 +74,43 @@ class RecordShopifyOrderForPlayer
                 'ref' => $ref,
             ], Carbon::parse(data_get($order, 'processedAt')));
         }
+    }
+
+    protected function identifyReferral(array $order): array
+    {
+        $attributes = data_get($order, 'customAttributes');
+        $ref = data_get(collect($attributes)->where('key', 'ref')->first(), 'value');
+        $referrer = $ref ? Player::where('referrer_code', $ref)->first() : null;
+
+        if (is_null($referrer)) {
+            return [null, ReferralType::NONE];
+        }
+
+        $buyerPhones = collect([
+            data_get($order, 'billingAddress.phone'),
+            data_get($order, 'shippingAddress.phone'),
+            data_get($order, 'customer.defaultAddress.phone'),
+        ])->filter()->map(fn($p) => normalize_phone($p));
+
+        if ($buyerPhones->contains($referrer->number)) {
+            return [$referrer, ReferralType::SELF];
+        }
+
+        return [$referrer, ReferralType::OTHER];
+    }
+
+    protected function identifyBuyer(array $order)
+    {
+        $phone = data_get($order, 'shippingAddress.phone');
+        $buyer = Player::where('number', normalize_phone($phone))->first();
+        if (is_null($buyer)) {
+            $buyer = Player::sync(
+                name: data_get($order, 'customer.displayName'),
+                number: $phone,
+            );
+        }
+
+        return $buyer;
     }
 
     protected function identifyActivity(string $sku)
