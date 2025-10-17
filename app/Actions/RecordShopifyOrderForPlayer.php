@@ -13,19 +13,15 @@ class RecordShopifyOrderForPlayer
     public function __invoke(array $order)
     {
         DB::transaction(function () use ($order) {
-            [$referrer, $referralType] = $this->identifyReferral($order);
-            if ($referrer) {
-                $this->recordReferredActivity($order, $referrer, $referralType);
-            }
-
             $buyer = $this->identifyBuyer($order);
-            $this->recordPurchasedActivity($order, $buyer, $referrer?->referrer_code);
+            $this->recordPurchasedActivity($buyer, $order);
         });
     }
 
-
-    protected function recordReferredActivity(array $order, Player $referrer, ReferralType $type = ReferralType::OTHER)
+    protected function recordPurchasedActivity(Player $buyer, array $order)
     {
+        [$referrer, $referralType] = $this->identifyReferral($order);
+
         // Processing line items
         $lines = data_get($order, 'lineItems.edges', []);
         foreach ($lines as $line) {
@@ -40,38 +36,26 @@ class RecordShopifyOrderForPlayer
                 continue;
             }
 
-            $referrer->acted(ActivityType::WTW_REFERRED, [
+            // Common meta for activities recorded below
+            $meta = [
                 'order_id' => data_get($order, 'id'),
                 'order_name' => data_get($order, 'name'),
                 'sku' => $sku,
                 'quantity' => $quantity,
-                'type' => $type,
-            ], Carbon::parse(data_get($order, 'processedAt')));
-        }
-    }
+            ];
 
-    protected function recordPurchasedActivity(array $order, Player $buyer, ?string $ref)
-    {
-        // Processing line items
-        $lines = data_get($order, 'lineItems.edges', []);
-        foreach ($lines as $line) {
-            $sku = data_get($line, 'node.sku');
-            $activity = $this->identifyActivity($sku);
-            if (is_null($activity)) {
-                continue;
+            // Record referral activity, if applicable
+            if ($referrer) {
+                $referrer->acted(ActivityType::WTW_REFERRED, [
+                    ...$meta,
+                    'type' => $referralType,
+                ], Carbon::parse(data_get($order, 'processedAt')));
             }
 
-            $quantity = $this->identifyQuantities($sku, data_get($line, 'node.quantity', 0));
-            if ($quantity <= 0) {
-                continue;
-            }
-
+            // Record purchase activity for buyer
             $buyer->acted($activity, [
-                'order_id' => data_get($order, 'id'),
-                'order_name' => data_get($order, 'name'),
-                'sku' => $sku,
-                'quantity' => $quantity,
-                'ref' => $ref,
+                ...$meta,
+                'ref' => $referrer?->referrer_code,
             ], Carbon::parse(data_get($order, 'processedAt')));
         }
     }
