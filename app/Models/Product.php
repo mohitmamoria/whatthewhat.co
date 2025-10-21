@@ -28,4 +28,17 @@ class Product extends Model
             'images' => AsCollection::of(ProductImage::class),
         ];
     }
+
+    public static function byShopifyId(string $shopifyId): ?self
+    {
+        return self::where('shopify_id', 'gid://shopify/Product/' . $shopifyId)->first();
+    }
+
+    public static function byVariantShopifyId(string $variantShopifyId): ?self
+    {
+        return self::whereRaw(
+            "JSON_SEARCH(JSON_EXTRACT(`variants`, '$[*].id'), 'one', ?) IS NOT NULL",
+            [$variantShopifyId]
+        )->first();
+    }
 }

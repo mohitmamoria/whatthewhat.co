@@ -26,8 +26,8 @@ Route::get('/count', function () {
 Route::get('/buy', function (Request $request) {
     return redirect()->route('home', $request->query());
 })->name('shop.buy');
+Route::get('/gift', [ShopController::class, 'buyForGifting'])->name('shop.gift');
 
-// Route::get('/buy', [ShopController::class, 'buy'])->name('shop.buy');
 Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
 
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);

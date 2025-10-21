@@ -29,21 +29,28 @@ class SyncProductsFromShopify extends Command
      */
     public function handle()
     {
-        $id = env('SHOPIFY_WTW_PRODUCT_ID');
+        $ids = [
+            env('SHOPIFY_WTW_PRODUCT_ID'),
+            env('SHOPIFY_WTW_GIFT_PRODUCT_ID'),
+        ];
+
         if ($this->option('id')) {
-            $id = $this->option('id');
+            $ids = [$this->option('id')];
         }
-        $this->info(sprintf("Syncing product with ID: %s", $id));
 
-        $response = Shopify::admin()->call('admin/getProduct', ['id' => 'gid://shopify/Product/' . $id]);
+        foreach ($ids as $id) {
+            $this->info(sprintf("Syncing product with ID: %s", $id));
 
-        $product = (new ConvertShopifyProductIntoLocalProduct)($response);
-        $product = DB::transaction(function () use ($response, $product) {
-            return Product::updateOrCreate(
-                ['shopify_id' => data_get($response, 'product.id')],
-                $product,
-            );
-        });
+            $response = Shopify::admin()->call('admin/getProduct', ['id' => 'gid://shopify/Product/' . $id]);
+
+            $product = (new ConvertShopifyProductIntoLocalProduct)($response);
+            $product = DB::transaction(function () use ($response, $product) {
+                return Product::updateOrCreate(
+                    ['shopify_id' => data_get($response, 'product.id')],
+                    $product,
+                );
+            });
+        }
 
         $this->info('Success!');
     }

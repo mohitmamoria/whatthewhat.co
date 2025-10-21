@@ -16,9 +16,18 @@ class ShopController extends Controller
 {
     public function buy(Request $request)
     {
-        $product = Product::first();
+        $product = Product::byShopifyId(env('SHOPIFY_WTW_PRODUCT_ID'));
 
         return inertia('Shop/Buy', [
+            'product' => ProductResource::make($product),
+        ]);
+    }
+
+    public function buyForGifting(Request $request)
+    {
+        $product = Product::byShopifyId(env('SHOPIFY_WTW_GIFT_PRODUCT_ID'));
+
+        return inertia('Shop/Gift', [
             'product' => ProductResource::make($product),
         ]);
     }
@@ -33,13 +42,11 @@ class ShopController extends Controller
 
         $validated = request()->validate([
             'variant' => ['required'],
-            'quantity' => ['required', 'integer', 'min:1', 'max:10'],
+            'quantity' => ['required', 'integer', 'min:1'],
         ]);
 
-        // check variant exists
-        $product = Product::first();
-        $variant = collect($product->variants)->firstWhere('id', $validated['variant']);
-        if (is_null($variant)) {
+        $product = Product::byVariantShopifyId($validated['variant']);
+        if (is_null($product)) {
             throw ValidationException::withMessages(['variant' => 'Invalid variant selected']);
         }
 
