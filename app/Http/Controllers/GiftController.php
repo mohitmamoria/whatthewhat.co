@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Actions\Gifting\ReserveGiftCode;
+use App\Models\Gift;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+
+class GiftController extends Controller
+{
+    public function show(Request $request, Gift $gift)
+    {
+        return $gift;
+    }
+
+    public function reserve(Request $request, Gift $gift)
+    {
+        $giftCode = (new ReserveGiftCode)($gift);
+
+        if (!$giftCode) {
+            throw ValidationException::withMessages(['gift' => 'No more gifts available at the moment.']);
+        }
+
+        return redirect()->route('gift_code.show', compact('gift', 'giftCode'));
+    }
+}

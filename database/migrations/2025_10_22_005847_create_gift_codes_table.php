@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Gift::class)->constrained()->onDelete('cascade');
             $table->string('name')->unique();
             $table->string('code')->unique();
+            $table->unsignedInteger('value')->default(0);
             $table->foreignIdFor(Player::class, 'receiver_id')->nullable();
             $table->json('meta')->nullable();
             $table->timestamp('reserved_at')->nullable();

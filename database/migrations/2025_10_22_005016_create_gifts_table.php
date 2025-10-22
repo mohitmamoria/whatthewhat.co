@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->foreignIdFor(Player::class, 'gifter_id')->constrained()->onDelete('cascade');
-            $table->string('variant');
+            $table->unsignedInteger('value_per_code');
             $table->unsignedInteger('quantity');
             $table->timestamps();
             $table->softDeletes();

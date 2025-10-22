@@ -41,4 +41,12 @@ class Product extends Model
             [$variantShopifyId]
         )->first();
     }
+
+    public static function bySku(string $sku): ?self
+    {
+        return self::whereRaw(
+            "JSON_SEARCH(JSON_EXTRACT(`variants`, '$[*].sku'), 'one', ?) IS NOT NULL",
+            [$sku]
+        )->first();
+    }
 }

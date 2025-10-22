@@ -16,6 +16,7 @@ class CreateGiftCodes
         for ($i = 0; $i < $codesToCreate; $i++) {
             $gift->giftCodes()->create([
                 'code' => $this->generateCode($gift->name),
+                'value' => $gift->value_per_code,
             ]);
         }
     }

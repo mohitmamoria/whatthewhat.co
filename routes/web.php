@@ -3,6 +3,9 @@
 use App\Actions\GetShopifyOrders;
 use App\Actions\CalculateAdminStats;
 use App\Enums\MessageStatus;
+use App\Http\Controllers\GiftCodeController;
+use App\Http\Controllers\GiftController;
+use App\Http\Controllers\GiftingController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopifyWebhookController;
@@ -27,8 +30,17 @@ Route::get('/buy', function (Request $request) {
     return redirect()->route('home', $request->query());
 })->name('shop.buy');
 Route::get('/gift', [ShopController::class, 'buyForGifting'])->name('shop.gift');
-
 Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
+
+/**
+ * GIFTING
+ */
+Route::get('/gifts/{gift:name}', [GiftController::class, 'show'])->name('gift.show');
+Route::get('/gifts/{gift:name}/reserve', [GiftController::class, 'reserve'])->name('gift.reserve');
+Route::get('/gifts/{gift:name}/codes/{giftCode:name}', [GiftCodeController::class, 'show'])->name('gift_code.show');
+Route::get('/gifts/{gift:name}/codes/{giftCode:name}/checkout', [GiftCodeController::class, 'checkout'])->name('gift_code.checkout');
+
+
 
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
 Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);

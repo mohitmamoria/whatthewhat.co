@@ -13,12 +13,8 @@ class Gift extends Model
 
     protected $fillable = [
         'name',
-        'variant',
+        'value_per_code',
         'quantity',
-    ];
-
-    protected $casts = [
-        'variant' => GiftVariant::class,
     ];
 
     public function gifter()

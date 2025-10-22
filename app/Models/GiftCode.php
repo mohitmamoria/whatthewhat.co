@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 
 class GiftCode extends Model
 {
@@ -18,6 +17,7 @@ class GiftCode extends Model
         'gift_id',
         'name',
         'code',
+        'value',
         'receiver_id',
         'meta',
         'reserved_at',
