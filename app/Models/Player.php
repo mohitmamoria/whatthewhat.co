@@ -23,6 +23,11 @@ class Player extends Model
         return $this->hasMany(Message::class);
     }
 
+    public function giftsGiven()
+    {
+        return $this->hasMany(Gift::class, 'gifter_id');
+    }
+
     public static function byReferrerCode(string $code)
     {
         return static::where('referrer_code', $code)->first();
