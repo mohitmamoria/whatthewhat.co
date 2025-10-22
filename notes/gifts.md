@@ -27,3 +27,22 @@ INDIVIDUALL CLAIM URL: /gifts/{GIFTNAME}/codes/{CODENAME}
 - created_at
 - updated_at
 - deleted_at
+
+Claiming process:
+
+/gifts/GIFT
+
+Click on 'receive one book'
+
+Simple OTP-based auth system
+
+Logged in player:
+
+- If already has a gift, sorry, you already have received a gift before
+- If available, show CLAIM button with a warning that they have 5 minutes to complete the transaction.
+- When CLAIM pressed. Reserve a code and send them to the /gifts/GIFT/codes/CODE URL.
+- Create a cart with attributes: [GIFTCODE = GIFTCODENAME]
+
+Webhook
+
+- Record activity. WTW_GIFT_RECEIVED for the receiver.

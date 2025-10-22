@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Gifting;
 
 use App\Models\Gift;
 use App\Models\GiftCode;
