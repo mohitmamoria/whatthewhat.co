@@ -86,7 +86,12 @@ class RecordShopifyOrderForPlayer
 
     protected function identifyBuyer(array $order)
     {
-        $phone = normalize_phone(data_get($order, 'shippingAddress.phone'));
+        $phone = collect([
+            data_get($order, 'shippingAddress.phone'),
+            data_get($order, 'billingAddress.phone'),
+            data_get($order, 'customer.defaultAddress.phone'),
+        ])->filter()->map(fn($p) => normalize_phone($p))->first();
+
         $buyer = Player::where('number', $phone)->first();
         if (is_null($buyer)) {
             $buyer = Player::sync(
