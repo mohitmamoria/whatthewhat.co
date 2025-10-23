@@ -11,6 +11,8 @@ class Otp extends Model
 {
     use SoftDeletes;
 
+    const EXPIRY_MINUTES = 10;
+
     protected $fillable = [
         'authenticatable_type',
         'authenticatable_id',

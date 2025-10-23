@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\GiftVariant;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 class Gift extends Model
 {
     use SoftDeletes, HasUniqueName;
+
+    const VALUE_OF_BOOK = 399;
 
     protected $fillable = [
         'name',
@@ -25,5 +27,12 @@ class Gift extends Model
     public function giftCodes()
     {
         return $this->hasMany(GiftCode::class);
+    }
+
+    public function isShippingCovered(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->value_per_code > static::VALUE_OF_BOOK,
+        );
     }
 }

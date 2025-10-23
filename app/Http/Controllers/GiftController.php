@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Gifting\ReserveGiftCode;
+use App\Http\Resources\GiftResource;
 use App\Models\Gift;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -11,7 +12,9 @@ class GiftController extends Controller
 {
     public function show(Request $request, Gift $gift)
     {
-        return $gift;
+        return inertia('Gifts/Show', [
+            'gift' => GiftResource::make($gift),
+        ]);
     }
 
     public function reserve(Request $request, Gift $gift)

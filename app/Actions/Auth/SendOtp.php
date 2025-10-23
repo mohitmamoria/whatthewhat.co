@@ -4,6 +4,7 @@ namespace App\Actions\Auth;
 
 use App\Actions\SendMessageOnWhatsapp;
 use App\Models\Message;
+use App\Models\Otp;
 use App\Models\Player;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -23,7 +24,7 @@ class SendOtp
         $player->otps()->unused()->delete();
         $player->otps()->create([
             'code' => Hash::make($code),
-            'expires_at' => now()->addMinutes(10),
+            'expires_at' => now()->addMinutes(Otp::EXPIRY_MINUTES),
         ]);
 
         (new SendMessageOnWhatsapp)($player, Message::TEMPLATE_PREFIX . 'otp', [

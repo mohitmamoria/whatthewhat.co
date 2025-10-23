@@ -62,3 +62,38 @@ if (! function_exists('normalize_phone')) {
         return preg_replace('/\D/', '', $phone);
     }
 }
+
+if (! function_exists('obfuscate_phone')) {
+    /**
+     * Obfuscate a phone number showing only the first N and last M digits.
+     *
+     * Examples:
+     *  obfuscate_phone('919876543210')          => '+91*******210'
+     *  obfuscate_phone('919876543210', 3, 2)    => '+919******10'
+     *  obfuscate_phone('98765', 2, 2)           => '+98*65'
+     *
+     */
+    function obfuscate_phone(string $phone, int $showStart = 2, int $showEnd = 2, string $mask = '*'): string
+    {
+        // Keep only digits
+        $digits = preg_replace('/\D+/', '', $phone ?? '');
+        $len = strlen($digits);
+
+        if ($len === 0) {
+            return '';
+        }
+
+        // If too short
+        if ($len < ($showStart + $showEnd)) {
+            $showStart = max(1, intdiv($len, 2));
+            $showEnd   = $len - $showStart;
+        }
+
+        $first = substr($digits, 0, $showStart);
+        $last  = substr($digits, -$showEnd);
+        $middleLen = max(0, $len - $showStart - $showEnd);
+        $middle = str_repeat($mask, $middleLen);
+
+        return '+' . $first . $middle . $last;
+    }
+}
