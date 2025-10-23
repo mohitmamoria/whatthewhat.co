@@ -21,7 +21,6 @@ const form = useForm({
 });
 
 const checkout = () => {
-    console.log('Checking out with', form);
     form.post(route('shop.checkout'), {
         preserveScroll: true,
     });

@@ -28,7 +28,7 @@ class GiftCodeController extends Controller
     public function checkout(Request $request, Gift $gift, GiftCode $giftCode)
     {
         // Create shopify gift card, if not already created
-        if ($giftCard->meta['shopify_gift_card_id'] ?? null === null) {
+        if ($giftCode->meta['shopify_gift_card_id'] ?? null === null) {
             // Create gift card via Shopify API
             $response = Shopify::admin()->call('admin/createGiftCard', [
                 'input' => [

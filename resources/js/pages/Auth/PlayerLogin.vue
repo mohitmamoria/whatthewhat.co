@@ -22,7 +22,6 @@ const startResendCounter = () => {
         if (resendCounter.value > 0) {
             resendCounter.value--;
         } else {
-            console.log('clear');
             clearInterval(interval);
         }
     }, 1000);

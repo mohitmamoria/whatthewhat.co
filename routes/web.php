@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-include_once __DIR__ . '/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::get('/', [ShopController::class, 'buy'])->name('home');
 
