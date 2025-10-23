@@ -15,7 +15,7 @@ class SendOtp
     public function __invoke(Player $player)
     {
         // Cannot request another OTP within 1 minute of the last one
-        if ($player->otps()->unused()->latest()->first()->created_at > now()->subMinute()) {
+        if ($player->otps()->unused()->recent()->first()) {
             return;
         }
 

@@ -38,6 +38,12 @@ class Otp extends Model
     }
 
     #[Scope]
+    public function recent(Builder $query): Builder
+    {
+        return $query->where('created_at', '>', now()->subMinute());
+    }
+
+    #[Scope]
     public function unexpired(Builder $query): Builder
     {
         return $query->where('expires_at', '>', now());

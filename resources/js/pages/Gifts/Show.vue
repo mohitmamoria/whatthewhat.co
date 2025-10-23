@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Narrow from '@/layouts/Narrow.vue';
 import AboutBookMinimal from '@/partials/AboutBookMinimal.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 
 var props = defineProps({
     gift: {
@@ -9,6 +9,8 @@ var props = defineProps({
         required: true,
     },
 });
+
+const loggedInPlayer = usePage().props.auth.player;
 
 const form = useForm({});
 
@@ -54,23 +56,24 @@ const reserve = () => {
                         </p>
                     </div>
 
-                    <div class="mt-10 flex items-center justify-center gap-x-6">
+                    <div v-if="!loggedInPlayer" class="mt-10 flex items-center justify-center gap-x-6">
                         <a
-                            href="#"
-                            class="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
-                            >Verify yourself to receive your gift</a
+                            :href="route('auth.player.login')"
+                            class="rounded-md bg-gray-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
+                            >Verify yourself to receive your gift &rarr;</a
                         >
                     </div>
-
-                    <form @submit.prevent="reserve">
-                        <button
-                            type="submit"
-                            class="mt-4 rounded-md bg-pink-600 px-2.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-pink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-700"
-                            :disabled="form.processing"
-                        >
-                            Claim your gift &rarr;
-                        </button>
-                    </form>
+                    <div v-else>
+                        <form @submit.prevent="reserve">
+                            <button
+                                type="submit"
+                                class="mt-4 rounded-md bg-pink-600 px-2.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-pink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-700"
+                                :disabled="form.processing"
+                            >
+                                Claim your gift &rarr;
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

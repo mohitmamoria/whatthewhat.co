@@ -7,16 +7,27 @@ use App\Models\Gamification\Activity;
 use App\Models\Gamification\ActivityType;
 use App\Models\Gamification\HasGamification;
 use App\Services\Idempotency\Idempotency;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Player extends Model
+class Player extends Authenticatable
 {
     use SoftDeletes, HasGamification;
 
+    const DEFAULT_NAME = 'Player';
+
     protected $fillable = ['name', 'number', 'referrer_code'];
+
+    // We have passwordless (OTP) login. It ensures this doesn’t break:
+    public function getAuthPassword()
+    {
+        // return an empty string so guards that expect a string don’t explode
+        return '';
+    }
 
     public function otps()
     {
@@ -38,21 +49,30 @@ class Player extends Model
         return static::where('referrer_code', $code)->first();
     }
 
-    public static function sync($name, $number): Player
+    public static function sync($name, $number, $shouldOverride = true): Player
     {
-        return DB::transaction(function () use ($name, $number) {
-            $player = static::updateOrCreate(
-                ['number' => normalize_phone($number)],
-                ['name' => $name]
-            );
+        $number = normalize_phone($number);
 
-            if ($player->wasRecentlyCreated) {
+        return DB::transaction(function () use ($name, $number, $shouldOverride) {
+            $player = static::where('number', $number)->first();
+
+            if (is_null($player)) {
+                $player = static::updateOrCreate(
+                    ['number' => $number],
+                    ['name' => $name]
+                );
+
                 // Set a unique referrer code
                 $player->referrer_code = get_unique_referrer_code($player);
                 $player->save();
 
                 // Set an empty balance account
                 $player->wallet()->firstOrCreate();
+            }
+
+            if ($shouldOverride) {
+                $player->name = $name;
+                $player->save();
             }
 
             return $player->fresh();
