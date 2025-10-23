@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->foreignIdFor(Player::class, 'gifter_id')->constrained()->onDelete('cascade');
+            $table->string('shopify_order_id');
             $table->unsignedInteger('value_per_code');
             $table->unsignedInteger('quantity');
             $table->timestamps();

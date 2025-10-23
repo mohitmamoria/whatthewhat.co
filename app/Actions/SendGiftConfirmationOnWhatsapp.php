@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\Gamification\Activity;
 use App\Models\Gamification\ActivityType;
+use App\Models\Gift;
 use App\Models\Message;
 
 class SendGiftConfirmationOnWhatsapp
@@ -15,7 +16,7 @@ class SendGiftConfirmationOnWhatsapp
         'gift-wtw-book-solo-without-shipping' => 'What The What?! Gift (without shipping)',
     ];
 
-    public function __invoke(Activity $activity)
+    public function __invoke(Activity $activity, Gift $gift)
     {
         if ($activity->type !== ActivityType::WTW_GIFTED) {
             return;
@@ -42,7 +43,7 @@ class SendGiftConfirmationOnWhatsapp
                         ],
                         [
                             "type" => "text",
-                            "text" => route('gift.show', ['gift' => $activity->meta['gift_name']]),
+                            "text" => route('gift.show', ['gift' => $gift->name]),
                         ],
                     ],
                 ],

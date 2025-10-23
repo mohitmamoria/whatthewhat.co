@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\Gifting\CreateGift;
+use App\Actions\Gifting\CreateGiftCodes;
 use App\Actions\SendGiftConfirmationOnWhatsapp;
 use App\Actions\SendOrderConfirmationOnWhatsapp;
 use App\Models\Gamification\Activity;
@@ -9,21 +11,21 @@ use App\Models\Gamification\ActivityType;
 use App\Models\Message;
 use Illuminate\Console\Command;
 
-class SendUnsentGiftConfirmations extends Command
+class ProcessPendingGiftPurchases extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:send-gift-confirmations';
+    protected $signature = 'app:process-gift-purchases';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Sends the gift confirmations that have not been sent yet';
+    protected $description = 'Creates gifts, gift codes and sends confirmation messages for pending gift purchases.';
 
     /**
      * Execute the console command.
@@ -41,7 +43,11 @@ class SendUnsentGiftConfirmations extends Command
         $this->info(sprintf("Pending: %d", $pendingActivities->count()));
         foreach ($pendingActivities as $index => $activity) {
             $this->info(sprintf('[%d/%d]', $index + 1, $pendingActivities->count()));
-            (new SendGiftConfirmationOnWhatsapp)($activity);
+
+            // Create Gift, Gift Codes and send confirmation
+            $gift = (new CreateGift)($activity);
+            (new CreateGiftCodes)($gift);
+            (new SendGiftConfirmationOnWhatsapp)($activity, $gift);
 
             $this->info("Gift confirmation sent for activity ID: {$activity->id}");
         }

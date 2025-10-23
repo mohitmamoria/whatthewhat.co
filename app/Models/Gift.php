@@ -15,6 +15,7 @@ class Gift extends Model
 
     protected $fillable = [
         'name',
+        'shopify_order_id',
         'value_per_code',
         'quantity',
     ];
