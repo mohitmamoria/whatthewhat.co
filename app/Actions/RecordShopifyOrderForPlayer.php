@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Enums\ReferralType;
 use App\Models\Gamification\ActivityType;
+use App\Models\GiftCode;
 use App\Models\Player;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,7 @@ class RecordShopifyOrderForPlayer
         DB::transaction(function () use ($order) {
             $buyer = $this->identifyBuyer($order);
             $this->recordPurchasedActivity($buyer, $order);
+            $this->makeGiftCodesUsed($order);
         });
     }
 
@@ -58,6 +60,23 @@ class RecordShopifyOrderForPlayer
                 'ref' => $referrer?->referrer_code,
                 'ref_type' => $referralType,
             ], Carbon::parse(data_get($order, 'processedAt')));
+        }
+    }
+
+    protected function makeGiftCodesUsed(array $order)
+    {
+        $attributes = data_get($order, 'customAttributes');
+        $giftCodeName = data_get(collect($attributes)->where('key', 'giftcode')->first(), 'value');
+        $receiverName = data_get(collect($attributes)->where('key', 'receiver')->first(), 'value');
+
+        if ($giftCodeName) {
+            $receiver = Player::byReferrerCode($receiverName);
+            $giftCode = GiftCode::unreceived()->where('name', $giftCodeName)->first();
+            if ($giftCode) {
+                $giftCode->receiver()->associate($receiver);
+                $giftCode->received_at = now();
+                $giftCode->save();
+            }
         }
     }
 

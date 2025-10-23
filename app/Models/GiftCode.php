@@ -56,6 +56,12 @@ class GiftCode extends Model
         return $query->whereNotNull('received_at');
     }
 
+    #[Scope]
+    protected function unreceived(Builder $query): Builder
+    {
+        return $query->whereNull('received_at');
+    }
+
     public function gift()
     {
         return $this->belongsTo(Gift::class);
