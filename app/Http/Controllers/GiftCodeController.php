@@ -27,6 +27,8 @@ class GiftCodeController extends Controller
 
     public function checkout(Request $request, Gift $gift, GiftCode $giftCode)
     {
+        $player = $request->user('player');
+
         // Create shopify gift card, if not already created
         if ($giftCode->meta['shopify_gift_card_id'] ?? null === null) {
             // Create gift card via Shopify API
@@ -46,6 +48,7 @@ class GiftCodeController extends Controller
 
         // Create checkout link with the gift card applied
         $attributes[] = ['key' => 'giftcode', 'value' => $giftCode->name];
+        $attributes[] = ['key' => 'receiver', 'value' => $player->referrer_code];
         $response = Shopify::storefront()->call('storefront/createCart', [
             'input' => [
                 'attributes' => $attributes,
