@@ -13,7 +13,7 @@ CLAIM URL: /gifts/{NAME}
 
 gift_codes
 
-INDIVIDUALL CLAIM URL: /gifts/{GIFTNAME}/codes/{CODENAME}
+INDIVIDUAL CLAIM URL: /gifts/{GIFTNAME}/codes/{CODENAME}
 
 - id
 - gift_id

@@ -10,16 +10,16 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue']);
 
-var quantity = ref(props.modelValue);
+const quantity = ref(props.modelValue);
 
-var increment = () => {
+const increment = () => {
     if (quantity.value < 10) {
         quantity.value++;
         emit('update:modelValue', parseInt(quantity.value));
     }
 };
 
-var decrement = () => {
+const decrement = () => {
     if (quantity.value > 1) {
         quantity.value--;
         emit('update:modelValue', parseInt(quantity.value));

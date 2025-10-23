@@ -14,13 +14,13 @@ const props = defineProps({
 
 const options = [5, 10, 20, 50, 100, 500];
 
-var form = useForm({
+const form = useForm({
     ref: usePage().props.ref,
     variant: props.variant.id,
     quantity: props.quantity,
 });
 
-var checkout = () => {
+const checkout = () => {
     console.log('Checking out with', form);
     form.post(route('shop.checkout'), {
         preserveScroll: true,

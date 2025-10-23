@@ -3,7 +3,7 @@ import Shop from '@/layouts/Shop.vue';
 import AboutBook from '@/partials/AboutBook.vue';
 import GiftVariants from '@/partials/GiftVariants.vue';
 
-var props = defineProps({
+const props = defineProps({
     product: {
         type: Object,
         required: true,

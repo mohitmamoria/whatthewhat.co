@@ -7,8 +7,6 @@ use App\Models\Gamification\Activity;
 use App\Models\Gamification\ActivityType;
 use App\Models\Gamification\HasGamification;
 use App\Services\Idempotency\Idempotency;
-use Illuminate\Container\Attributes\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
