@@ -1,50 +1,52 @@
 mutation updateOrder($input: OrderInput!) {
     orderUpdate(input: $input) {
-        id
-        name
-        processedAt
-        customAttributes {
-            key
-            value
-        }
-        shippingAddress {
-            phone
-        }
-        billingAddress {
-            phone
-        }
-        customer {
+        order {
             id
-            displayName
-            email
-            firstName
-            lastName
-            tags
-            defaultAddress {
-                address1
-                address2
-                phone
-                city
-                province
-                provinceCode
-                country
-                countryCodeV2
-                zip
+            name
+            processedAt
+            customAttributes {
+                key
+                value
             }
-        }
-        lineItems(first: 100) {
-            edges {
-                node {
-                    quantity
-                    sku
-                    product {
-                        id
-                        title
-                    }
-                    variant {
-                        id
-                        title
+            shippingAddress {
+                phone
+            }
+            billingAddress {
+                phone
+            }
+            customer {
+                id
+                displayName
+                email
+                firstName
+                lastName
+                tags
+                defaultAddress {
+                    address1
+                    address2
+                    phone
+                    city
+                    province
+                    provinceCode
+                    country
+                    countryCodeV2
+                    zip
+                }
+            }
+            lineItems(first: 100) {
+                edges {
+                    node {
+                        quantity
                         sku
+                        product {
+                            id
+                            title
+                        }
+                        variant {
+                            id
+                            title
+                            sku
+                        }
                     }
                 }
             }

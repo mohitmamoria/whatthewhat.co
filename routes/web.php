@@ -58,7 +58,7 @@ if (app()->environment('local')) {
 
     Route::get('/test', function () {
         try {
-            $response = Shopify::admin()->call('admin/getOrder', ['id' => 'gid://shopify/Order/6281220817075']);
+            $response = Shopify::admin()->call('admin/getOrder', ['id' => 'gid://shopify/Order/6281329574067']);
 
             dd($response);
         } catch (ShopifyException $e) {
