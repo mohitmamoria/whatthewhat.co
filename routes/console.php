@@ -1,6 +1,7 @@
 <?php
 
 use App\Console\Commands\InvitePlayerToPreorder;
+use App\Console\Commands\SendUnsentGiftConfirmations;
 use App\Console\Commands\SendUnsentOrderConfirmations;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -11,4 +12,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command(InvitePlayerToPreorder::class, ['1000'])->hourly()->withoutOverlapping();
-Schedule::command(SendUnsentOrderConfirmations::class)->everyFiveMinutes()->withoutOverlapping();
+Schedule::command(SendUnsentOrderConfirmations::class)->everyMinute()->withoutOverlapping();
+Schedule::command(SendUnsentGiftConfirmations::class)->everyMinute()->withoutOverlapping();
