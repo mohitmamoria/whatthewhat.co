@@ -14,7 +14,7 @@ class SyncOrdersFromShopify extends Command
      *
      * @var string
      */
-    protected $signature = 'app:sync-shopify-orders';
+    protected $signature = 'app:sync-shopify-orders {--product : Sync orders for a specific product only}';
 
     /**
      * The console command description.
@@ -28,7 +28,12 @@ class SyncOrdersFromShopify extends Command
      */
     public function handle()
     {
-        $products = Product::all();
+        $products = [];
+        if ($this->option('product')) {
+            $products = Product::where('shopify_id', $this->option('product'))->get();
+        } else {
+            $products = Product::all();
+        }
 
         $this->info(sprintf('Syncing orders for %d products', $products->count()));
         foreach ($products as $product) {
