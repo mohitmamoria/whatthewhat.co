@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GiftCodeResource;
 use App\Models\Gift;
 use App\Models\GiftCode;
 use App\Models\Product;
@@ -17,8 +18,11 @@ class GiftCodeController extends Controller
 
     public function show(Request $request, Gift $gift, GiftCode $giftCode)
     {
-        dd($giftCode);
-        // Shows the page with the gift code name, whether shipping is paid or not and a button to checkout.
+        $giftCode->load('gift');
+
+        return inertia('GiftCodes/Show', [
+            'giftCode' => GiftCodeResource::make($giftCode),
+        ]);
     }
 
     public function checkout(Request $request, Gift $gift, GiftCode $giftCode)

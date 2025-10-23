@@ -18,7 +18,10 @@ class GiftResource extends JsonResource
             'name' => $this->name,
             'gifter' => PlayerResource::make($this->gifter),
             'is_shipping_covered' => $this->is_shipping_covered,
-            'quantity' => $this->quantity,
+            'total_count' => $this->quantity,
+            'ready_count' => $this->giftCodes()->ready()->count(),
+            'reserved_count' => $this->giftCodes()->reserved()->count(),
+            'received_count' => $this->giftCodes()->received()->count(),
         ];
     }
 }

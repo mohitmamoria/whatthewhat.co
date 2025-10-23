@@ -1,7 +1,9 @@
-<script setup></script>
+<script setup>
+import Footer from '@/partials/Footer.vue';
+</script>
 
 <template>
-    <div class="">
+    <div>
         <header class="mb-12">
             <img src="/images/what-the-what-logo.svg" alt="What The What?! Logo" class="mx-auto mt-6 h-16 w-auto sm:h-18" />
         </header>
@@ -14,4 +16,5 @@
             </div>
         </div>
     </div>
+    <Footer class="mt-64" />
 </template>
