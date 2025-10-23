@@ -42,6 +42,11 @@ class Player extends Authenticatable
         return $this->hasMany(Gift::class, 'gifter_id');
     }
 
+    public function giftCodesReceived()
+    {
+        return $this->hasMany(GiftCode::class, 'receiver_id');
+    }
+
     public static function byReferrerCode(string $code)
     {
         return static::where('referrer_code', $code)->first();

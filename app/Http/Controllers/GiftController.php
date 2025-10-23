@@ -19,6 +19,11 @@ class GiftController extends Controller
 
     public function reserve(Request $request, Gift $gift)
     {
+        $player = $request->user('player');
+        if ($player->giftCodesReceived()->count() > 0) {
+            throw ValidationException::withMessages(['gift' => 'You have already received a gift.']);
+        }
+
         $giftCode = (new ReserveGiftCode)($gift);
 
         if (!$giftCode) {

@@ -14,6 +14,8 @@ class GiftResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $player = $request->user('player');
+
         return [
             'name' => $this->name,
             'gifter' => PlayerResource::make($this->gifter),
@@ -22,6 +24,7 @@ class GiftResource extends JsonResource
             'ready_count' => $this->giftCodes()->ready()->count(),
             'reserved_count' => $this->giftCodes()->reserved()->count(),
             'received_count' => $this->giftCodes()->received()->count(),
+            'has_received_gift' => $player ? $player->giftCodesReceived()->count() > 0 : false,
         ];
     }
 }

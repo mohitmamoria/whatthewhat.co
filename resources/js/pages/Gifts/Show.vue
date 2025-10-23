@@ -53,6 +53,7 @@ const reserve = () => {
                             >Verify yourself to receive your gift &rarr;</Link
                         >
                     </div>
+                    <div v-else-if="gift.has_received_gift">You have already received a gift. Please check your email for details.</div>
                     <div v-else>
                         <form @submit.prevent="reserve">
                             <button
