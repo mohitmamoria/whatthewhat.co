@@ -22,7 +22,7 @@ const checkout = () => {
         <div class="relative isolate px-6 lg:px-8">
             <div class="mx-auto max-w-2xl">
                 <div class="text-center">
-                    <h1 class="text-2xl font-semibold tracking-tight text-balance text-gray-900 sm:text-3xl">Hurry up before it goes away!</h1>
+                    <h1 class="text-2xl font-semibold tracking-tight text-balance text-gray-900 sm:text-3xl">🎉 Congratulations!</h1>
 
                     <hr class="mt-12 border-gray-300" />
 

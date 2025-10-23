@@ -103,5 +103,9 @@ class RecordShopifyOrderForPlayer
         if (str($sku)->startsWith('wtw-book-')) {
             return ActivityType::WTW_PURCHASED;
         }
+
+        if (str($sku)->startsWith('gift-wtw-book-')) {
+            return ActivityType::WTW_GIFTED;
+        }
     }
 }

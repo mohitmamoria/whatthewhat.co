@@ -17,7 +17,7 @@ const form = useForm({
 
 const resendCounter = ref(0);
 const startResendCounter = () => {
-    resendCounter.value = 30;
+    resendCounter.value = 60;
     const interval = setInterval(() => {
         if (resendCounter.value > 0) {
             resendCounter.value--;
