@@ -2,7 +2,7 @@
 import Narrow from '@/layouts/Narrow.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
-var props = defineProps({
+const props = defineProps({
     giftCode: {
         type: Object,
         required: true,
@@ -37,15 +37,18 @@ const checkout = () => {
                         </p>
                     </div>
 
-                    <form @submit.prevent="checkout">
-                        <button
-                            type="submit"
-                            class="mt-4 rounded-md bg-pink-600 px-2.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-pink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-700"
-                            :disabled="form.processing"
-                        >
-                            Accept your gift &rarr;
-                        </button>
-                    </form>
+                    <div v-if="giftCode.gift.has_received_gift">You have already received a gift. Please check your email for details.</div>
+                    <div v-else>
+                        <form @submit.prevent="checkout">
+                            <button
+                                type="submit"
+                                class="mt-4 rounded-md bg-pink-600 px-2.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-pink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-700"
+                                :disabled="form.processing"
+                            >
+                                Accept your gift &rarr;
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -40,10 +40,12 @@ class GiftCodeController extends Controller
                 ]
             ]);
 
-            $giftCode->meta = array_merge($giftCode->meta ?? [], [
-                'shopify_gift_card_id' => data_get($response, 'giftCardCreate.giftCard.id'),
-            ]);
-            $giftCode->save();
+            if (data_get($response, 'giftCardCreate.giftCard.id')) {
+                $giftCode->meta = array_merge($giftCode->meta ?? [], [
+                    'shopify_gift_card_id' => data_get($response, 'giftCardCreate.giftCard.id'),
+                ]);
+                $giftCode->save();
+            }
         }
 
         // Create checkout link with the gift card applied
