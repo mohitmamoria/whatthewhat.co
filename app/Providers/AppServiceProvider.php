@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Player;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Mcp\Server\Resource;
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
 
         Relation::enforceMorphMap([
             'player' => Player::class,
+            'user' => User::class,
         ]);
     }
 }

@@ -18,6 +18,11 @@ class Player extends Model
 
     protected $fillable = ['name', 'number', 'referrer_code'];
 
+    public function otps()
+    {
+        return $this->morphMany(Otp::class, 'authenticatable');
+    }
+
     public function messages()
     {
         return $this->hasMany(Message::class);

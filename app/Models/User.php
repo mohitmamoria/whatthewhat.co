@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function otps()
+    {
+        return $this->morphMany(Otp::class, 'authenticatable');
+    }
 }
