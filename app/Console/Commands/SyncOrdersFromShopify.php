@@ -14,7 +14,7 @@ class SyncOrdersFromShopify extends Command
      *
      * @var string
      */
-    protected $signature = 'app:sync-shopify-orders {--product : Sync orders for a specific product only}';
+    protected $signature = 'app:sync-shopify-orders {--product= : Sync orders for a specific product only}';
 
     /**
      * The console command description.
