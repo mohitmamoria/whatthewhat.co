@@ -36,7 +36,7 @@ class PlayerAuthController extends Controller
         $validated = $request->validate([
             'phone' => 'required|string',
             'otp' => 'required|string',
-            'next' => 'sometimes|string',
+            'next' => 'nullable|string',
         ]);
 
         $phone = normalize_phone($validated['phone']);

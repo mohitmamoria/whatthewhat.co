@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Narrow from '@/layouts/Narrow.vue';
 import AboutBookMinimal from '@/partials/AboutBookMinimal.vue';
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 
-var props = defineProps({
+const props = defineProps({
     gift: {
         type: Object,
         required: true,
@@ -25,16 +25,6 @@ const reserve = () => {
         <div class="relative isolate px-6 lg:px-8">
             <div class="mx-auto max-w-2xl">
                 <AboutBookMinimal />
-                <!-- <div class="mb-8 flex justify-center">
-                    <div
-                        class="relative flex flex-col items-center gap-1 rounded-full px-6 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 sm:flex-row"
-                    >
-                        Want to give the gift of curiosity?
-                        <a :href="route('shop.gift')" class="font-semibold text-purple-600"
-                            ><span class="absolute inset-0" aria-hidden="true" />Give here <span aria-hidden="true">&rarr;</span></a
-                        >
-                    </div>
-                </div> -->
                 <div class="text-center">
                     <h1 class="text-2xl font-semibold tracking-tight text-balance text-gray-900 sm:text-3xl">
                         🎁 Gift of curiosity by <br />
@@ -57,10 +47,10 @@ const reserve = () => {
                     </div>
 
                     <div v-if="!loggedInPlayer" class="mt-10 flex items-center justify-center gap-x-6">
-                        <a
-                            :href="route('auth.player.login')"
+                        <Link
+                            :href="route('auth.player.login', { next: route('gift.show', { gift: gift.name }) })"
                             class="rounded-md bg-gray-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
-                            >Verify yourself to receive your gift &rarr;</a
+                            >Verify yourself to receive your gift &rarr;</Link
                         >
                     </div>
                     <div v-else>
