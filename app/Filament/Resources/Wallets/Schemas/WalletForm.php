@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\Wallets\Schemas;
 
+use App\Models\Player;
+use Filament\Forms\Components\MorphToSelect;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -11,11 +14,12 @@ class WalletForm
     {
         return $schema
             ->components([
-                TextInput::make('owner_type')
+                MorphToSelect::make('owner')
+                    ->types([
+                        MorphToSelect\Type::make(Player::class)
+                            ->titleAttribute('number'),
+                    ])
                     ->required(),
-                TextInput::make('owner_id')
-                    ->required()
-                    ->numeric(),
                 TextInput::make('balance')
                     ->required()
                     ->numeric()
