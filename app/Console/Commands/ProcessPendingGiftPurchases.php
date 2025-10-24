@@ -40,7 +40,6 @@ class ProcessPendingGiftPurchases extends Command
             })
             ->orderBy('occurred_at', 'asc')
             ->get();
-        dd($pendingActivities);
 
         $this->info(sprintf("Pending: %d", $pendingActivities->count()));
         foreach ($pendingActivities as $index => $activity) {
