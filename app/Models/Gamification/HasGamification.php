@@ -11,11 +11,11 @@ trait HasGamification
 
     public function activities()
     {
-        return $this->morphMany(Activity::class, 'owner');
+        return $this->morphMany(Activity::class, 'owner')->latest();
     }
 
     public function transactions()
     {
-        return $this->morphMany(Transaction::class, 'owner');
+        return $this->morphMany(Transaction::class, 'owner')->latest();
     }
 }

@@ -34,7 +34,7 @@ class Player extends Authenticatable
 
     public function messages()
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Message::class)->latest();
     }
 
     public function giftsGiven()
