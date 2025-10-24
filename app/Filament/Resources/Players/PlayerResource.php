@@ -6,6 +6,8 @@ use App\Filament\Resources\Players\Pages\CreatePlayer;
 use App\Filament\Resources\Players\Pages\EditPlayer;
 use App\Filament\Resources\Players\Pages\ListPlayers;
 use App\Filament\Resources\Players\RelationManagers\ActivitiesRelationManager;
+use App\Filament\Resources\Players\RelationManagers\GiftCodesReceivedRelationManager;
+use App\Filament\Resources\Players\RelationManagers\GiftsGivenRelationManager;
 use App\Filament\Resources\Players\RelationManagers\MessagesRelationManager;
 use App\Filament\Resources\Players\RelationManagers\TransactionsRelationManager;
 use App\Filament\Resources\Players\Schemas\PlayerForm;
@@ -46,6 +48,10 @@ class PlayerResource extends Resource
             'messages' => MessagesRelationManager::class,
             'activities' => ActivitiesRelationManager::class,
             'transactions' => TransactionsRelationManager::class,
+            RelationGroup::make('Gifting', [
+                'gifts_given' => GiftsGivenRelationManager::class,
+                'gift_codes_received' => GiftCodesReceivedRelationManager::class,
+            ])
         ];
     }
 
