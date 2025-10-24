@@ -6,6 +6,7 @@ use App\Enums\MessageDirection;
 use App\Enums\MessagePlatform;
 use App\Enums\MessageStatus;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -23,8 +24,13 @@ class MessageForm
                     ->required(),
                 TextInput::make('platform_message_id')
                     ->required(),
-                TextInput::make('body')
-                    ->required(),
+                Textarea::make('body')
+                    ->label('Body')
+                    ->rows(8)
+                    ->afterStateHydrated(fn($component, $state) => $component->state(json_encode($state, JSON_PRETTY_PRINT)))
+                    ->dehydrateStateUsing(fn($state) => json_decode($state, true))
+                    ->required()
+                    ->rule('json'),
                 Select::make('direction')
                     ->options(MessageDirection::class)
                     ->required(),

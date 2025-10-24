@@ -22,10 +22,10 @@ class ActivitiesTable
                 TextColumn::make('owner_id')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('idempotency_key')
-                    ->searchable(),
                 TextColumn::make('type')
                     ->badge()
+                    ->searchable(),
+                TextColumn::make('idempotency_key')
                     ->searchable(),
                 TextColumn::make('occurred_at')
                     ->dateTime()
