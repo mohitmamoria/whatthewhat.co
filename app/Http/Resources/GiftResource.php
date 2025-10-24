@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Gamification\ActivityType;
+use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,7 +26,15 @@ class GiftResource extends JsonResource
             'ready_count' => $this->giftCodes()->ready()->count(),
             'reserved_count' => $this->giftCodes()->reserved()->count(),
             'received_count' => $this->giftCodes()->received()->count(),
-            'has_received_gift' => $player ? $player->giftCodesReceived()->count() > 0 : false,
+            'can_receive_gift' => $player ? $this->canReceiveGift($player) : false,
         ];
+    }
+
+    protected function canReceiveGift(Player $player): bool
+    {
+        return
+            $player->giftCodesReceived()->doesntExist()
+            &&
+            $player->activities()->where('type', ActivityType::WTW_PURCHASED)->doesntExist();
     }
 }

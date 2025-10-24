@@ -37,8 +37,7 @@ const checkout = () => {
                         </p>
                     </div>
 
-                    <div v-if="giftCode.gift.has_received_gift">You have already received a gift. Please check your email for details.</div>
-                    <div v-else>
+                    <div v-if="giftCode.gift.can_receive_gift">
                         <form @submit.prevent="checkout">
                             <button
                                 type="submit"
@@ -49,6 +48,7 @@ const checkout = () => {
                             </button>
                         </form>
                     </div>
+                    <div v-else>Seems like you have already purchased the book or received it as a gift. Please check your email.</div>
                 </div>
             </div>
         </div>
