@@ -25,7 +25,6 @@ class MessageForm
                 TextInput::make('platform_message_id')
                     ->required(),
                 Textarea::make('body')
-                    ->label('Body')
                     ->rows(8)
                     ->afterStateHydrated(fn($component, $state) => $component->state(json_encode($state, JSON_PRETTY_PRINT)))
                     ->dehydrateStateUsing(fn($state) => json_decode($state, true))

@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ActivityResource extends Resource
 {
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 70;
 
     protected static ?string $model = Activity::class;
 

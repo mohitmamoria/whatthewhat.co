@@ -1,36 +1,38 @@
 <?php
 
-namespace App\Filament\Resources\Activities\Schemas;
+namespace App\Filament\Resources\GiftCodes\Schemas;
 
-use App\Models\Gamification\ActivityType;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
-class ActivityForm
+class GiftCodeForm
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextInput::make('owner_type')
-                    ->required(),
-                TextInput::make('owner_id')
+                TextInput::make('gift_id')
                     ->required()
                     ->numeric(),
-                TextInput::make('idempotency_key'),
-                Select::make('type')
-                    ->options(ActivityType::class)
+                TextInput::make('name')
                     ->required(),
+                TextInput::make('code')
+                    ->required(),
+                TextInput::make('value')
+                    ->required()
+                    ->numeric()
+                    ->default(0),
+                TextInput::make('receiver_id')
+                    ->numeric(),
                 Textarea::make('meta')
                     ->rows(8)
                     ->afterStateHydrated(fn($component, $state) => $component->state(json_encode($state, JSON_PRETTY_PRINT)))
                     ->dehydrateStateUsing(fn($state) => json_decode($state, true))
                     ->rule('json'),
-                DateTimePicker::make('occurred_at')
-                    ->required(),
+                DateTimePicker::make('reserved_at'),
+                DateTimePicker::make('received_at'),
             ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Transactions\Schemas;
 
 use App\Models\Gamification\TransactionDirection;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -25,7 +26,12 @@ class TransactionForm
                     ->numeric(),
                 TextInput::make('reason')
                     ->required(),
-                TextInput::make('meta'),
+                Textarea::make('meta')
+                    ->label('Body')
+                    ->rows(8)
+                    ->afterStateHydrated(fn($component, $state) => $component->state(json_encode($state, JSON_PRETTY_PRINT)))
+                    ->dehydrateStateUsing(fn($state) => json_decode($state, true))
+                    ->rule('json'),
             ]);
     }
 }

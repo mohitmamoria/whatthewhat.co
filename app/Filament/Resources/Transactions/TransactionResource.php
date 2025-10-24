@@ -16,7 +16,7 @@ use Filament\Tables\Table;
 
 class TransactionResource extends Resource
 {
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 80;
 
     protected static ?string $model = Transaction::class;
 
