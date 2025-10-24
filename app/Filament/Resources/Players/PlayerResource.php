@@ -5,11 +5,14 @@ namespace App\Filament\Resources\Players;
 use App\Filament\Resources\Players\Pages\CreatePlayer;
 use App\Filament\Resources\Players\Pages\EditPlayer;
 use App\Filament\Resources\Players\Pages\ListPlayers;
+use App\Filament\Resources\Players\RelationManagers\ActivitiesRelationManager;
 use App\Filament\Resources\Players\RelationManagers\MessagesRelationManager;
+use App\Filament\Resources\Players\RelationManagers\TransactionsRelationManager;
 use App\Filament\Resources\Players\Schemas\PlayerForm;
 use App\Filament\Resources\Players\Tables\PlayersTable;
 use App\Models\Player;
 use BackedEnum;
+use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -40,7 +43,9 @@ class PlayerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            MessagesRelationManager::class,
+            'messages' => MessagesRelationManager::class,
+            'activities' => ActivitiesRelationManager::class,
+            'transactions' => TransactionsRelationManager::class,
         ];
     }
 

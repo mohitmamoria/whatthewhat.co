@@ -16,6 +16,6 @@ trait HasGamification
 
     public function transactions()
     {
-        return $this->morphMany(Transaction::class, 'owner')->latest();
+        return $this->through('wallet')->has('transactions');
     }
 }

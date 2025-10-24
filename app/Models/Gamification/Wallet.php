@@ -27,7 +27,7 @@ class Wallet extends Model
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class)->latest();
     }
 
     public function credit(string $idempotencyKey, int $points, string $reason, array $meta = []): Transaction
