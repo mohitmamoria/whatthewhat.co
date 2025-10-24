@@ -10,6 +10,7 @@ use App\Models\Gamification\Activity;
 use App\Models\Gamification\ActivityType;
 use App\Models\Message;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class ProcessPendingGiftPurchases extends Command
 {
@@ -34,11 +35,12 @@ class ProcessPendingGiftPurchases extends Command
     {
         $pendingActivities = Activity::with('owner')
             ->where('type', ActivityType::WTW_GIFTED)
-            ->whereDoesntHave('owner.messages', function ($query) {
-                $query->where('body->content', Message::TEMPLATE_PREFIX . SendGiftConfirmationOnWhatsapp::TEMPLATE_GIFT_CONFIRMATION);
+            ->whereDoesntHave('owner.giftsGiven', function ($query) {
+                $query->where('shopify_order_id', '=', DB::raw('JSON_EXTRACT(meta, \'$.order_id\')'));
             })
             ->orderBy('occurred_at', 'asc')
             ->get();
+        dd($pendingActivities);
 
         $this->info(sprintf("Pending: %d", $pendingActivities->count()));
         foreach ($pendingActivities as $index => $activity) {
