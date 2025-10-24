@@ -85,7 +85,9 @@ const submit = () => {
                                             v-model="form.phone"
                                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-pink-600 sm:text-sm/6"
                                         />
-                                        <p class="mt-1 text-sm/6 text-gray-600">We will send an OTP to verify.</p>
+                                        <p class="mt-1 text-sm/6 text-gray-600">
+                                            Please add the country code (like +91) when submitting the phone number.
+                                        </p>
                                         <p v-if="form.errors.phone" class="mt-2 text-sm/6 text-red-600">{{ form.errors.phone }}</p>
                                     </div>
                                 </div>
@@ -97,6 +99,9 @@ const submit = () => {
                                     <div class="mt-2">
                                         <input
                                             type="text"
+                                            inputmode="numeric"
+                                            autocomplete="one-time-code"
+                                            pattern="\d{6}"
                                             name="otp"
                                             id="otp"
                                             v-model="form.otp"
