@@ -10,7 +10,7 @@ const next = computed(() => {
 });
 
 const form = useForm({
-    phone: '',
+    phone: '+91',
     otp: '',
     next: next.value || '',
 });

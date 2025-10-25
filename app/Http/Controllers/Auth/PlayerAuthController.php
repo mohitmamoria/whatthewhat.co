@@ -19,7 +19,7 @@ class PlayerAuthController extends Controller
     public function otp(Request $request)
     {
         $validated = $request->validate([
-            'phone' => 'required|string',
+            'phone' => 'required|string|starts_with:+',
         ]);
 
         $phone = normalize_phone($validated['phone']);
@@ -34,7 +34,7 @@ class PlayerAuthController extends Controller
     public function verify(Request $request)
     {
         $validated = $request->validate([
-            'phone' => 'required|string',
+            'phone' => 'required|string|starts_with:+',
             'otp' => 'required|string',
             'next' => 'nullable|string',
         ]);
