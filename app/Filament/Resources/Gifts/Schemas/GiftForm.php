@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\Gifts\Schemas;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GiftForm
 {
@@ -13,9 +15,11 @@ class GiftForm
             ->components([
                 TextInput::make('name')
                     ->required(),
-                TextInput::make('gifter_id')
+                Select::make('gifter')
                     ->required()
-                    ->numeric(),
+                    ->relationship('gifter', 'name')
+                    ->searchable(),
+                TextInput::make('gifter_name')->nullable(),
                 TextInput::make('shopify_order_id')
                     ->required(),
                 TextInput::make('value_per_code')
