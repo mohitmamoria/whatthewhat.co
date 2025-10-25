@@ -17,7 +17,7 @@ const checkout = () => {
 </script>
 
 <template>
-    <Head :title="`A gift by ${giftCode.gift.gifter.name}`"></Head>
+    <Head :title="`A gift by ${giftCode.gift.gifter_name}`"></Head>
     <Narrow>
         <div class="relative isolate px-6 lg:px-8">
             <div class="mx-auto max-w-2xl">
@@ -32,7 +32,7 @@ const checkout = () => {
                             checkout to claim it, or it will be given to the next person in queue.
                         </p>
                         <p class="mt-8" v-if="!giftCode.gift.is_shipping_covered">
-                            Please note that while the book is paid for by {{ giftCode.gift.gifter.name }}, shipping charges will be applied at
+                            Please note that while the book is paid for by {{ giftCode.gift.gifter_name }}, shipping charges will be applied at
                             checkout.
                         </p>
                     </div>

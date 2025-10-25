@@ -20,7 +20,7 @@ const reserve = () => {
 </script>
 
 <template>
-    <Head :title="`A gift by ${gift.gifter.name}`"></Head>
+    <Head :title="`A gift by ${gift.gifter_name}`"></Head>
     <Narrow>
         <div class="relative isolate px-6 lg:px-8">
             <div class="mx-auto max-w-2xl">
@@ -28,13 +28,13 @@ const reserve = () => {
                 <div class="text-center">
                     <h1 class="text-2xl font-semibold tracking-tight text-balance text-gray-900 sm:text-3xl">
                         🎁 Gift of curiosity by <br />
-                        <span class="font-serif text-5xl leading-relaxed">{{ gift.gifter.name }}</span>
+                        <span class="font-serif text-5xl leading-relaxed">{{ gift.gifter_name }}</span>
                     </h1>
                     <p class="mt-8 font-serif text-lg font-medium text-pretty text-gray-900 sm:text-xl/8">
-                        This gift of curiosity will make the world a more curious place. Thank you, {{ gift.gifter.name }}!
+                        This gift of curiosity will make the world a more curious place. Thank you, {{ gift.gifter_name }}!
                     </p>
                     <p class="mt-4 font-serif text-lg font-medium text-pretty text-gray-900 sm:text-xl/8" v-if="gift.is_shipping_covered">
-                        ❤️ Shipping charges are also covered by {{ gift.gifter.name }}.
+                        ❤️ Shipping charges are also covered by {{ gift.gifter_name }}.
                     </p>
 
                     <hr class="mt-12 border-gray-300" />
