@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import Narrow from '@/layouts/Narrow.vue';
+import { ChevronDownIcon } from '@heroicons/vue/16/solid';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+
+const props = defineProps({
+    countries: {
+        type: Array,
+        required: true,
+    },
+});
 
 const page = usePage();
 const next = computed(() => {
@@ -10,7 +18,8 @@ const next = computed(() => {
 });
 
 const form = useForm({
-    phone: '+91',
+    country: 'IN',
+    phone: '',
     otp: '',
     next: next.value || '',
 });
@@ -66,7 +75,7 @@ const submit = () => {
                             <form class="space-y-6" @submit.prevent="submit">
                                 <div>
                                     <div class="flex items-center justify-between">
-                                        <label for="email" class="block text-sm/6 font-medium text-gray-900">WhatsApp number</label>
+                                        <label for="phone" class="block text-sm/6 font-medium text-gray-900">WhatsApp number</label>
                                         <div class="text-sm" v-if="isOTPSent">
                                             <form @submit.prevent="sendOTP">
                                                 <button type="submit" class="text-pink-600 hover:text-pink-500" :disabled="resendCounter > 0">
@@ -76,7 +85,43 @@ const submit = () => {
                                         </div>
                                     </div>
                                     <div class="mt-2">
-                                        <input
+                                        <div>
+                                            <div class="mt-2">
+                                                <div
+                                                    class="flex rounded-md bg-white outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-pink-600"
+                                                >
+                                                    <div class="grid shrink-0 grid-cols-1 focus-within:relative">
+                                                        <select
+                                                            id="country"
+                                                            name="country"
+                                                            v-model="form.country"
+                                                            autocomplete="country"
+                                                            aria-label="Country"
+                                                            class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-7 pl-3 text-base text-gray-500 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-pink-600 sm:text-sm/6"
+                                                        >
+                                                            <option v-for="country in countries" :value="country.alpha_2" :key="country.alpha_2">
+                                                                {{ country.alpha_2 }} {{ country.flag }} ({{ country.isd }})
+                                                            </option>
+                                                        </select>
+                                                        <ChevronDownIcon
+                                                            class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                                                            aria-hidden="true"
+                                                        />
+                                                    </div>
+                                                    <input
+                                                        type="tel"
+                                                        name="phone"
+                                                        id="phone"
+                                                        autocomplete="phone"
+                                                        required
+                                                        v-model="form.phone"
+                                                        class="block min-w-0 grow bg-white py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                                        placeholder="9876543210"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <input
                                             type="tel"
                                             name="phone"
                                             id="phone"
@@ -84,10 +129,7 @@ const submit = () => {
                                             required
                                             v-model="form.phone"
                                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-pink-600 sm:text-sm/6"
-                                        />
-                                        <p class="mt-1 text-sm/6 text-gray-600">
-                                            Please add the country code (like +91) when submitting the phone number.
-                                        </p>
+                                        /> -->
                                         <p v-if="form.errors.phone" class="mt-2 text-sm/6 text-red-600">{{ form.errors.phone }}</p>
                                     </div>
                                 </div>

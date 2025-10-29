@@ -5,22 +5,52 @@ namespace App\Http\Controllers\Auth;
 use App\Actions\Auth\SendOtp;
 use App\Actions\Auth\VerifyOtp;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CountryResource;
 use App\Models\Player;
+use App\Services\Country\Country;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 
 class PlayerAuthController extends Controller
 {
     public function login(Request $request)
     {
-        return inertia('Auth/PlayerLogin');
+        return inertia('Auth/PlayerLogin', [
+            'countries' => CountryResource::collection(Country::all()),
+        ]);
     }
 
     public function otp(Request $request)
     {
         $validated = $request->validate([
-            'phone' => 'required|string|starts_with:+',
+            'country' => 'required|string|max:2',
+            'phone' => 'required|string',
         ]);
+
+        try {
+            $phoneUtil = PhoneNumberUtil::getInstance();
+
+            // Parse based on the country (region) provided
+            $proto = $phoneUtil->parse($validated['phone'], $validated['country']);
+
+            // Check validity
+            if (! $phoneUtil->isValidNumberForRegion($proto, $validated['country'])) {
+                throw ValidationException::withMessages([
+                    'phone' => 'The provided phone number is invalid for the selected country.',
+                ]);
+            }
+
+            // Convert to E.164 => +919876543210
+            $validated['phone'] = $phoneUtil->format($proto, PhoneNumberFormat::E164);
+        } catch (NumberParseException $e) {
+            throw ValidationException::withMessages([
+                'phone' => 'The provided phone number is invalid.',
+            ]);
+        }
+
 
         $phone = normalize_phone($validated['phone']);
 
