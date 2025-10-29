@@ -44,7 +44,7 @@ class PlayerAuthController extends Controller
             }
 
             // Convert to E.164 => +919876543210
-            $validated['phone'] = $phoneUtil->format($proto, PhoneNumberFormat::E164);
+            $validated['phone'] = phone_e164($validated['phone'], $validated['country']);
         } catch (NumberParseException $e) {
             throw ValidationException::withMessages([
                 'phone' => 'The provided phone number is invalid.',

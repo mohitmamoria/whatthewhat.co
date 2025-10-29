@@ -94,7 +94,9 @@ class RecordShopifyOrderForPlayer
             data_get($order, 'billingAddress.phone'),
             data_get($order, 'shippingAddress.phone'),
             data_get($order, 'customer.defaultAddress.phone'),
-        ])->filter()->map(fn($p) => normalize_phone($p));
+        ])
+            ->filter()->map(fn($p) => phone_e164($p))
+            ->filter()->map(fn($p) => normalize_phone($p));
 
         if ($buyerPhones->contains($referrer->number)) {
             return [$referrer, ReferralType::SELF];
@@ -109,7 +111,10 @@ class RecordShopifyOrderForPlayer
             data_get($order, 'shippingAddress.phone'),
             data_get($order, 'billingAddress.phone'),
             data_get($order, 'customer.defaultAddress.phone'),
-        ])->filter()->map(fn($p) => normalize_phone($p))->first();
+        ])
+            ->filter()->map(fn($p) => phone_e164($p))
+            ->filter()->map(fn($p) => normalize_phone($p))
+            ->first();
 
         $buyer = Player::where('number', $phone)->first();
         if (is_null($buyer)) {

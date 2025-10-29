@@ -2,6 +2,9 @@
 
 use App\Models\Player;
 use Illuminate\Support\Str;
+use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 
 if (! function_exists('p')) {
     function p($id): ?Player
@@ -61,6 +64,35 @@ if (! function_exists('normalize_phone')) {
         // +91 98765 43210 -> 919876543210
         // +1 (123) 456-7890 -> 11234567890
         return preg_replace('/\D/', '', $phone);
+    }
+}
+
+if (! function_exists('phone_e164')) {
+    /**
+     * Convert a given phone number to E.164 format.
+     *
+     * @param  string  $number   Raw number entered by user (with or without +)
+     * @param  string|null  $region  ISO 2-letter region (e.g. 'IN', 'US') - defaults to 'IN'
+     * @return string|null   E.164 formatted number (e.g. +919876543210) or null if invalid
+     */
+    function phone_e164(string $number, ?string $region = 'IN'): ?string
+    {
+        $phoneUtil = PhoneNumberUtil::getInstance();
+
+        try {
+            // Parse according to given region
+            $proto = $phoneUtil->parse($number, strtoupper($region));
+
+            // Check if valid
+            if (! $phoneUtil->isValidNumber($proto)) {
+                return null;
+            }
+
+            // Return in E.164 format (+<countrycode><nationalnumber>)
+            return $phoneUtil->format($proto, PhoneNumberFormat::E164);
+        } catch (NumberParseException $e) {
+            return null;
+        }
     }
 }
 
