@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Gifts\Schemas;
 
+use App\Models\Player;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -18,7 +19,8 @@ class GiftForm
                 Select::make('gifter')
                     ->required()
                     ->relationship('gifter', 'name')
-                    ->searchable(),
+                    ->searchable(['name', 'number'])
+                    ->preload(),
                 TextInput::make('gifter_name')->nullable(),
                 TextInput::make('shopify_order_id')
                     ->required(),

@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\Gifts\Tables;
 
+use App\Http\Resources\PlayerResource;
+use App\Filament\Resources\Players\PlayerResource as FilamentPlayerResource;
+use App\Models\Player;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -19,9 +22,17 @@ class GiftsTable
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('gifter_id')
-                    ->numeric()
-                    ->sortable(),
+
+                TextColumn::make('gifter.name')
+                    ->label('Gifter')
+                    ->color('primary')
+                    ->url(function ($record) {
+                        $gifter = $record->gifter;
+                        if (! $gifter instanceof Player) {
+                            return null;
+                        }
+                        return FilamentPlayerResource::getUrl('edit', ['record' => $gifter]);
+                    }),
                 TextColumn::make('shopify_order_id')
                     ->searchable(),
                 TextColumn::make('value_per_code')

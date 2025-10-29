@@ -23,7 +23,8 @@ class MessagesTable
                 TextColumn::make('platform')
                     ->badge()
                     ->searchable(),
-                TextColumn::make('platform_message_id')
+                TextColumn::make('body.content')
+                    ->label('Body')
                     ->searchable(),
                 TextColumn::make('direction')
                     ->badge()
