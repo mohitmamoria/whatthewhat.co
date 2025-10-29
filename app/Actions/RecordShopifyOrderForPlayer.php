@@ -91,11 +91,10 @@ class RecordShopifyOrderForPlayer
         }
 
         $buyerPhones = collect([
-            data_get($order, 'billingAddress.phone'),
-            data_get($order, 'shippingAddress.phone'),
-            data_get($order, 'customer.defaultAddress.phone'),
+            phone_e164(data_get($order, 'billingAddress.phone'), data_get($order, 'billingAddress.countryCodeV2')),
+            phone_e164(data_get($order, 'shippingAddress.phone'), data_get($order, 'shippingAddress.countryCodeV2')),
+            phone_e164(data_get($order, 'customer.defaultAddress.phone'), data_get($order, 'customer.defaultAddress.countryCodeV2')),
         ])
-            ->filter()->map(fn($p) => phone_e164($p))
             ->filter()->map(fn($p) => normalize_phone($p));
 
         if ($buyerPhones->contains($referrer->number)) {
@@ -108,11 +107,10 @@ class RecordShopifyOrderForPlayer
     protected function identifyBuyer(array $order)
     {
         $phone = collect([
-            data_get($order, 'shippingAddress.phone'),
-            data_get($order, 'billingAddress.phone'),
-            data_get($order, 'customer.defaultAddress.phone'),
+            phone_e164(data_get($order, 'shippingAddress.phone'), data_get($order, 'shippingAddress.countryCodeV2')),
+            phone_e164(data_get($order, 'billingAddress.phone'), data_get($order, 'billingAddress.countryCodeV2')),
+            phone_e164(data_get($order, 'customer.defaultAddress.phone'), data_get($order, 'customer.defaultAddress.countryCodeV2')),
         ])
-            ->filter()->map(fn($p) => phone_e164($p))
             ->filter()->map(fn($p) => normalize_phone($p))
             ->first();
 

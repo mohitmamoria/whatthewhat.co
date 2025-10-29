@@ -9,9 +9,11 @@ query getOrder($id: ID!) {
         }
         shippingAddress {
             phone
+            countryCodeV2
         }
         billingAddress {
             phone
+            countryCodeV2
         }
         customer {
             id

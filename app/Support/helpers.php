@@ -75,8 +75,12 @@ if (! function_exists('phone_e164')) {
      * @param  string|null  $region  ISO 2-letter region (e.g. 'IN', 'US') - defaults to 'IN'
      * @return string|null   E.164 formatted number (e.g. +919876543210) or null if invalid
      */
-    function phone_e164(string $number, ?string $region = 'IN'): ?string
+    function phone_e164(?string $number, ?string $region = 'IN'): ?string
     {
+        if (is_null($number) || trim($number) === '') {
+            return null;
+        }
+
         $phoneUtil = PhoneNumberUtil::getInstance();
 
         try {
