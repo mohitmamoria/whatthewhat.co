@@ -125,8 +125,12 @@ class RecordShopifyOrderForPlayer
         return $buyer;
     }
 
-    protected function identifyActivity(string $sku)
+    protected function identifyActivity(?string $sku)
     {
+        if (is_null($sku)) {
+            return null;
+        }
+
         if (str($sku)->startsWith('wtw-book-')) {
             return ActivityType::WTW_PURCHASED;
         }
