@@ -2,6 +2,8 @@
 
 namespace App\Models\Gamification;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -29,5 +31,11 @@ class Activity extends Model
     public function owner()
     {
         return $this->morphTo();
+    }
+
+    #[Scope]
+    public function ofType(Builder $query, ActivityType $type)
+    {
+        return $query->where('type', $type);
     }
 }

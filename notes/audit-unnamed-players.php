@@ -1,10 +1,22 @@
 <?php
 
-$players = App\Models\Player::where('name', 'Player')->get();
+$received = App\Models\GiftCode::with('receiver')->received()->get();
 
-foreach ($players as $player) {
-    echo $player->name . ' - ' . $player->number . "\n";
-    $player->activities()->where('type', App\Models\Gamification\ActivityType::WTW_GIFT_RECEIVED)->get()->each(function ($activity) {
-        echo " Activity ID: " . $activity->id . "\n";
-    });
+$unnamed = [];
+foreach ($received as $giftCode) {
+    $receiver = $giftCode->receiver;
+    if (strtolower($receiver->name) === 'player') {
+        echo "Gift Code ID: {$giftCode->id}, Receiver ID: {$receiver->id}, Receiver Number: {$receiver->number}\n";
+        $unnamed[] = $giftCode;
+    }
+}
+
+$activities = [];
+foreach ($unnamed as $giftCode) {
+    $receiver = $giftCode->receiver;
+
+    $activities[$giftCode->name] = [
+        'number' => $receiver->number,
+        'activities' => $receiver->activities()->pluck('type')->map(fn($a) => $a->value)->toArray(),
+    ];
 }
