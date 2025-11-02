@@ -10,9 +10,11 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Forms\Components\RichEditor\TextColor;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
@@ -43,8 +45,10 @@ class GiftsTable
                 TextColumn::make('quantity')
                     ->numeric()
                     ->sortable(),
-                IconColumn::make('available_for_all')
-                    ->boolean(),
+                IconColumn::make('is_shipping_covered')->boolean(),
+                TextColumn::make('ready_codes_count')
+                    ->label('Available codes')->badge(),
+                ToggleColumn::make('available_for_all'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

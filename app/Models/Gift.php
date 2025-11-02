@@ -40,6 +40,13 @@ class Gift extends Model
         return $query->where('available_for_all', true);
     }
 
+    public function readyCodesCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->giftCodes()->ready()->count(),
+        );
+    }
+
     public function isShippingCovered(): Attribute
     {
         return Attribute::make(
