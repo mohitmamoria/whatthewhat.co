@@ -17,6 +17,24 @@ class GiftController extends Controller
         ]);
     }
 
+    public function lucky(Request $request, string $code)
+    {
+        if ($code !== env('GIFT_LUCKY_CODE')) {
+            return redirect()->route('home');
+        }
+
+        $gift = Gift::whereHas('giftCodes', function ($query) {
+            return $query->ready();
+        })->inRandomOrder()->first();
+
+        if (!is_null($gift)) {
+            return redirect()->route('gift.show', $gift);
+        }
+
+        $gift = Gift::inRandomOrder()->first();
+        return redirect()->route('gift.show', $gift);
+    }
+
     public function reserve(Request $request, Gift $gift)
     {
         $player = $request->user('player');

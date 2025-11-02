@@ -37,6 +37,7 @@ Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checko
 /**
  * GIFTING
  */
+Route::get('/gifts/lucky/{code}', [GiftController::class, 'lucky'])->name('gift.lucky');
 Route::get('/gifts/{gift:name}', [GiftController::class, 'show'])->name('gift.show');
 Route::middleware('auth:player')->group(function () {
     Route::post('/gifts/{gift:name}/reserve', [GiftController::class, 'reserve'])->name('gift.reserve');
