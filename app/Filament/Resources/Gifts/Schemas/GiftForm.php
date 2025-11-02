@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Gifts\Schemas;
 use App\Models\Player;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -30,6 +31,7 @@ class GiftForm
                 TextInput::make('quantity')
                     ->required()
                     ->numeric(),
+                Toggle::make('available_for_all'),
             ]);
     }
 }

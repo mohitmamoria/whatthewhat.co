@@ -23,7 +23,7 @@ class GiftController extends Controller
             return redirect()->route('home');
         }
 
-        $gift = Gift::whereHas('giftCodes', function ($query) {
+        $gift = Gift::availableForAll()->whereHas('giftCodes', function ($query) {
             return $query->ready();
         })->inRandomOrder()->first();
 
@@ -31,7 +31,7 @@ class GiftController extends Controller
             return redirect()->route('gift.show', $gift);
         }
 
-        $gift = Gift::inRandomOrder()->first();
+        $gift = Gift::availableForAll()->inRandomOrder()->first();
         return redirect()->route('gift.show', $gift);
     }
 
