@@ -131,7 +131,9 @@ class CalculateAdminStats
         $totalGiftsAvailable = 0;
         foreach ($gifts as $gift) {
             $totalGiftsGiven += $gift->quantity;
-            $totalGiftsAvailable += $gift->ready_codes_count;
+            if ($gift->is_available_for_all) {
+                $totalGiftsAvailable += $gift->ready_codes_count;
+            }
         }
 
         return compact('totalGiftsGiven', 'totalGiftsAvailable');

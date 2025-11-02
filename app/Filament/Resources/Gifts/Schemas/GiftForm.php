@@ -31,7 +31,7 @@ class GiftForm
                 TextInput::make('quantity')
                     ->required()
                     ->numeric(),
-                Toggle::make('available_for_all'),
+                Toggle::make('is_available_for_all'),
             ]);
     }
 }

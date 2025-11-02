@@ -21,7 +21,7 @@ class Gift extends Model
         'shopify_order_id',
         'value_per_code',
         'quantity',
-        'available_for_all',
+        'is_available_for_all',
     ];
 
     public function gifter()
@@ -37,7 +37,7 @@ class Gift extends Model
     #[Scope]
     protected function availableForAll(Builder $query): Builder
     {
-        return $query->where('available_for_all', true);
+        return $query->where('is_available_for_all', true);
     }
 
     public function readyCodesCount(): Attribute

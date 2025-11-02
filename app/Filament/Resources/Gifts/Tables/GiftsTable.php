@@ -48,7 +48,7 @@ class GiftsTable
                 IconColumn::make('is_shipping_covered')->boolean(),
                 TextColumn::make('ready_codes_count')
                     ->label('Available codes')->badge(),
-                ToggleColumn::make('available_for_all'),
+                ToggleColumn::make('is_available_for_all'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
