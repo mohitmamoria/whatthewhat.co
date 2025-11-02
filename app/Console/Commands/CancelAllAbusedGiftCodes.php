@@ -36,6 +36,11 @@ class CancelAllAbusedGiftCodes extends Command
             $activities = $receiver->activities()->ofType(ActivityType::WTW_PURCHASED)->get();
             $this->info(sprintf('Gift Code: %s; Receiver: %s (%s); Order Count: %d', $code->name, $receiver->number, $receiver->name, $activities->count()));
 
+            if ($activities->count() <= 1) {
+                $this->info("Skipping as no purchase activities found.");
+                continue;
+            }
+
             $orders = $activities->map(fn($a) => $a->meta['order_id'] ?? null)->filter()->unique();
             foreach ($orders as $orderId) {
                 $this->info(sprintf('Checking Order ID: %s', $orderId));
