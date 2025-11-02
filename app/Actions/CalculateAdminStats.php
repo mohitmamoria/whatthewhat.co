@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Enums\MessageStatus;
 use App\Models\Gamification\ActivityType;
+use App\Models\Gift;
 use App\Models\Player;
 use App\Services\Shopify\Shopify;
 use App\Services\Shopify\ShopifyException;
@@ -16,6 +17,8 @@ class CalculateAdminStats
 
         $shopifyStats = $this->booksAndCalendarsSold();
 
+        $giftStats = $this->giftStats();
+
         return nl2br(sprintf(
             "Total Players: %d
             \n
@@ -25,7 +28,9 @@ class CalculateAdminStats
             \n
             Books Sold: %d (@ %.2f%%)
             \n
-            Calendars Sold: %d",
+            Calendars Sold: %d
+            \n
+            Gifts Available: %d (of %d given)",
             $funnelStats['totalPlayers'],
             $funnelStats['playersWithBonusPages'],
             $funnelStats['invitedPlayers'],
@@ -34,6 +39,8 @@ class CalculateAdminStats
             $shopifyStats['booksSold'],
             ($shopifyStats['booksSold'] / $funnelStats['invitedPlayers']) * 100,
             $shopifyStats['calendarsSold'],
+            $giftStats['totalGiftsAvailable'],
+            $giftStats['totalGiftsGiven']
         ));
     }
 
@@ -114,5 +121,19 @@ class CalculateAdminStats
         });
 
         return compact('booksSold', 'calendarsSold');
+    }
+
+    protected function giftStats()
+    {
+        $gifts = Gift::all();
+
+        $totalGiftsGiven = 0;
+        $totalGiftsAvailable = 0;
+        foreach ($gifts as $gift) {
+            $totalGiftsGiven += $gift->quantity;
+            $totalGiftsAvailable += $gift->ready_codes_count;
+        }
+
+        return compact('totalGiftsGiven', 'totalGiftsAvailable');
     }
 }
