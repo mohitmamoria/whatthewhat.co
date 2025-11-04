@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import { Link } from '@inertiajs/vue3';
+</script>
 
 <template>
     <div class="rounded-xl bg-linear-to-b from-yellow-200 to-yellow-100 text-center">
@@ -19,13 +21,22 @@
                     <p>It's not a quiz book. It's not a fact book.</p>
 
                     <p class="mt-4">It's both&mdash;and more!</p>
-                    <a
-                        href="#buy"
-                        type="submit"
-                        class="mt-4 inline-block rounded-md bg-pink-600 px-2.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-pink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                        Buy Now &rarr;
-                    </a>
+
+                    <div class="mt-4 flex items-center justify-center gap-2">
+                        <a
+                            href="#buy"
+                            class="inline-block rounded-md bg-pink-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-pink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+                        >
+                            Buy for yourself &rarr;
+                        </a>
+
+                        <Link
+                            :href="route('shop.gift')"
+                            class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50"
+                        >
+                            Gift to the world &rarr;
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

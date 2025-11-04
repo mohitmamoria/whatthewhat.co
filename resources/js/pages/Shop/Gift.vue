@@ -1,6 +1,6 @@
 <script setup>
 import Shop from '@/layouts/Shop.vue';
-import AboutBook from '@/partials/AboutBook.vue';
+import AboutBookMinimal from '@/partials/AboutBookMinimal.vue';
 import GiftVariants from '@/partials/GiftVariants.vue';
 import TopGifters from '@/partials/TopGifters.vue';
 
@@ -18,7 +18,7 @@ const props = defineProps({
 
 <template>
     <Shop>
-        <AboutBook></AboutBook>
+        <AboutBookMinimal></AboutBookMinimal>
 
         <TopGifters class="mt-12" :gifts="gifts"></TopGifters>
 
