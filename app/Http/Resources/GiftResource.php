@@ -21,7 +21,7 @@ class GiftResource extends JsonResource
         return [
             'name' => $this->name,
             'gifter_name' => $this->gifter_name ?: $this->gifter->name,
-            'gifter' => PlayerResource::make($this->gifter),
+            // 'gifter' => PlayerResource::make($this->gifter),
             'is_shipping_covered' => $this->is_shipping_covered,
             'total_count' => $this->quantity,
             'ready_count' => $this->giftCodes()->ready()->count(),

@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="mt-12 bg-white py-12">
+    <div class="bg-white py-12">
         <div class="mx-auto max-w-7xl lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center">
                 <h2 class="text-sm font-semibold text-indigo-600">Make the world a more curious place</h2>

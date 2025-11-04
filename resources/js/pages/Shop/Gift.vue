@@ -1,11 +1,16 @@
-<script setup lang="ts">
+<script setup>
 import Shop from '@/layouts/Shop.vue';
 import AboutBook from '@/partials/AboutBook.vue';
 import GiftVariants from '@/partials/GiftVariants.vue';
+import TopGifters from '@/partials/TopGifters.vue';
 
 const props = defineProps({
     product: {
         type: Object,
+        required: true,
+    },
+    gifts: {
+        type: Array,
         required: true,
     },
 });
@@ -14,6 +19,8 @@ const props = defineProps({
 <template>
     <Shop>
         <AboutBook></AboutBook>
+
+        <TopGifters class="mt-12" :gifts="gifts"></TopGifters>
 
         <div id="buy">
             <GiftVariants :variants="product.variants"></GiftVariants>

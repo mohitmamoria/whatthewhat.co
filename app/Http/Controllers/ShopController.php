@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GiftResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Gift;
 use App\Models\Player;
 use App\Models\Product;
 use App\Services\Shopify\Shopify;
@@ -29,6 +31,7 @@ class ShopController extends Controller
 
         return inertia('Shop/Gift', [
             'product' => ProductResource::make($product),
+            'gifts' => GiftResource::collection(Gift::orderByDesc('quantity')->get()),
         ]);
     }
 
