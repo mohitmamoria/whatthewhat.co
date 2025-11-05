@@ -64,6 +64,7 @@ class PlayerAuthController extends Controller
     public function verify(Request $request)
     {
         $validated = $request->validate([
+            'country' => 'required|string|max:2',
             'phone' => 'required|string',
             'otp' => 'required|string',
             'next' => 'nullable|string',
