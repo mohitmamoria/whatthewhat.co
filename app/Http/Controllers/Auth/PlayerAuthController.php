@@ -64,10 +64,31 @@ class PlayerAuthController extends Controller
     public function verify(Request $request)
     {
         $validated = $request->validate([
-            'phone' => 'required|string|starts_with:+',
+            'phone' => 'required|string',
             'otp' => 'required|string',
             'next' => 'nullable|string',
         ]);
+
+        try {
+            $phoneUtil = PhoneNumberUtil::getInstance();
+
+            // Parse based on the country (region) provided
+            $proto = $phoneUtil->parse($validated['phone'], $validated['country']);
+
+            // Check validity
+            if (! $phoneUtil->isValidNumberForRegion($proto, $validated['country'])) {
+                throw ValidationException::withMessages([
+                    'phone' => 'The provided phone number is invalid for the selected country.',
+                ]);
+            }
+
+            // Convert to E.164 => +919876543210
+            $validated['phone'] = phone_e164($validated['phone'], $validated['country']);
+        } catch (NumberParseException $e) {
+            throw ValidationException::withMessages([
+                'phone' => 'The provided phone number is invalid.',
+            ]);
+        }
 
         $phone = normalize_phone($validated['phone']);
 
