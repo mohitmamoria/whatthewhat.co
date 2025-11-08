@@ -26,7 +26,7 @@ class CalculateAdminStats
             \n
             Players invited to order: %d (failed: %d -- %.2f%%)
             \n
-            Books Sold: %d (@ %.2f%%)
+            Books Sold: %d (with gifts: %d)
             \n
             Calendars Sold: %d
             \n
@@ -37,7 +37,7 @@ class CalculateAdminStats
             $funnelStats['invitesFailed'],
             ($funnelStats['invitesFailed'] / ($funnelStats['invitedPlayers'] + $funnelStats['invitesFailed'])) * 100,
             $shopifyStats['booksSold'],
-            ($shopifyStats['booksSold'] / $funnelStats['invitedPlayers']) * 100,
+            ($shopifyStats['booksSold'] + $giftStats['totalGiftsAvailable']),
             $shopifyStats['calendarsSold'],
             $giftStats['totalGiftsAvailable'],
             $giftStats['totalGiftsGiven']
