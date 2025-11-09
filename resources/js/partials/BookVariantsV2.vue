@@ -11,7 +11,7 @@ const props = defineProps({
 
 const badges = {
     'wtw-book-calendar': {
-        label: 'Includes Trivia Calendar 2026!',
+        label: '🔥 Selling Out Fast!',
         color: 'bg-yellow-50 text-yellow-700 ',
     },
     'wtw-book-calendar-duo': {
