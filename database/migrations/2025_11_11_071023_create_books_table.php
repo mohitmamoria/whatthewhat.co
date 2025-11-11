@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('markbook_books', function (Blueprint $table) {
             $table->id();
-            $table->string('openlibrary_work_id')->unique();
-            $table->string('google_books_volume_id')->unique();
+            $table->string('openlibrary_work_id')->nullable()->unique();
+            $table->string('google_books_volume_id')->nullable()->unique();
             $table->string('title');
             $table->json('authors');
             $table->string('cover_image_url')->nullable();

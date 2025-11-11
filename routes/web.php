@@ -6,6 +6,10 @@ use App\Enums\MessageStatus;
 use App\Http\Controllers\GiftCodeController;
 use App\Http\Controllers\GiftController;
 use App\Http\Controllers\GiftingController;
+use App\Http\Controllers\Markbook\BookSearchController;
+use App\Http\Controllers\Markbook\MarkbookFeedController;
+use App\Http\Controllers\Markbook\MarkbookLeaderboardController;
+use App\Http\Controllers\Markbook\ReadingController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopifyWebhookController;
@@ -56,8 +60,14 @@ Route::post('/webhooks/shopify', ShopifyWebhookController::class);
 /**
  * MARKBOOK
  */
-Route::get('/markbook');
-Route::get('/markbook/leaderboard'); // weekly, monthly, all-time
+Route::middleware('auth:player')->group(function () {
+    Route::get('/markbook', [MarkbookFeedController::class, 'index'])->name('markbook.feed');
+    Route::get('/markbook/books', BookSearchController::class)->name('markbook.book-search');
+
+    Route::post('/markbook/readings', [ReadingController::class, 'store'])->name('markbook.readings.store');
+
+    Route::get('/markbook/leaderboard/{duration}', [MarkbookLeaderboardController::class, 'index'])->name('markbook.leaderboard'); // weekly, monthly, all-time
+});
 
 
 if (app()->environment('local')) {
