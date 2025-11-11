@@ -45,11 +45,20 @@ Route::middleware('auth:player')->group(function () {
     Route::post('/gifts/{gift:name}/codes/{giftCode:name}/checkout', [GiftCodeController::class, 'checkout'])->name('gift_code.checkout');
 });
 
+/**
+ * WEBHOOKS
+ */
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
 Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
 Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
-
 Route::post('/webhooks/shopify', ShopifyWebhookController::class);
+
+/**
+ * MARKBOOK
+ */
+Route::get('/markbook');
+Route::get('/markbook/leaderboard'); // weekly, monthly, all-time
+
 
 if (app()->environment('local')) {
     Route::get('/webhooks/shopify/test', ShopifyWebhookController::class);
