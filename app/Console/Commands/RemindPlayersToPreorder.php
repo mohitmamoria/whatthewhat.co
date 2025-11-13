@@ -35,7 +35,8 @@ class RemindPlayersToPreorder extends Command
         $players = Player::whereHas('activities', function ($query) {
             $query->where('type', ActivityType::WTW_BONUS_PAGES_DOWNLOADED);
         })->whereDoesntHave('activities', function ($query) {
-            $query->where('type', ActivityType::WTW_PURCHASED);
+            $query->where('type', ActivityType::WTW_PURCHASED)
+                ->orWhere('type', ActivityType::WTW_REFERRED);
         })->whereDoesntHave('messages', function ($query) use ($message) {
             $query->where('body->content', $message);
         })->oldest()->limit($count)->get();
