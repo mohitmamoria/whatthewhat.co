@@ -43,7 +43,7 @@ const searchBooks = async (query) => {
 </script>
 
 <template>
-    <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm">
+    <div class="mt-12 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm">
         <div class="px-4 py-5 sm:px-6">What did you read today?</div>
         <div class="px-4 py-5 sm:p-6">
             <form @submit.prevent="submit" class="mx-auto max-w-xl">
