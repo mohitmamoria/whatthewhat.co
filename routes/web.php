@@ -7,6 +7,7 @@ use App\Http\Controllers\GiftCodeController;
 use App\Http\Controllers\GiftController;
 use App\Http\Controllers\GiftingController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\QR\HelloAuthorsController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopifyWebhookController;
 use App\Http\Controllers\WebhookController;
@@ -50,6 +51,12 @@ Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
 Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
 
 Route::post('/webhooks/shopify', ShopifyWebhookController::class);
+
+
+/**
+ * QR CODES
+ */
+Route::get('/hello-authors', [HelloAuthorsController::class, 'show'])->name('qr.hello_authors');
 
 if (app()->environment('local')) {
     Route::get('/webhooks/shopify/test', ShopifyWebhookController::class);
