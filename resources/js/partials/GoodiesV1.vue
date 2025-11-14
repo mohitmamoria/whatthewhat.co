@@ -13,7 +13,7 @@
                     <svg class="size-1.5 animate-ping fill-red-500" viewBox="0 0 6 6" aria-hidden="true">
                         <circle cx="3" cy="3" r="3" />
                     </svg>
-                    Only 2000 packs available.
+                    Less than 100 packs left now.
                 </span>
             </div>
 

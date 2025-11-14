@@ -1,81 +1,64 @@
 <script setup>
-import { ChatBubbleLeftEllipsisIcon } from '@heroicons/vue/20/solid';
+import { BookOpenIcon } from '@heroicons/vue/16/solid';
+import { BookmarkIcon } from '@heroicons/vue/20/solid';
+import { InfiniteScroll } from '@inertiajs/vue3';
 
-const activity = [
-    {
-        id: 1,
-        type: 'comment',
-        person: { name: 'Eduardo Benz', href: '#' },
-        imageUrl:
-            'https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-        comment:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tincidunt nunc ipsum tempor purus vitae id. Morbi in vestibulum nec varius. Et diam cursus quis sed purus nam.',
-        date: '6d ago',
+const props = defineProps({
+    readings: {
+        type: Object,
+        required: true,
     },
-    {
-        id: 4,
-        type: 'comment',
-        person: { name: 'Jason Meyers', href: '#' },
-        imageUrl:
-            'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-        comment:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tincidunt nunc ipsum tempor purus vitae id. Morbi in vestibulum nec varius. Et diam cursus quis sed purus nam. Scelerisque amet elit non sit ut tincidunt condimentum. Nisl ultrices eu venenatis diam.',
-        date: '2h ago',
-    },
-    {
-        id: 7,
-        type: 'comment',
-        person: { name: 'Eduardo Benz', href: '#' },
-        imageUrl:
-            'https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-        comment:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tincidunt nunc ipsum tempor purus vitae id. Morbi in vestibulum nec varius. Et diam cursus quis sed purus nam.',
-        date: '6d ago',
-    },
-];
+});
 </script>
 
 <template>
     <div class="mt-16 flow-root">
         <ul role="list" class="-mb-8">
-            <li v-for="(activityItem, activityItemIdx) in activity" :key="activityItem.id">
-                <div class="relative pb-8">
-                    <span
-                        v-if="activityItemIdx !== activity.length - 1"
-                        class="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200"
-                        aria-hidden="true"
-                    ></span>
-                    <div class="relative flex items-start space-x-3">
-                        <template v-if="activityItem.type === 'comment'">
+            <InfiniteScroll data="readings">
+                <li v-for="(reading, index) in readings.data" :key="reading.id">
+                    <div class="relative pb-8">
+                        <span
+                            v-if="index !== readings.data.length - 1"
+                            class="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200"
+                            aria-hidden="true"
+                        ></span>
+                        <div class="relative flex items-start space-x-3">
                             <div class="relative">
                                 <img
+                                    v-if="reading.book.cover_image_url"
                                     class="flex size-10 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white outline -outline-offset-1 outline-black/5"
-                                    :src="activityItem.imageUrl"
-                                    alt=""
+                                    :src="reading.book.cover_image_url"
+                                    :alt="reading.book.title"
                                 />
+                                <div
+                                    v-else
+                                    class="flex size-10 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white outline -outline-offset-1 outline-black/5"
+                                >
+                                    <BookOpenIcon class="size-8 text-pink-400" aria-hidden="true"></BookOpenIcon>
+                                </div>
 
                                 <span class="absolute -right-1 -bottom-0.5 rounded-tl bg-white px-0.5 py-px">
-                                    <ChatBubbleLeftEllipsisIcon class="size-5 text-gray-400" aria-hidden="true" />
+                                    <BookmarkIcon class="size-3 text-gray-400" aria-hidden="true" />
                                 </span>
                             </div>
                             <div class="min-w-0 flex-1">
                                 <div>
                                     <div class="flex items-center justify-between text-sm">
-                                        <a :href="activityItem.person.href" class="font-medium text-gray-900">What The What?!</a>
-                                        <time :datetime="activityItem.dateTime" class="flex-none py-0.5 text-xs/5 text-gray-500">{{
-                                            activityItem.date
+                                        <p class="font-medium text-gray-900">What The What?!</p>
+                                        <time :datetime="reading.created_at" class="flex-none py-0.5 text-xs/5 text-gray-500">{{
+                                            reading.created_at
                                         }}</time>
                                     </div>
-                                    <p class="mt-0.5 text-sm text-gray-500">23 pages</p>
+                                    <p class="mt-0.5 text-sm text-gray-500">{{ reading.pages_read }} pages</p>
                                 </div>
                                 <div class="mt-2 text-sm text-gray-700">
-                                    <p>{{ activityItem.comment }}</p>
+                                    <p>{{ reading.notes }}</p>
                                 </div>
                             </div>
-                        </template>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            </InfiniteScroll>
         </ul>
     </div>
 </template>

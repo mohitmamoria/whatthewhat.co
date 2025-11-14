@@ -3,6 +3,10 @@ import Combobox from '@/components/Combobox.vue';
 import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
+    selected: {
+        type: Object,
+        default: null,
+    },
     books: {
         type: Array,
         default: () => [],
@@ -10,7 +14,7 @@ const props = defineProps({
 });
 
 const form = useForm({
-    book: null,
+    book: props.selected,
     pages_read: 1,
     notes: '',
 });
@@ -60,7 +64,7 @@ const searchBooks = async (query) => {
                                 id="pages"
                                 v-model="form.pages_read"
                                 min="1"
-                                class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                                class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-pink-600"
                             />
                         </div>
                     </div>
@@ -72,7 +76,7 @@ const searchBooks = async (query) => {
                                 name="notes"
                                 id="notes"
                                 v-model="form.notes"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-pink-600 sm:text-sm/6"
                             ></textarea>
                         </div>
                     </div>

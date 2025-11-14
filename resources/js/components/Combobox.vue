@@ -56,7 +56,7 @@ watch(query, async (newQuery) => {
         <ComboboxLabel class="block text-sm/6 font-semibold text-gray-900">{{ label }}</ComboboxLabel>
         <div class="relative mt-2.5">
             <ComboboxInput
-                class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-pink-600"
                 @change="query = $event.target.value"
                 @blur="query = ''"
                 :display-value="(book) => book?.title"
@@ -80,7 +80,7 @@ watch(query, async (newQuery) => {
                         <li
                             :class="[
                                 'relative cursor-default px-3 py-2 select-none',
-                                active ? 'bg-indigo-600 text-white outline-hidden' : 'text-gray-900',
+                                active ? 'bg-pink-600 text-white outline-hidden' : 'text-gray-900',
                             ]"
                         >
                             <div class="flex">

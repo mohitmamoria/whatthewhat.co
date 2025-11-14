@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Markbook;
 
+use App\Actions\Markbook\CalculateMarkbookStats;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Markbook\BookResource;
+use App\Http\Resources\Markbook\ReadingResource;
 use App\Models\Markbook\Book;
 use Illuminate\Http\Request;
 
@@ -11,21 +13,18 @@ class MarkbookFeedController extends Controller
 {
     public function index(Request $request)
     {
-        $q = trim((string) $request->query('q', ''));
-        $limit = min((int) $request->query('limit', 10), 50);
+        $player = $request->user('player');
 
-        if ($q === '' || mb_strlen($q) < 2) {
-            $books = collect();
-        } else {
-            $books = BookResource::collection(
-                Book::whereLike('title', '%' . $q . '%')
-                    ->orWhereLike('authors', '%' . $q . '%')
-                    ->limit($limit)
-                    ->get()
-            );
-        }
+        $stats = (new CalculateMarkbookStats)($player);
+
+        $lastReading = $player->readings()->latest()->first();
+
+        $readings = $player->readings()->with('book')->latest()->paginate(20);
+
         return inertia('Markbook/Feed', [
-            'books' => $books,
+            'last_reading_book' => $lastReading ? new BookResource($lastReading->book) : null,
+            'stats' => $stats,
+            'readings' => inertia()->scroll(ReadingResource::collection($readings)),
         ]);
     }
 }
