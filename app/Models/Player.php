@@ -108,4 +108,9 @@ class Player extends Authenticatable
             return $activity;
         });
     }
+
+    public function comingSoonSubscriptions()
+    {
+        return $this->hasMany(ComingSoonSubscription::class);
+    }
 }
