@@ -49,4 +49,11 @@ class Product extends Model
             [$sku]
         )->first();
     }
+
+    public function isVariantSoldOut(string $variantShopifyId): bool
+    {
+        $variant = $this->variants->firstWhere('id', $variantShopifyId);
+
+        return $variant ? !$variant->is_available : false;
+    }
 }
