@@ -9,6 +9,7 @@ use App\Http\Controllers\GiftingController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\QR\ComingSoonController;
 use App\Http\Controllers\QR\HelloAuthorsController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopifyWebhookController;
 use App\Http\Controllers\WebhookController;
@@ -57,11 +58,13 @@ Route::post('/webhooks/shopify', ShopifyWebhookController::class);
 /**
  * QR CODES
  */
+Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware(['auth:player']);
+
 Route::get('/hello-authors', [HelloAuthorsController::class, 'show'])->name('qr.hello_authors');
+
 Route::get('/qr/coming-soon', [ComingSoonController::class, 'show'])->name('qr.coming_soon');
-Route::middleware('auth:player')->group(function () {
-    Route::post('/qr/coming-soon/subscription', [ComingSoonController::class, 'subscribe'])->name('qr.coming_soon.subscribe');
-});
+Route::post('/qr/coming-soon/subscription', [ComingSoonController::class, 'subscribe'])->name('qr.coming_soon.subscribe')->middleware('auth:player');
 
 if (app()->environment('local')) {
     Route::get('/webhooks/shopify/test', ShopifyWebhookController::class);

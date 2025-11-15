@@ -37,6 +37,11 @@ class Player extends Authenticatable
         return $this->hasMany(Message::class)->latest();
     }
 
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
+
     public function giftsGiven()
     {
         return $this->hasMany(Gift::class, 'gifter_id');
