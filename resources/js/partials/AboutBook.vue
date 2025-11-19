@@ -24,7 +24,7 @@ import { Link } from '@inertiajs/vue3';
 
                     <div class="mt-4 flex items-center justify-center gap-2">
                         <a
-                            href="#buy"
+                            href="https://amzn.in/d/2SCwDkI"
                             class="inline-block rounded-md bg-pink-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-pink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
                         >
                             Buy for yourself &rarr;
