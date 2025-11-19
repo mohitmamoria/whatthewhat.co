@@ -4,6 +4,7 @@ import AboutBook from '@/partials/AboutBook.vue';
 import BookVariantsV2 from '@/partials/BookVariantsV2.vue';
 import FAQ from '@/partials/FAQ.vue';
 import GoodiesV1 from '@/partials/GoodiesV1.vue';
+import SoldOut from '@/partials/SoldOut.vue';
 import Sticky from '@/partials/Sticky.vue';
 
 var props = defineProps({
@@ -16,6 +17,7 @@ var props = defineProps({
 
 <template>
     <Shop>
+        <SoldOut></SoldOut>
         <AboutBook></AboutBook>
 
         <!-- <Goodies></Goodies> -->
