@@ -40,6 +40,7 @@ Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checko
 /**
  * GIFTING
  */
+Route::get('/g', [GiftController::class, 'luckyOne'])->middleware(QuickHttpBasicAuth::class);
 Route::get('/gifts/lucky/{code}', [GiftController::class, 'lucky'])->name('gift.lucky');
 Route::get('/gifts/{gift:name}', [GiftController::class, 'show'])->name('gift.show');
 Route::middleware('auth:player')->group(function () {
