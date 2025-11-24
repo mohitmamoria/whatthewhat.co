@@ -29,7 +29,7 @@ const subscribe = () => {
             <div class="mx-auto max-w-7xl lg:px-8">
                 <div class="mx-auto max-w-2xl lg:text-center">
                     <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance">Coming Soon</p>
-                    <p class="mt-6 text-lg/8 text-gray-600">This page will become available on 25 November 2025.</p>
+                    <p class="mt-6 text-lg/8 text-gray-600">This page will become available on 5 December 2025.</p>
                     <div v-if="!loggedInPlayer" class="mt-10 flex items-center justify-center gap-x-6">
                         <Link
                             :href="route('auth.player.login', { next: route('qr.coming_soon', { page: props.intended }) })"
