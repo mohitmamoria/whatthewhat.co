@@ -7,6 +7,7 @@ use App\Http\Controllers\GiftCodeController;
 use App\Http\Controllers\GiftController;
 use App\Http\Controllers\GiftingController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\QotdController;
 use App\Http\Controllers\QR\ComingSoonController;
 use App\Http\Controllers\QR\HelloAuthorsController;
 use App\Http\Controllers\ReviewController;
@@ -49,6 +50,16 @@ Route::middleware('auth:player')->group(function () {
     Route::post('/gifts/{gift:name}/codes/{giftCode:name}/checkout', [GiftCodeController::class, 'checkout'])->name('gift_code.checkout');
 });
 
+/**
+ * QOTD
+ */
+Route::get('/qotd', [QotdController::class, 'index'])->name('qotd.index');
+Route::get('/qotd/play', [QotdController::class, 'play'])->name('qotd.play')->middleware('auth:player');
+Route::post('/qotd/attempts', [QotdController::class, 'attempt'])->name('qotd.attempt')->middleware('auth:player');
+
+/**
+ * WEBHOOKS
+ */
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
 Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
 Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
