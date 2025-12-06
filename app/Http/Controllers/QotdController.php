@@ -87,11 +87,14 @@ class QotdController extends Controller
             abort(403);
         }
 
-        $attempt->update([
-            'answer' => '[[TIMEOUT]]',
-            'is_correct' => false,
-            'time_spent' => $attempt->created_at->diffInSeconds(now()),
-        ]);
+        // Only if NOT already attempted or NOT timed out!
+        if ($attempt->time_spent === null) {
+            $attempt->update([
+                'answer' => '[[TIMEOUT]]',
+                'is_correct' => false,
+                'time_spent' => $attempt->created_at->diffInSeconds(now()),
+            ]);
+        }
 
         return redirect()->back();
     }

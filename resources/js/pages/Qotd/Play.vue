@@ -1,6 +1,7 @@
 <script setup>
 import Qotd from '@/layouts/Qotd.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps({
     attempt: {
@@ -12,53 +13,73 @@ const props = defineProps({
 const loggedInPlayer = usePage().props.auth.player;
 
 const form = useForm({
-    answer: null,
+    answer: props.attempt.answer,
 });
 
+const timeout = () => {
+    form.post(route('qotd.timeout', { attempt: props.attempt.name }));
+};
+const timeLeft = ref(15);
+const timer = setInterval(() => {
+    if (timeLeft.value > 0) {
+        timeLeft.value -= 1;
+    } else {
+        clearInterval(timer);
+        timeout();
+    }
+}, 1000);
+
 const submit = () => {
-    form.post(route('qotd.answer', { attempt: props.attempt.name }));
+    form.post(route('qotd.answer', { attempt: props.attempt.name }), {
+        onFinish: () => {
+            clearInterval(timer);
+        },
+    });
 };
 </script>
 
 <template>
     <Qotd>
-        {{ attempt }} {{ form }}
+        {{ timeLeft }} seconds left to answer
+        <form class="space-y-2" @submit.prevent="submit">
+            <div class="overflow-hidden rounded-lg bg-white shadow-sm">
+                <div class="px-4 py-5 sm:p-6">
+                    <article class="pros mb-8 whitespace-pre-wrap" v-html="attempt.question.body_html"></article>
 
-        <div>
-            <article class="pros mb-8 whitespace-pre-wrap" v-html="attempt.question.body_html"></article>
-
-            <form class="space-y-2" @submit.prevent="submit">
-                <div class="mt-2 grid grid-cols-1 gap-3">
-                    <label
-                        v-for="(option, index) in attempt.question.options"
-                        :key="index"
-                        :aria-label="option"
-                        class="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-gray-300 has-checked:bg-gray-300 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-gray-300 has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
-                    >
-                        <input
-                            type="radio"
-                            name="option"
-                            v-model="form.answer"
-                            :value="index"
-                            class="absolute inset-0 appearance-none focus:outline-none disabled:cursor-not-allowed"
-                        />
-                        <span class="text-sm font-medium text-gray-900">{{ option }}</span>
-                    </label>
+                    <div class="mt-2 grid grid-cols-1 gap-3">
+                        <label
+                            v-for="(option, index) in attempt.question.options"
+                            :key="index"
+                            :aria-label="option"
+                            class="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-gray-300 has-checked:bg-gray-300 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-gray-300 has-disabled:border-gray-400 has-disabled:opacity-60"
+                        >
+                            <input
+                                type="radio"
+                                name="option"
+                                v-model="form.answer"
+                                :value="index"
+                                :disabled="attempt.is_completed"
+                                class="absolute inset-0 appearance-none focus:outline-none disabled:cursor-not-allowed"
+                            />
+                            <span class="text-sm font-medium text-gray-900">{{ option }}</span>
+                        </label>
+                    </div>
                 </div>
-
-                <div>
-                    <button
-                        type="submit"
-                        :disabled="form.processing"
-                        class="flex w-full justify-center rounded-md bg-pink-600 px-3 py-1.5 text-sm leading-6 font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600 disabled:opacity-50"
-                    >
-                        Submit
-                    </button>
-                    <p class="mt-2 text-red-600">
-                        {{ form.errors.answer ? 'Please select an option to proceed.' : '' }}
-                    </p>
+                <div class="bg-gray-50 px-4 py-4 sm:px-6" v-if="!attempt.is_completed">
+                    <div>
+                        <button
+                            type="submit"
+                            :disabled="form.processing"
+                            class="flex w-full justify-center rounded-md bg-pink-600 px-3 py-1.5 text-sm leading-6 font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600 disabled:opacity-50"
+                        >
+                            Submit
+                        </button>
+                        <p class="mt-2 text-red-600">
+                            {{ form.errors.answer ? 'Please select an option to proceed.' : '' }}
+                        </p>
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </Qotd>
 </template>
