@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Attempt extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasUniqueName;
 
     protected $fillable = [
         'question_id',

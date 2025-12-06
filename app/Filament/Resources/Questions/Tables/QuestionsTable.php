@@ -18,6 +18,7 @@ class QuestionsTable
     {
         return $table
             ->columns([
+                TextColumn::make('name'),
                 TextColumn::make('asked_on')
                     ->date()
                     ->sortable(),

@@ -3,7 +3,7 @@ import Qotd from '@/layouts/Qotd.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
-    question: {
+    attempt: {
         type: Object,
         required: true,
     },
@@ -16,21 +16,21 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('qotd.attempt'));
+    form.post(route('qotd.answer', { attempt: props.attempt.name }));
 };
 </script>
 
 <template>
     <Qotd>
-        {{ question }} {{ form }}
+        {{ attempt }} {{ form }}
 
         <div>
-            <article class="pros mb-8 whitespace-pre-wrap" v-html="question.body_html"></article>
+            <article class="pros mb-8 whitespace-pre-wrap" v-html="attempt.question.body_html"></article>
 
             <form class="space-y-2" @submit.prevent="submit">
                 <div class="mt-2 grid grid-cols-1 gap-3">
                     <label
-                        v-for="(option, index) in question.options"
+                        v-for="(option, index) in attempt.question.options"
                         :key="index"
                         :aria-label="option"
                         class="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-gray-300 has-checked:bg-gray-300 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-gray-300 has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"

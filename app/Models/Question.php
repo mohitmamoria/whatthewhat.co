@@ -9,9 +9,10 @@ use Illuminate\Support\Str;
 
 class Question extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasUniqueName;
 
     protected $fillable = [
+        'name',
         'asked_on',
         'body',
         'options',

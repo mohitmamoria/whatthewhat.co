@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
             $table->date('asked_on');
             $table->text('body');
             $table->json('options');

@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('attempts', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
             $table->foreignIdFor(Question::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Player::class)->constrained()->cascadeOnDelete();
-            $table->string('answer');
-            $table->boolean('is_correct');
-            $table->unsignedInteger('time_spent');
+            $table->string('answer')->nullable();
+            $table->boolean('is_correct')->default(false);
+            $table->unsignedInteger('time_spent')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
