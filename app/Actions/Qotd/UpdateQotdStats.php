@@ -13,7 +13,7 @@ class UpdateQotdStats
 
         $answeredPercent = $totalAttempted > 0 ? round(($totalAnswered / $totalAttempted), 2) * 100 : 0;
 
-        $averageTimeTaken = $player->attempts()->correct()->avg('time_spent');
+        $averageTimeTaken = round($player->attempts()->correct()->avg('time_spent'), 2);
 
         // TBD: Calculate longest and current streaks
 
