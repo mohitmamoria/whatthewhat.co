@@ -19,7 +19,11 @@ class PatchQotdStats
         // Calculate the new average time taken by adding the current attempt's time to the weighted total
         // of previous attempts, then dividing by the new total number of answered attempts.
         // Formula: ((previous_average * previous_count) + new_value) / new_count
-        $averageTimeTaken = round(((($qotd->average_time_taken * $qotd->total_answered) + $attempt->time_spent) / $totalAnswered), 2);
+        if ($totalAnswered === 0) {
+            $averageTimeTaken = 0;
+        } else {
+            $averageTimeTaken = round(((($qotd->average_time_taken * $qotd->total_answered) + $attempt->time_spent) / $totalAnswered), 2);
+        }
 
         $player->qotd->update([
             'total_attempted' => $totalAttempted,

@@ -29,7 +29,7 @@ const features = [
             <dl class="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
                 <div v-for="feature in features" :key="feature.name" class="relative pl-9">
                     <dt class="inline font-semibold text-gray-900">
-                        <component :is="feature.icon" class="absolute top-1 left-1 size-5 text-indigo-600" aria-hidden="true" />
+                        <component :is="feature.icon" class="absolute top-1 left-1 size-5 text-pink-600" aria-hidden="true" />
                         {{ feature.name }}
                     </dt>
                 </div>
