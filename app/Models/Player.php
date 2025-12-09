@@ -7,6 +7,7 @@ use App\Models\Gamification\Activity;
 use App\Models\Gamification\ActivityType;
 use App\Models\Gamification\HasGamification;
 use App\Services\Idempotency\Idempotency;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,11 @@ class Player extends Authenticatable
     public function attempts()
     {
         return $this->hasMany(Attempt::class);
+    }
+
+    public function qotd(): HasOne
+    {
+        return $this->hasOne(QotdGame::class);
     }
 
     public static function byReferrerCode(string $code)

@@ -54,10 +54,13 @@ Route::middleware('auth:player')->group(function () {
  * QOTD
  */
 Route::get('/qotd', [QotdController::class, 'index'])->name('qotd.index');
-Route::post('/qotd/{question:name}/attempts', [QotdController::class, 'attempt'])->name('qotd.attempts')->middleware('auth:player');
-Route::get('/qotd/attempts/{attempt:name}', [QotdController::class, 'play'])->name('qotd.play')->middleware('auth:player');
-Route::post('/qotd/attempts/{attempt:name}/answers', [QotdController::class, 'answer'])->name('qotd.answer')->middleware('auth:player');
-Route::post('/qotd/attempts/{attempt:name}/timedout', [QotdController::class, 'timeout'])->name('qotd.timeout')->middleware('auth:player');
+Route::post('/qotd/join', [QotdController::class, 'join'])->name('qotd.join');
+Route::middleware('auth:player')->group(function () {
+    Route::post('/qotd/{question:name}/attempts', [QotdController::class, 'attempt'])->name('qotd.attempts');
+    Route::get('/qotd/attempts/{attempt:name}', [QotdController::class, 'play'])->name('qotd.play');
+    Route::post('/qotd/attempts/{attempt:name}/answers', [QotdController::class, 'answer'])->name('qotd.answer');
+    Route::post('/qotd/attempts/{attempt:name}/timedout', [QotdController::class, 'timeout'])->name('qotd.timeout');
+});
 
 /**
  * WEBHOOKS

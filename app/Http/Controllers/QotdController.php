@@ -3,21 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\AttemptResource;
+use App\Http\Resources\QotdGameResource;
 use App\Http\Resources\QuestionResource;
 use App\Models\Attempt;
+use App\Models\Gamification\ActivityType;
+use App\Models\QotdGame;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class QotdController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $question = Question::forToday();
 
+        $player = $request->user('player');
+        $game = $player?->qotd;
+
         return inertia('Qotd/Index', [
             'question' => QuestionResource::make($question),
+            'qotd_game' => $game ? QotdGameResource::make($game) : null,
         ]);
+    }
+
+    public function join(Request $request)
+    {
+        $player = $request->user('player');
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        DB::transaction(function () use ($player, $validated) {
+            $player->update([
+                'name' => $validated['name'],
+            ]);
+
+            $player->qotd()->firstOrCreate([
+                'joined_on' => now()->toDateString(),
+                'expires_on' => now()->addDays(QotdGame::DEFAULT_EXPIRES_DAYS)->toDateString(),
+            ]);
+
+            $player->acted(ActivityType::QOTD_JOINED);
+        });
+
+
+        return redirect()->back();
     }
 
     public function attempt(Request $request, Question $question)
@@ -30,9 +62,13 @@ class QotdController extends Controller
                 return $existing;
             }
 
-            return $player->attempts()->create([
+            $attempt = $player->attempts()->create([
                 'question_id' => $question->id,
             ]);
+
+            $player->acted(ActivityType::QOTD_ATTEMPTED, ['question_id' => $question->id]);
+
+            return $attempt;
         });
 
         return redirect()->route('qotd.play', ['attempt' => $attempt->name]);
@@ -65,16 +101,22 @@ class QotdController extends Controller
             'answer' => 'required|numeric|min:0|max:3',
         ]);
 
-        $attempted = $attempt->question->options[$validated['answer']];
+        $chosenOption = $attempt->question->options[$validated['answer']];
 
-        // Only if NOT already attempted or NOT timed out!
-        if ($attempt->time_spent === null) {
-            $attempt->update([
-                'answer' => $validated['answer'],
-                'is_correct' => $attempted['is_correct'],
-                'time_spent' => $attempt->created_at->diffInSeconds(now()),
-            ]);
-        }
+        DB::transaction(function () use ($player, $attempt, $chosenOption, $validated) {
+            // Only if NOT already attempted or NOT timed out!
+            if ($attempt->time_spent === null) {
+                $attempt->update([
+                    'answer' => $validated['answer'],
+                    'is_correct' => $chosenOption['is_correct'],
+                    'time_spent' => $attempt->created_at->diffInSeconds(now()),
+                ]);
+            }
+
+            if ($chosenOption['is_correct']) {
+                $player->acted(ActivityType::QOTD_ANSWERED, ['question_id' => $attempt->question_id]);
+            }
+        });
 
         return redirect()->back();
     }
