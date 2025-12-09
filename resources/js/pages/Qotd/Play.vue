@@ -20,14 +20,16 @@ const timeout = () => {
     form.post(route('qotd.timeout', { attempt: props.attempt.name }));
 };
 const timeLeft = ref(15);
-const timer = setInterval(() => {
-    if (timeLeft.value > 0) {
-        timeLeft.value -= 1;
-    } else {
-        clearInterval(timer);
-        timeout();
-    }
-}, 1000);
+if (!props.attempt.is_completed) {
+    const timer = setInterval(() => {
+        if (timeLeft.value > 0) {
+            timeLeft.value -= 1;
+        } else {
+            clearInterval(timer);
+            timeout();
+        }
+    }, 1000);
+}
 
 const submit = () => {
     form.post(route('qotd.answer', { attempt: props.attempt.name }), {
