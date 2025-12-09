@@ -4,7 +4,7 @@ namespace App\Actions\Qotd;
 
 use App\Models\Player;
 
-class UpdateQotdStats
+class RecalculateQotdStats
 {
     public function __invoke(Player $player): void
     {
@@ -14,8 +14,6 @@ class UpdateQotdStats
         $answeredPercent = $totalAttempted > 0 ? round(($totalAnswered / $totalAttempted), 2) * 100 : 0;
 
         $averageTimeTaken = round($player->attempts()->correct()->avg('time_spent'), 2);
-
-        // TBD: Calculate longest and current streaks
 
         $player->qotd->update([
             'total_attempted' => $totalAttempted,

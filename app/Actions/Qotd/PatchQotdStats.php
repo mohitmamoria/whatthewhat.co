@@ -21,8 +21,6 @@ class PatchQotdStats
         // Formula: ((previous_average * previous_count) + new_value) / new_count
         $averageTimeTaken = round(((($qotd->average_time_taken * $qotd->total_answered) + $attempt->time_spent) / $totalAnswered), 2);
 
-        // TBD: Calculate longest and current streaks
-
         $player->qotd->update([
             'total_attempted' => $totalAttempted,
             'total_answered' => $totalAnswered,
