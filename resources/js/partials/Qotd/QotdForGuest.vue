@@ -20,7 +20,7 @@ const features = [
 
 <template>
     <div class="mx-auto gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none">
-        <div class="">
+        <div>
             <p class="mt-2 text-center font-serif text-2xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-3xl">Question Of The Day</p>
             <p class="mt-6 text-lg/8 text-gray-700">
                 A daily game (100% free; no ads or paywalls) where you answer a fun trivia question to earn points and compete with other players on

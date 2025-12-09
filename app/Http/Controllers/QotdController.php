@@ -117,6 +117,7 @@ class QotdController extends Controller
 
         $validated = $request->validate([
             'answer' => 'required|numeric|min:0|max:3',
+            'time_left' => 'required|numeric|max:' . Attempt::TIME_PER_ATTEMPT,
         ]);
 
         $chosenOption = $attempt->question->options[$validated['answer']];
@@ -127,7 +128,7 @@ class QotdController extends Controller
                 $attempt->update([
                     'answer' => $validated['answer'],
                     'is_correct' => $chosenOption['is_correct'],
-                    'time_spent' => $attempt->created_at->diffInSeconds(now()),
+                    'time_spent' => Attempt::TIME_PER_ATTEMPT - $validated['time_left'],
                 ]);
 
                 (new PatchQotdStats)($player, $attempt);
@@ -155,7 +156,7 @@ class QotdController extends Controller
                 $attempt->update([
                     'answer' => Attempt::TIMEOUT_ANSWER,
                     'is_correct' => false,
-                    'time_spent' => $attempt->created_at->diffInSeconds(now()),
+                    'time_spent' => Attempt::TIME_PER_ATTEMPT,
                 ]);
 
                 (new PatchQotdStats)($player, $attempt);

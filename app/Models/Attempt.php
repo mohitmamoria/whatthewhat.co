@@ -12,6 +12,7 @@ class Attempt extends Model
 {
     use SoftDeletes, HasUniqueName;
 
+    const TIME_PER_ATTEMPT = 13; // seconds
     const TIMEOUT_ANSWER = '[[TIMEOUT]]';
 
     protected $fillable = [

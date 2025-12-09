@@ -32,7 +32,7 @@ class Question extends Model
 
     public static function forToday()
     {
-        $today = now('Asia/Kolkata')->addDay()->toDateString();
+        $today = now('Asia/Kolkata')->toDateString();
         return self::where('asked_on', $today)->first();
     }
 }

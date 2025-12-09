@@ -2,7 +2,7 @@
 import Qotd from '@/layouts/Qotd.vue';
 import { CheckCircleIcon } from '@heroicons/vue/20/solid';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 
 const props = defineProps({
     attempt: {
@@ -13,29 +13,56 @@ const props = defineProps({
 
 const loggedInPlayer = usePage().props.auth.player;
 
+const TIME_PER_QUESTION = props.attempt.time_left;
+
 const form = useForm({
     answer: props.attempt.answer,
+    time_left: TIME_PER_QUESTION,
 });
+
+const showOptions = ref(false);
+let timer = null;
 
 const timeout = () => {
     form.post(route('qotd.timeout', { attempt: props.attempt.name }));
 };
-const timeLeft = ref(15);
-const timer = setInterval(() => {
-    if (timeLeft.value > 0) {
-        timeLeft.value -= 1;
-    } else {
-        clearInterval(timer);
-        timeout();
+
+const startTimer = () => {
+    timer = setInterval(() => {
+        if (form.time_left > 0) {
+            form.time_left -= 1;
+        } else {
+            clearInterval(timer);
+            timeout();
+        }
+    }, 1000);
+};
+
+const onOptionsRevealed = () => {
+    if (!props.attempt.is_completed) {
+        startTimer();
     }
-}, 1000);
-if (props.attempt.is_completed) {
-    timeLeft.value = 0;
-    clearInterval(timer);
-}
+};
+
+onMounted(() => {
+    if (props.attempt.is_completed) {
+        showOptions.value = true;
+        form.time_left = 0;
+    } else {
+        setTimeout(() => {
+            showOptions.value = true;
+        }, 2000);
+    }
+});
+
+onUnmounted(() => {
+    if (timer) {
+        clearInterval(timer);
+    }
+});
 
 const barLength = computed(() => {
-    return 100 - ((15 - timeLeft.value) / 15) * 100;
+    return 100 - ((TIME_PER_QUESTION - form.time_left) / TIME_PER_QUESTION) * 100;
 });
 
 const submit = () => {
@@ -51,34 +78,54 @@ const submit = () => {
     <Qotd>
         <div v-if="!attempt.is_completed">
             <div class="mb-4 text-center">
-                <span class="rounded-full bg-pink-600 p-2 px-4 text-xl font-bold text-white">{{ timeLeft > 0 ? timeLeft : 'TIMES UP!' }}</span>
+                <span class="rounded-full bg-pink-600 p-2 px-4 text-xl font-bold text-white">{{
+                    form.time_left > 0 ? form.time_left : 'TIMES UP!'
+                }}</span>
             </div>
             <div class="my-2 overflow-hidden rounded-full bg-gray-200">
-                <div class="h-2 rounded-full bg-pink-600" :style="{ width: barLength + '%' }"></div>
+                <div class="h-2 rounded-full bg-pink-600 transition-[width] duration-300 ease-in-out" :style="{ width: barLength + '%' }"></div>
             </div>
         </div>
+
         <form class="space-y-2" @submit.prevent="submit">
             <div class="overflow-hidden rounded-lg bg-white shadow-sm">
                 <div class="px-4 py-5 sm:p-6">
-                    <article class="pros mb-8 whitespace-pre-wrap" v-html="attempt.question.body_html"></article>
+                    <span
+                        class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 inset-ring inset-ring-gray-500/10"
+                        >Question</span
+                    >
+                    <article class="prose prose-xl mb-8 whitespace-pre-wrap" v-html="attempt.question.body_html"></article>
 
-                    <div class="mt-2 grid grid-cols-1 gap-3">
-                        <label
-                            v-for="(option, index) in attempt.question.options"
-                            :key="index"
-                            :aria-label="option"
-                            class="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-gray-300 has-checked:bg-gray-300 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-gray-300 has-disabled:border-gray-400 has-disabled:opacity-60"
-                        >
-                            <input
-                                type="radio"
-                                name="option"
-                                v-model="form.answer"
-                                :value="index"
-                                :disabled="attempt.is_completed"
-                                class="absolute inset-0 appearance-none focus:outline-none disabled:cursor-not-allowed"
-                            />
-                            <span class="text-sm font-medium text-gray-900">{{ option }}</span>
-                        </label>
+                    <!-- Options -->
+                    <Transition
+                        enter-active-class="transition-all duration-300 ease-out"
+                        enter-from-class="opacity-0 translate-y-4"
+                        enter-to-class="opacity-100 translate-y-0"
+                        @after-enter="onOptionsRevealed"
+                    >
+                        <div v-if="showOptions" class="grid grid-cols-1 gap-3">
+                            <label
+                                v-for="(option, index) in attempt.question.options"
+                                :key="index"
+                                :aria-label="option"
+                                class="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-gray-300 has-checked:bg-gray-300 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-gray-300 has-disabled:border-gray-400 has-disabled:opacity-60"
+                            >
+                                <input
+                                    type="radio"
+                                    name="option"
+                                    v-model="form.answer"
+                                    :value="index"
+                                    :disabled="attempt.is_completed"
+                                    class="absolute inset-0 appearance-none focus:outline-none disabled:cursor-not-allowed"
+                                />
+                                <span class="text-sm font-medium text-gray-900">{{ option }}</span>
+                            </label>
+                        </div>
+                    </Transition>
+
+                    <!-- Skeleton placeholder while waiting for options -->
+                    <div v-if="!showOptions" class="grid grid-cols-1 gap-3">
+                        <div v-for="n in attempt.question.options?.length || 4" :key="n" class="h-12 animate-pulse rounded-md bg-gray-200"></div>
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-4 sm:px-6" v-if="!attempt.is_completed">

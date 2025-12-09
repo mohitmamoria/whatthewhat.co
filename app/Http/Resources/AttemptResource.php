@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Attempt;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,6 +22,7 @@ class AttemptResource extends JsonResource
             'time_spent' => $this->time_spent,
             'is_timedout' => $this->is_timedout,
             'is_completed' => $this->time_spent !== null,
+            'time_left' => Attempt::TIME_PER_ATTEMPT,
             'question' => $this->whenLoaded('question', QuestionResource::make($this->question)),
         ];
     }
