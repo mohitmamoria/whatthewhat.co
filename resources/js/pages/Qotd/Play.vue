@@ -2,7 +2,7 @@
 import Qotd from '@/layouts/Qotd.vue';
 import { CheckCircleIcon } from '@heroicons/vue/20/solid';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
     attempt: {
@@ -21,16 +21,22 @@ const timeout = () => {
     form.post(route('qotd.timeout', { attempt: props.attempt.name }));
 };
 const timeLeft = ref(15);
-if (!props.attempt.is_completed) {
-    const timer = setInterval(() => {
-        if (timeLeft.value > 0) {
-            timeLeft.value -= 1;
-        } else {
-            clearInterval(timer);
-            timeout();
-        }
-    }, 1000);
+const timer = setInterval(() => {
+    if (timeLeft.value > 0) {
+        timeLeft.value -= 1;
+    } else {
+        clearInterval(timer);
+        timeout();
+    }
+}, 1000);
+if (props.attempt.is_completed) {
+    timeLeft.value = 0;
+    clearInterval(timer);
 }
+
+const barLength = computed(() => {
+    return 100 - ((15 - timeLeft.value) / 15) * 100;
+});
 
 const submit = () => {
     form.post(route('qotd.answer', { attempt: props.attempt.name }), {
@@ -43,7 +49,14 @@ const submit = () => {
 
 <template>
     <Qotd>
-        {{ timeLeft }} seconds left to answer
+        <div v-if="!attempt.is_completed">
+            <div class="mb-4 text-center">
+                <span class="rounded-full bg-pink-600 p-2 px-4 text-xl font-bold text-white">{{ timeLeft > 0 ? timeLeft : 'TIMES UP!' }}</span>
+            </div>
+            <div class="my-2 overflow-hidden rounded-full bg-gray-200">
+                <div class="h-2 rounded-full bg-pink-600" :style="{ width: barLength + '%' }"></div>
+            </div>
+        </div>
         <form class="space-y-2" @submit.prevent="submit">
             <div class="overflow-hidden rounded-lg bg-white shadow-sm">
                 <div class="px-4 py-5 sm:p-6">

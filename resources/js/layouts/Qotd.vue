@@ -1,5 +1,6 @@
 <script setup>
 import PlayerTopBar from '@/partials/PlayerTopBar.vue';
+import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
@@ -9,7 +10,11 @@ import PlayerTopBar from '@/partials/PlayerTopBar.vue';
             <div class="mx-auto max-w-xl">
                 <PlayerTopBar></PlayerTopBar>
 
-                <header class="mb-12 text-center">QOTD LOGO</header>
+                <header class="mb-12 text-center">
+                    <Link :href="route('qotd.index')">
+                        <img src="/images/qotd/qotd-logo-vertical.svg" alt="QOTD Logo" class="mx-auto mt-6 h-10 w-auto" />
+                    </Link>
+                </header>
                 <!-- Content goes here -->
                 <slot></slot>
             </div>

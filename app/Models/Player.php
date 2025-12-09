@@ -68,7 +68,7 @@ class Player extends Authenticatable
         return static::where('referrer_code', $code)->first();
     }
 
-    public static function sync($name, $number, $shouldOverride = true): Player
+    public static function sync($name, $number, $shouldOverride = false): Player
     {
         $number = normalize_phone($number);
 

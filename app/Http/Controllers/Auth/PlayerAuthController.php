@@ -54,7 +54,7 @@ class PlayerAuthController extends Controller
 
         $phone = normalize_phone($validated['phone']);
 
-        $player = Player::sync(Player::DEFAULT_NAME, $phone, shouldOverride: false);
+        $player = Player::sync(Player::DEFAULT_NAME, $phone);
 
         (new SendOtp)($player);
 
@@ -93,7 +93,7 @@ class PlayerAuthController extends Controller
 
         $phone = normalize_phone($validated['phone']);
 
-        $player = Player::sync(Player::DEFAULT_NAME, $phone, shouldOverride: false);
+        $player = Player::sync(Player::DEFAULT_NAME, $phone);
 
         $verified = (new VerifyOtp)($player, $validated['otp']);
         if (! $verified) {
