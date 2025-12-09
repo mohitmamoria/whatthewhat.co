@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Qotd\UpdateQotdStats;
 use App\Http\Resources\AttemptResource;
 use App\Http\Resources\QotdGameResource;
 use App\Http\Resources\QuestionResource;
@@ -116,6 +117,8 @@ class QotdController extends Controller
             if ($chosenOption['is_correct']) {
                 $player->acted(ActivityType::QOTD_ANSWERED, ['question_id' => $attempt->question_id]);
             }
+
+            (new UpdateQotdStats)($player);
         });
 
         return redirect()->back();
@@ -129,14 +132,18 @@ class QotdController extends Controller
             abort(403);
         }
 
-        // Only if NOT already attempted or NOT timed out!
-        if ($attempt->time_spent === null) {
-            $attempt->update([
-                'answer' => '[[TIMEOUT]]',
-                'is_correct' => false,
-                'time_spent' => $attempt->created_at->diffInSeconds(now()),
-            ]);
-        }
+        DB::transaction(function () use ($player, $attempt) {
+            // Only if NOT already attempted or NOT timed out!
+            if ($attempt->time_spent === null) {
+                $attempt->update([
+                    'answer' => Attempt::TIMEOUT_ANSWER,
+                    'is_correct' => false,
+                    'time_spent' => $attempt->created_at->diffInSeconds(now()),
+                ]);
+            }
+
+            (new UpdateQotdStats)($player);
+        });
 
         return redirect()->back();
     }
