@@ -85,7 +85,7 @@ const submit = () => {
             </div>
         </form>
 
-        <div class="mt-12 rounded-md bg-pink-50 p-4">
+        <div class="mt-12 rounded-md bg-pink-50 p-4" v-if="attempt.is_completed">
             <div class="flex">
                 <div class="shrink-0">
                     <CheckCircleIcon class="size-5 text-pink-400" aria-hidden="true" />
