@@ -19,6 +19,7 @@ class AttemptResource extends JsonResource
             'answer' => $this->answer,
             'is_correct' => $this->is_correct,
             'time_spent' => $this->time_spent,
+            'is_timedout' => $this->is_timedout,
             'is_completed' => $this->time_spent !== null,
             'question' => $this->whenLoaded('question', QuestionResource::make($this->question)),
         ];

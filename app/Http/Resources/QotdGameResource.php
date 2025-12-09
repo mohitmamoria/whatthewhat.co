@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class QotdGameResource extends JsonResource
 {
@@ -15,12 +16,12 @@ class QotdGameResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'longest_streak' => $this->longest_streak,
-            'current_streak' => $this->current_streak,
+            'longest_streak' => sprintf('%d %s', $this->longest_streak, Str::plural('day', $this->longest_streak)),
+            'current_streak' => sprintf('%d %s', $this->current_streak, Str::plural('day', $this->current_streak)),
             'total_attempted' => $this->total_attempted,
             'total_answered' => $this->total_answered,
-            'answered_percent' => number_format($this->answered_percent, 2),
-            'average_time_taken' => number_format($this->average_time_taken, 2),
+            'answered_percent' => sprintf('%s%%', number_format($this->answered_percent, 2)),
+            'average_time_taken' => sprintf('%ss', number_format($this->average_time_taken, 2)),
         ];
     }
 }

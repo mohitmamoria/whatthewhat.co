@@ -56,6 +56,7 @@ Route::middleware('auth:player')->group(function () {
 Route::get('/qotd', [QotdController::class, 'index'])->name('qotd.index');
 Route::post('/qotd/join', [QotdController::class, 'join'])->name('qotd.join');
 Route::middleware('auth:player')->group(function () {
+    Route::get('/qotd/stats', [QotdController::class, 'stats'])->name('qotd.stats');
     Route::post('/qotd/{question:name}/attempts', [QotdController::class, 'attempt'])->name('qotd.attempts');
     Route::get('/qotd/attempts/{attempt:name}', [QotdController::class, 'play'])->name('qotd.play');
     Route::post('/qotd/attempts/{attempt:name}/answers', [QotdController::class, 'answer'])->name('qotd.answer');

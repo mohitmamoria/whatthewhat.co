@@ -1,6 +1,7 @@
 <script setup>
 import Qotd from '@/layouts/Qotd.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { CheckCircleIcon } from '@heroicons/vue/20/solid';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -83,5 +84,24 @@ const submit = () => {
                 </div>
             </div>
         </form>
+
+        <div class="mt-12 rounded-md bg-pink-50 p-4">
+            <div class="flex">
+                <div class="shrink-0">
+                    <CheckCircleIcon class="size-5 text-pink-400" aria-hidden="true" />
+                </div>
+                <div class="ml-3 flex-1 md:flex md:justify-between">
+                    <p class="text-sm text-pink-700" v-if="attempt.is_correct">Yay! You answered it correctly!</p>
+                    <p class="text-sm text-pink-700" v-else-if="attempt.is_timedout">Oops! The time ran out.</p>
+                    <p class="text-sm text-pink-700" v-else>Oops! That's incorrect.</p>
+                    <p class="mt-3 text-sm md:mt-0 md:ml-6">
+                        <Link :href="route('qotd.stats')" class="font-medium whitespace-nowrap text-pink-700 hover:text-pink-600">
+                            See your stats
+                            <span aria-hidden="true"> &rarr;</span>
+                        </Link>
+                    </p>
+                </div>
+            </div>
+        </div>
     </Qotd>
 </template>

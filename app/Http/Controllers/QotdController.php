@@ -29,6 +29,20 @@ class QotdController extends Controller
         ]);
     }
 
+    public function stats(Request $request)
+    {
+        $player = $request->user('player');
+        $game = $player?->qotd;
+
+        if (is_null($game)) {
+            return redirect()->route('qotd.index');
+        }
+
+        return inertia('Qotd/Stats', [
+            'qotd_game' => QotdGameResource::make($game),
+        ]);
+    }
+
     public function join(Request $request)
     {
         $player = $request->user('player');
