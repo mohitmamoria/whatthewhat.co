@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Actions\Qotd\PatchQotdStats;
 use App\Actions\Qotd\UpdateQotdStats;
 use App\Http\Resources\AttemptResource;
+use App\Http\Resources\PlayerResource;
 use App\Http\Resources\QotdGameResource;
 use App\Http\Resources\QuestionResource;
 use App\Models\Attempt;
 use App\Models\Gamification\ActivityType;
+use App\Models\Player;
 use App\Models\QotdGame;
 use App\Models\Question;
 use Illuminate\Http\Request;
@@ -22,9 +24,13 @@ class QotdController extends Controller
 
         $player = $request->user('player');
         $game = $player?->qotd;
+        $referrer = $request->query('ref')
+            ? Player::byReferrerCode($request->query('ref'))
+            : null;
 
         return inertia('Qotd/Index', [
             'question' => QuestionResource::make($question),
+            'referrer' => $referrer ? PlayerResource::make($referrer) : null,
             'qotd_game' => $game ? QotdGameResource::make($game) : null,
         ]);
     }
@@ -49,9 +55,14 @@ class QotdController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'ref'  => 'nullable|string|max:50',
         ]);
 
-        DB::transaction(function () use ($player, $validated) {
+        $referrer = $validated['ref']
+            ? Player::byReferrerCode($validated['ref'])
+            : null;
+
+        DB::transaction(function () use ($player, $referrer, $validated) {
             $player->update([
                 'name' => $validated['name'],
             ]);
@@ -59,9 +70,16 @@ class QotdController extends Controller
             $player->qotd()->firstOrCreate([
                 'joined_on' => now()->toDateString(),
                 'expires_on' => now()->addDays(QotdGame::DEFAULT_EXPIRES_DAYS)->toDateString(),
+                'referrer_id' => $referrer?->id,
             ]);
 
             $player->acted(ActivityType::QOTD_JOINED);
+
+            if ($referrer) {
+                $referrer->acted(ActivityType::QOTD_REFERRED, ['referred_player_id' => $player->id]);
+
+                $referrer->qotd->recalculateExpiry();
+            }
         });
 
 

@@ -37,7 +37,7 @@ const features = [
         </div>
         <div class="mt-12 text-center">
             <Link
-                :href="route('auth.player.login', { next: route('qotd.index') })"
+                :href="route('auth.player.login', { next: $page.props.url })"
                 class="rounded-md bg-gray-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
                 >Login using WhatsApp to play &rarr;</Link
             >

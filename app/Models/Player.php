@@ -7,6 +7,7 @@ use App\Models\Gamification\Activity;
 use App\Models\Gamification\ActivityType;
 use App\Models\Gamification\HasGamification;
 use App\Services\Idempotency\Idempotency;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -61,6 +62,11 @@ class Player extends Authenticatable
     public function qotd(): HasOne
     {
         return $this->hasOne(QotdGame::class);
+    }
+
+    public function referredQotds(): HasMany
+    {
+        return $this->hasMany(QotdGame::class, 'referrer_id');
     }
 
     public static function byReferrerCode(string $code)

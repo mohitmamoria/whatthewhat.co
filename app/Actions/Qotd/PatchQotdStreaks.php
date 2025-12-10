@@ -16,35 +16,40 @@ class PatchQotdStreaks
 
         $from = $qotd->last_streak_calculated_at;
 
-        $attempts = $player->attempts()
-            ->where('created_at', '>', $from)
-            ->orderBy('created_at', 'asc')
-            ->get();
+        // By default, consider that it is a fresh new streak
+        $longestStreak = 1;
+        $currentStreak = 1;
+        $longestStreakStartAttemptId = $attempt->id;
+        $currentStreakStartAttemptId = $attempt->id;
 
-        $lastCalculatedAttempt = $player->attempts()
-            ->where('created_at', '<=', $from)
-            ->orderBy('created_at', 'desc')
-            ->first();
+        // Only recalculate if we have a last calculated timestamp
+        if ($from) {
+            $lastCalculatedAttempt = $player->attempts()
+                ->where('created_at', '<=', $from)
+                ->orderBy('created_at', 'desc')
+                ->first();
 
-        $attemptDate = $attempt->created_at->tz(self::TIMEZONE)->toDateString();
-        $lastAttemptDate = $lastCalculatedAttempt->created_at->tz(self::TIMEZONE)->toDateString();
+            $attemptDate = $attempt->created_at->tz(self::TIMEZONE)->toDateString();
+            $lastAttemptDate = $lastCalculatedAttempt->created_at->tz(self::TIMEZONE)->toDateString();
 
-        $longestStreak = $qotd->longest_streak;
-        $currentStreak = $qotd->current_streak;
-        $longestStreakStartAttemptId = $qotd->longest_streak_start_attempt_id;
-        $currentStreakStartAttemptId = $qotd->current_streak_start_attempt_id;
+            $longestStreak = $qotd->longest_streak;
+            $currentStreak = $qotd->current_streak;
+            $longestStreakStartAttemptId = $qotd->longest_streak_start_attempt_id;
+            $currentStreakStartAttemptId = $qotd->current_streak_start_attempt_id;
 
-        if (Carbon::parse($attemptDate)->diffInDays(Carbon::parse($lastAttemptDate)) === 1) {
-            $currentStreak++;
-        } else {
-            $currentStreak = 1;
-            $currentStreakStartAttemptId = $attempt->id;
+            if (Carbon::parse($attemptDate)->diffInDays(Carbon::parse($lastAttemptDate)) === 1) {
+                $currentStreak++;
+            } else {
+                $currentStreak = 1;
+                $currentStreakStartAttemptId = $attempt->id;
+            }
+
+            if ($currentStreak > $longestStreak) {
+                $longestStreak = $currentStreak;
+                $longestStreakStartAttemptId = $currentStreakStartAttemptId;
+            }
         }
 
-        if ($currentStreak > $longestStreak) {
-            $longestStreak = $currentStreak;
-            $longestStreakStartAttemptId = $currentStreakStartAttemptId;
-        }
 
         $player->qotd->update([
             'longest_streak' => $longestStreak,

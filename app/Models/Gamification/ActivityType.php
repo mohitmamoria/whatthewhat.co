@@ -11,6 +11,7 @@ enum ActivityType: string
     case QOTD_JOINED = 'qotd_joined';
     case QOTD_ATTEMPTED = 'qotd_attempted';
     case QOTD_ANSWERED = 'qotd_answered';
+    case QOTD_REFERRED = 'qotd_referred';
     case QOTD_HINT_TAKEN = 'qotd_hint_taken';
 
     public function label(): string
@@ -23,6 +24,7 @@ enum ActivityType: string
             self::QOTD_JOINED => 'QOTD Joined',
             self::QOTD_ATTEMPTED => 'QOTD Attempted',
             self::QOTD_ANSWERED => 'QOTD Answered',
+            self::QOTD_REFERRED => 'QOTD Referred',
             self::QOTD_HINT_TAKEN => 'QOTD Hint Taken',
         };
     }
@@ -34,6 +36,7 @@ enum ActivityType: string
             self::QOTD_JOINED => 100,
             self::QOTD_ATTEMPTED => 10,
             self::QOTD_ANSWERED => 20,
+            self::QOTD_REFERRED => 100,
             self::QOTD_HINT_TAKEN => -10,
             default => 0,
         };
