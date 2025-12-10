@@ -7,6 +7,7 @@ use App\Http\Controllers\GiftCodeController;
 use App\Http\Controllers\GiftController;
 use App\Http\Controllers\GiftingController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\QotdController;
 use App\Http\Controllers\QR\ComingSoonController;
 use App\Http\Controllers\QR\HelloAuthorsController;
 use App\Http\Controllers\ReviewController;
@@ -49,6 +50,22 @@ Route::middleware('auth:player')->group(function () {
     Route::post('/gifts/{gift:name}/codes/{giftCode:name}/checkout', [GiftCodeController::class, 'checkout'])->name('gift_code.checkout');
 });
 
+/**
+ * QOTD
+ */
+Route::get('/qotd', [QotdController::class, 'index'])->name('qotd.index');
+Route::middleware('auth:player')->group(function () {
+    Route::post('/qotd/join', [QotdController::class, 'join'])->name('qotd.join');
+    Route::get('/qotd/stats', [QotdController::class, 'stats'])->name('qotd.stats');
+    Route::post('/qotd/{question:name}/attempts', [QotdController::class, 'attempt'])->name('qotd.attempts');
+    Route::get('/qotd/attempts/{attempt:name}', [QotdController::class, 'play'])->name('qotd.play');
+    Route::post('/qotd/attempts/{attempt:name}/answers', [QotdController::class, 'answer'])->name('qotd.answer');
+    Route::post('/qotd/attempts/{attempt:name}/timedout', [QotdController::class, 'timeout'])->name('qotd.timeout');
+});
+
+/**
+ * WEBHOOKS
+ */
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
 Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
 Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);

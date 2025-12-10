@@ -22,6 +22,18 @@ class SendMessageOnWhatsapp
             return $this->recordMessage($response, $player, $message, $components);
         }
 
+        if (str_starts_with($message, Message::INTERACTIVE_PREFIX)) {
+            $message = substr($message, strlen(Message::INTERACTIVE_PREFIX));
+            $interactive = [
+                ...$components,
+                'body' => [
+                    'text' => $message,
+                ],
+            ];
+            $response = (new Whatsapp)->sendInteractive($player->number, $interactive);
+            return $this->recordMessage($response, $player, $message, $components);
+        }
+
         $response = (new Whatsapp)->sendText($player->number, $message);
         return $this->recordMessage($response, $player, $message, $components);
     }

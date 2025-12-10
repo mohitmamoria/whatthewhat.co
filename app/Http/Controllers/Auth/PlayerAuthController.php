@@ -54,7 +54,7 @@ class PlayerAuthController extends Controller
 
         $phone = normalize_phone($validated['phone']);
 
-        $player = Player::sync(Player::DEFAULT_NAME, $phone, shouldOverride: false);
+        $player = Player::sync(Player::DEFAULT_NAME, $phone);
 
         (new SendOtp)($player);
 
@@ -93,7 +93,7 @@ class PlayerAuthController extends Controller
 
         $phone = normalize_phone($validated['phone']);
 
-        $player = Player::sync(Player::DEFAULT_NAME, $phone, shouldOverride: false);
+        $player = Player::sync(Player::DEFAULT_NAME, $phone);
 
         $verified = (new VerifyOtp)($player, $validated['otp']);
         if (! $verified) {
@@ -114,6 +114,21 @@ class PlayerAuthController extends Controller
     public function logout(Request $request)
     {
         auth('player')->logout();
+
+        return redirect()->route('home');
+    }
+
+    public function directLogin(Request $request, Player $player)
+    {
+        $validated = $request->validate([
+            'next' => 'sometimes|string',
+        ]);
+
+        auth('player')->login($player);
+
+        if (data_get($validated, 'next')) {
+            return redirect()->intended(data_get($validated, 'next'));
+        }
 
         return redirect()->route('home');
     }

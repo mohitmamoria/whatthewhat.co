@@ -7,6 +7,8 @@ use App\Models\Gamification\Activity;
 use App\Models\Gamification\ActivityType;
 use App\Models\Gamification\HasGamification;
 use App\Services\Idempotency\Idempotency;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -52,12 +54,27 @@ class Player extends Authenticatable
         return $this->hasMany(GiftCode::class, 'receiver_id');
     }
 
+    public function attempts()
+    {
+        return $this->hasMany(Attempt::class);
+    }
+
+    public function qotd(): HasOne
+    {
+        return $this->hasOne(QotdGame::class);
+    }
+
+    public function referredQotds(): HasMany
+    {
+        return $this->hasMany(QotdGame::class, 'referrer_id');
+    }
+
     public static function byReferrerCode(string $code)
     {
         return static::where('referrer_code', $code)->first();
     }
 
-    public static function sync($name, $number, $shouldOverride = true): Player
+    public static function sync($name, $number, $shouldOverride = false): Player
     {
         $number = normalize_phone($number);
 
@@ -112,6 +129,15 @@ class Player extends Authenticatable
 
             return $activity;
         });
+    }
+
+    public function directLoginUrlTo(?string $next = null)
+    {
+        return url()
+            ->temporarySignedRoute('auth.player.login.direct', now()->addMinutes(10), [
+                'player' => $this->referrer_code,
+                'next' => $next
+            ]);
     }
 
     public function comingSoonSubscriptions()
