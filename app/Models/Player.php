@@ -131,6 +131,15 @@ class Player extends Authenticatable
         });
     }
 
+    public function directLoginUrlTo(?string $next = null)
+    {
+        return url()
+            ->temporarySignedRoute('auth.player.login.direct', now()->addMinutes(10), [
+                'player' => $this->referrer_code,
+                'next' => $next
+            ]);
+    }
+
     public function comingSoonSubscriptions()
     {
         return $this->hasMany(ComingSoonSubscription::class);

@@ -117,4 +117,19 @@ class PlayerAuthController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function directLogin(Request $request, Player $player)
+    {
+        $validated = $request->validate([
+            'next' => 'sometimes|string',
+        ]);
+
+        auth('player')->login($player);
+
+        if (data_get($validated, 'next')) {
+            return redirect()->intended(data_get($validated, 'next'));
+        }
+
+        return redirect()->route('home');
+    }
 }

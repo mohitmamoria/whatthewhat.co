@@ -8,4 +8,6 @@ Route::prefix('/auth')->name('auth.')->group(function () {
     Route::post('/players/otp', [PlayerAuthController::class, 'otp'])->name('player.otp');
     Route::post('/players/verify', [PlayerAuthController::class, 'verify'])->name('player.verify');
     Route::post('/players/logout', [PlayerAuthController::class, 'logout'])->name('player.logout');
+
+    Route::get('/players/login/{player:referrer_code}', [PlayerAuthController::class, 'directLogin'])->name('player.login.direct')->middleware('signed');
 });
