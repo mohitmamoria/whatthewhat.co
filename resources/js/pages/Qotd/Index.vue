@@ -27,6 +27,7 @@ const join = () => {
 
 <template>
     <Qotd>
+        {{ qotd_game }}
         <div v-if="!loggedInPlayer" class="mt-10 flex items-center justify-center gap-x-6">
             <QotdForGuest />
         </div>

@@ -16,6 +16,7 @@ class QotdGameResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'is_expired' => $this->is_expired,
             'longest_streak' => sprintf('%d %s', $this->longest_streak, Str::plural('day', $this->longest_streak)),
             'current_streak' => sprintf('%d %s', $this->current_streak, Str::plural('day', $this->current_streak)),
             'total_attempted' => $this->total_attempted,

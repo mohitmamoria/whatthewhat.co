@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -44,5 +45,12 @@ class QotdGame extends Model
     public function currentStreakStartAttempt()
     {
         return $this->belongsTo(Attempt::class, 'current_streak_start_attempt_id');
+    }
+
+    protected function isExpired(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->expires_on->isPast(),
+        );
     }
 }
