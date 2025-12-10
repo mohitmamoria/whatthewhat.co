@@ -15,6 +15,7 @@ class Message extends Model
     use SoftDeletes;
 
     const TEMPLATE_PREFIX = '__t:';
+    const INTERACTIVE_PREFIX = '__i:';
 
     protected $fillable = [
         'platform',
