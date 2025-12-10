@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Qotd\PatchQotdStats;
+use App\Actions\Qotd\RecalculateQotdStats;
+use App\Actions\Qotd\RecalculateQotdStreaks;
 use App\Actions\Qotd\UpdateQotdStats;
 use App\Http\Resources\AttemptResource;
 use App\Http\Resources\PlayerResource;
@@ -100,8 +102,6 @@ class QotdController extends Controller
                 'question_id' => $question->id,
             ]);
 
-            (new PatchQotdStats)($player, $attempt);
-
             $player->acted(ActivityType::QOTD_ATTEMPTED, ['question_id' => $question->id]);
 
             return $attempt;
@@ -149,7 +149,8 @@ class QotdController extends Controller
                     'time_spent' => Attempt::TIME_PER_ATTEMPT - $validated['time_left'],
                 ]);
 
-                (new PatchQotdStats)($player, $attempt);
+                (new RecalculateQotdStats)($player);
+                (new RecalculateQotdStreaks)($player);
             }
 
             if ($chosenOption['is_correct']) {
@@ -177,7 +178,8 @@ class QotdController extends Controller
                     'time_spent' => Attempt::TIME_PER_ATTEMPT,
                 ]);
 
-                (new PatchQotdStats)($player, $attempt);
+                (new RecalculateQotdStats)($player);
+                (new RecalculateQotdStreaks)($player);
             }
         });
 
