@@ -51,4 +51,11 @@ class Attempt extends Model
             get: fn() => $this->answer === self::TIMEOUT_ANSWER,
         );
     }
+
+    public function isCompleted(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->time_spent !== null,
+        );
+    }
 }

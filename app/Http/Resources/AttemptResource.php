@@ -21,8 +21,15 @@ class AttemptResource extends JsonResource
             'is_correct' => $this->is_correct,
             'time_spent' => $this->time_spent,
             'is_timedout' => $this->is_timedout,
-            'is_completed' => $this->time_spent !== null,
+            'is_completed' => $this->is_completed,
             'time_left' => Attempt::TIME_PER_ATTEMPT,
+            'correct_answer_index' => $this->when($this->is_completed, function () {
+                foreach ($this->question->options as $index => $option) {
+                    if ($option['is_correct']) {
+                        return $index;
+                    }
+                }
+            }),
             'question' => $this->whenLoaded('question', QuestionResource::make($this->question)),
         ];
     }
