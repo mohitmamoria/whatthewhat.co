@@ -34,6 +34,12 @@ class SendQotdReminderToPlayers extends Command
 
         $players = Player::query()
             ->whereHas('qotd')
+            // where has an incoming message from the player in the last 24 hours
+            ->whereHas('messages', function ($query) {
+                $query
+                    ->where('direction', MessageDirection::INCOMING)
+                    ->where('created_at', '>', now()->subHours(24));
+            })
             // where the last QOTD related message sent to the player was more than 23.5 hours ago
             ->whereDoesntHave('messages', function ($query) {
                 $query
