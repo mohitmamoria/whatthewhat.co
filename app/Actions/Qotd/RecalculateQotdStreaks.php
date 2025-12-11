@@ -30,7 +30,7 @@ class RecalculateQotdStreaks
 
             $longestStreakStartAttemptId = $currentStreakStartAttemptId = $attempt->id;
 
-            if ($lastAttemptDate === null || Carbon::parse($attemptDate)->diffInDays(Carbon::parse($lastAttemptDate)) === 1) {
+            if ($lastAttemptDate === null || Carbon::parse($lastAttemptDate)->diffInDays(Carbon::parse($attemptDate)) === 1.0) {
                 $currentStreak++;
             } else {
                 $currentStreak = 1;

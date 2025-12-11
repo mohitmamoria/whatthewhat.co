@@ -37,7 +37,7 @@ class PatchQotdStreaks
             $longestStreakStartAttemptId = $qotd->longest_streak_start_attempt_id;
             $currentStreakStartAttemptId = $qotd->current_streak_start_attempt_id;
 
-            if (Carbon::parse($attemptDate)->diffInDays(Carbon::parse($lastAttemptDate)) === 1) {
+            if (Carbon::parse($lastAttemptDate)->diffInDays(Carbon::parse($attemptDate)) === 1.0) {
                 $currentStreak++;
             } else {
                 $currentStreak = 1;
