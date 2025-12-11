@@ -104,7 +104,11 @@ class WhatsappWebhookController extends Controller
             $body = data_get($value, 'messages.0.button.text');
         }
 
-        Log::info('WEBHOOK_PAYLOAD', [$name, $messageId, $number, $body, $value]);
+        if (is_null($body)) {
+            $body = data_get($value, 'messages.0.interactive.button_reply.title');
+        }
+
+        Log::info('WEBHOOK_PAYLOAD', [$name, $messageId, $number, $body]);
         $this->sendRequiredInfo($name, $number, $body, $messageId);
         return 'OK';
     }
