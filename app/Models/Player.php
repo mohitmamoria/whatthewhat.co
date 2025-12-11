@@ -69,6 +69,33 @@ class Player extends Authenticatable
         return $this->hasMany(QotdGame::class, 'referrer_id');
     }
 
+    public function getQotdStreakString($days = 21, $pad = false)
+    {
+        $streak = [];
+        $from = now()->subDays($days);
+        if ($this->qotd->joined_on->greaterThan($from)) {
+            $from = $this->qotd->joined_on;
+        }
+
+        for ($date = $from; $date->lessThanOrEqualTo(now()); $date->addDay()) {
+            $attempted = $this->attempts()
+                ->whereDate('created_at', $date->toDateString())
+                ->exists();
+
+            if ($attempted) {
+                $streak[] = '✅';
+            } else {
+                $streak[] = '⬜️';
+            }
+        }
+
+        if ($pad && count($streak) < $days) {
+            $streak = array_merge($streak, array_fill(0, $days - count($streak), '⬜️'));
+        }
+
+        return implode('', $streak);
+    }
+
     public static function byReferrerCode(string $code)
     {
         return static::where('referrer_code', $code)->first();
