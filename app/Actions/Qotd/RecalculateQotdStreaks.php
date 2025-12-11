@@ -28,7 +28,9 @@ class RecalculateQotdStreaks
         foreach ($attempts as $attempt) {
             $attemptDate = $attempt->created_at->tz(self::TIMEZONE)->toDateString();
 
-            $longestStreakStartAttemptId = $currentStreakStartAttemptId = $attempt->id;
+            if ($currentStreak === 0) {
+                $currentStreakStartAttemptId = $attempt->id;
+            }
 
             if ($lastAttemptDate === null || Carbon::parse($lastAttemptDate)->diffInDays(Carbon::parse($attemptDate)) === 1.0) {
                 $currentStreak++;
