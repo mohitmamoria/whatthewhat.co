@@ -1,6 +1,5 @@
 <script setup>
 import { CakeIcon, ChartBarIcon, SquaresPlusIcon } from '@heroicons/vue/20/solid';
-import { Link } from '@inertiajs/vue3';
 
 const features = [
     {
@@ -36,11 +35,17 @@ const features = [
             </dl>
         </div>
         <div class="mt-12 text-center">
-            <Link
-                :href="route('auth.player.login', { next: $page.props.url })"
+            <a
+                href="https://wa.me/message/U2K5MFCV5XI4H1"
                 class="rounded-md bg-gray-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
-                >Login using WhatsApp to play &rarr;</Link
             >
+                Login using WhatsApp to play &rarr;
+            </a>
+            <div class="mt-6">
+                <p>or, scan the QR code below:</p>
+
+                <img src="/images/qotd/play-qotd-qr.png" alt="Scan to start playing QOTD" class="mx-auto w-1/2 sm:w-32" />
+            </div>
         </div>
     </div>
 </template>
