@@ -45,6 +45,15 @@ class RecalculateQotdStreaks
             $lastAttemptDate = $attemptDate;
         }
 
+        // If the last attempt day was sometime before yesterday (i.e., more than 1 day ago), make the current streak 0
+        if (
+            !is_null($lastAttemptDate) &&
+            Carbon::parse($lastAttemptDate, self::TIMEZONE)->diffInDays(now()->tz(self::TIMEZONE)) >= 2.0
+        ) {
+            $currentStreak = 0;
+            $currentStreakStartAttemptId = null;
+        }
+
         $player->qotd->update([
             'longest_streak' => $longestStreak,
             'current_streak' => $currentStreak,

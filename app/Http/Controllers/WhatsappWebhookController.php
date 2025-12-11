@@ -236,5 +236,30 @@ class WhatsappWebhookController extends Controller
 
             return;
         }
+
+        // QOTD (regular command)
+        // QOTD [MOMO3713] (referral command)
+        if ($body->startsWith('REMIND ME')) {
+            $ref = null;
+            if ($body->containsAll(['[', ']'])) {
+                $ref = $body->between('[', ']')->toString();
+            }
+
+            $url = $player->directLoginUrlTo(route('qotd.index', ['ref' => $ref]));
+            $message = "Today's QOTD (Question Of The Day) is ready to play.\n\nPlay now, earn points, and maintain your streak.👇";
+
+            (new SendMessageOnWhatsapp)($player, Message::INTERACTIVE_PREFIX . $message, [
+                'type' => 'cta_url',
+                'action' => [
+                    'name' => 'cta_url',
+                    'parameters' => [
+                        'display_text' => "Answer today's QOTD",
+                        'url' => $url,
+                    ]
+                ]
+            ]);
+
+            return;
+        }
     }
 }

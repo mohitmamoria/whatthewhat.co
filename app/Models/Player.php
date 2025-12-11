@@ -69,13 +69,19 @@ class Player extends Authenticatable
         return $this->hasMany(QotdGame::class, 'referrer_id');
     }
 
-    public function getQotdStreakString($days = 21, $pad = false)
+    public function getQotdCurrentStreakString()
     {
-        $streak = [];
-        $from = now()->subDays($days);
-        if ($this->qotd->joined_on->greaterThan($from)) {
-            $from = $this->qotd->joined_on;
+        if ($this->qotd->current_streak > 21) {
+            return '🔥 ×' . $this->qotd->current_streak . ' days';
         }
+
+        $challenges = [
+            ['from' => 0, 'to' => 3, 'challenge' => 3],
+            ['from' => 4, 'to' => 10, 'challenge' => 10],
+            ['from' => 11, 'to' => 21, 'challenge' => 21],
+        ];
+
+        $from = $this->qotd->currentStreakStartAttempt->created_at;
 
         for ($date = $from; $date->lessThanOrEqualTo(now()); $date->addDay()) {
             $attempted = $this->attempts()
@@ -85,15 +91,22 @@ class Player extends Authenticatable
             if ($attempted) {
                 $streak[] = '✅';
             } else {
-                $streak[] = '⬜️';
+                $streak[] = '🔲'; // today's day, if not yet attempted
             }
         }
 
-        if ($pad && count($streak) < $days) {
-            $streak = array_merge($streak, array_fill(0, $days - count($streak), '⬜️'));
+        // If the streak is less than the challenge days, pad with empty squares
+        $challenge = $challenges[0];
+        foreach ($challenges as $candidate) {
+            if ($this->qotd->current_streak >= $candidate['from'] && $this->qotd->current_streak <= $candidate['to']) {
+                $challenge = $candidate;
+                break;
+            }
         }
 
-        return implode('', $streak);
+        $streak = array_merge($streak, array_fill(0, $challenge['challenge'] - count($streak), '⬜️'));
+
+        return implode(' ', $streak);
     }
 
     public static function byReferrerCode(string $code)
