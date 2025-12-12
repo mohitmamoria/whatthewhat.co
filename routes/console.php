@@ -19,5 +19,5 @@ Schedule::command(InvitePlayerToPreorder::class, ['1000'])->hourly()->appendOutp
 Schedule::command(SendUnsentOrderConfirmations::class)->everyMinute()->appendOutputTo(storage_path('logs/send_unsent_order_confirmations.log'));
 Schedule::command(ProcessPendingGiftPurchases::class)->everyMinute()->appendOutputTo(storage_path('logs/process_pending_gift_purchases.log'));
 
-Schedule::command(SendQotdReminderToPlayers::class)->everyThirtyMinutes()->appendOutputTo(storage_path('logs/send_qotd_reminder_to_players.log'));
+Schedule::command(SendQotdReminderToPlayers::class)->everyFifteenMinutes()->appendOutputTo(storage_path('logs/send_qotd_reminder_to_players.log'));
 Schedule::command(RecalculateQotdStatsAndStreaks::class)->dailyAt('21:00')->appendOutputTo(storage_path('logs/recalculate_qotd_stats_and_streaks.log'));
