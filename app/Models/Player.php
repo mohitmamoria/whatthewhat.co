@@ -69,6 +69,13 @@ class Player extends Authenticatable
         return $this->hasMany(QotdGame::class, 'referrer_id');
     }
 
+    public function totems()
+    {
+        return $this->belongsToMany(Totem::class)
+            ->withPivot('progress', 'collected_at')
+            ->withTimestamps();
+    }
+
     public function getQotdCurrentStreakString()
     {
         if ($this->qotd->current_streak > 21) {
