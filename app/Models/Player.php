@@ -174,7 +174,7 @@ class Player extends Authenticatable
     public function directLoginUrlTo(?string $next = null)
     {
         return url()
-            ->temporarySignedRoute('auth.player.login.direct', now()->addMinutes(10), [
+            ->signedRoute('auth.player.login.direct', [
                 'player' => $this->referrer_code,
                 'next' => $next
             ]);

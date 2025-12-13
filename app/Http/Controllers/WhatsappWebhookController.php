@@ -218,7 +218,7 @@ class WhatsappWebhookController extends Controller
 
         // PLAY QOTD (regular command)
         // PLAY QOTD [MOMO3713] (referral command)
-        if ($body->startsWith('PLAY QOTD')) {
+        if ($body->lower()->startsWith('play qotd')) {
             $ref = null;
             if ($body->containsAll(['[', ']'])) {
                 $ref = $body->between('[', ']')->toString();
