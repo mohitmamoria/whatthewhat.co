@@ -30,6 +30,17 @@ class Question extends Model
         return Attribute::make(get: fn() => Str::markdown($this->body));
     }
 
+    public function correctOption(): Attribute
+    {
+        return Attribute::make(get: function () {
+            foreach ($this->options as $index => $option) {
+                if ($option['is_correct']) {
+                    return $option['body'];
+                }
+            }
+        });
+    }
+
     public static function forToday()
     {
         $today = now('Asia/Kolkata')->toDateString();
