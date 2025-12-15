@@ -7,6 +7,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    todays_attempt: {
+        type: Object,
+        default: null,
+    },
 });
 
 const stats = [
@@ -20,7 +24,26 @@ const { text, copy, copied, isSupported } = useClipboard();
 
 <template>
     <Qotd>
-        <div>
+        <div class="overflow-hidden rounded-lg bg-white shadow-sm" v-if="todays_attempt">
+            <div class="px-4 py-5 sm:p-6">
+                <h1 class="text-xl font-bold">Today's game</h1>
+                <p class="prose mt-2">
+                    You spent {{ todays_attempt.time_spent < 7 ? 'only ⚡️' : '' }} {{ todays_attempt.time_spent }}
+                    {{ todays_attempt.time_spent > 1 ? 'seconds' : 'second' }}.
+                </p>
+                <div v-if="isSupported">
+                    <button
+                        @click="copy(todays_attempt.share_message)"
+                        class="mt-4 inline-flex items-center rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+                    >
+                        <span v-if="!copied">Copy</span>
+                        <span v-else>Copied!</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12">
             <h3 class="text-base font-semibold text-gray-900">Your QOTD Stats</h3>
             <dl class="mt-5 grid grid-cols-1 divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm md:grid-cols-3 md:divide-x md:divide-y-0">
                 <div v-for="item in stats" :key="item.name" class="px-4 py-5 sm:p-6">
