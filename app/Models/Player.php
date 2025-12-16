@@ -76,6 +76,16 @@ class Player extends Authenticatable
             ->withTimestamps();
     }
 
+    public function updateTotemProgress(Totem $totem, array $progress): void
+    {
+        // make sure that the items in progress are part of the totem's pages array
+        $progress = collect($progress)->intersect($totem->pages)->values();
+
+        $this->totems()->syncWithoutDetaching([
+            $totem->id => ['progress' => json_encode($progress)]
+        ]);
+    }
+
     public function getQotdCurrentStreakString()
     {
         if ($this->qotd->current_streak > 21) {

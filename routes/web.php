@@ -13,9 +13,12 @@ use App\Http\Controllers\QR\HelloAuthorsController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopifyWebhookController;
+use App\Http\Controllers\TotemController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\WhatsappWebhookController;
 use App\Http\Middleware\QuickHttpBasicAuth;
+use App\Models\Player;
+use App\Models\Totem;
 use App\Services\Shopify\Shopify;
 use App\Services\Shopify\ShopifyException;
 use Illuminate\Http\Request;
@@ -64,6 +67,13 @@ Route::middleware('auth:player')->group(function () {
 });
 
 /**
+ * TOTEMS
+ */
+Route::middleware('auth:player')->group(function () {
+    Route::get('/totems', [TotemController::class, 'index'])->name('totems.index');
+});
+
+/**
  * WEBHOOKS
  */
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
@@ -85,6 +95,10 @@ Route::get('/qr/coming-soon', [ComingSoonController::class, 'show'])->name('qr.c
 Route::post('/qr/coming-soon/subscription', [ComingSoonController::class, 'subscribe'])->name('qr.coming_soon.subscribe')->middleware('auth:player');
 
 if (app()->environment('local')) {
+    Route::get('login-as-player/{player}', function (Player $player) {
+        auth()->guard('player')->login($player);
+        return redirect('/');
+    });
     Route::get('/webhooks/shopify/test', ShopifyWebhookController::class);
     Route::get('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
     Route::get('/webhooks/whatsapp/test', [WhatsappWebhookController::class, 'test']);
