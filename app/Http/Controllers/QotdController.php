@@ -46,8 +46,11 @@ class QotdController extends Controller
             return redirect()->route('qotd.index');
         }
 
+        $todaysAttempt = $player->attempts()->where('question_id', Question::forToday()->id)->first();
+
         return inertia('Qotd/Stats', [
             'qotd_game' => QotdGameResource::make($game),
+            'todays_attempt' => $todaysAttempt ? AttemptResource::make($todaysAttempt) : null,
         ]);
     }
 

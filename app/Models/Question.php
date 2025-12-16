@@ -25,9 +25,25 @@ class Question extends Model
 
     protected $appends = ['body_html'];
 
+    public function title(): Attribute
+    {
+        return Attribute::make(get: fn() => $this->asked_on->format('d M Y')); // 01 Jan 2026
+    }
+
     public function bodyHtml(): Attribute
     {
         return Attribute::make(get: fn() => Str::markdown($this->body));
+    }
+
+    public function correctOption(): Attribute
+    {
+        return Attribute::make(get: function () {
+            foreach ($this->options as $index => $option) {
+                if ($option['is_correct']) {
+                    return $option['body'];
+                }
+            }
+        });
     }
 
     public static function forToday()

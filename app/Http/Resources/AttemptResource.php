@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Actions\Qotd\GetShareMessage;
 use App\Models\Attempt;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -29,6 +30,9 @@ class AttemptResource extends JsonResource
                         return $index;
                     }
                 }
+            }),
+            'share_message' => $this->when($this->is_completed, function () {
+                return (new GetShareMessage)($this->resource);
             }),
             'question' => $this->whenLoaded('question', QuestionResource::make($this->question)),
         ];

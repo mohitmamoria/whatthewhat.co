@@ -25,6 +25,10 @@ class QuestionsTable
                 TextColumn::make('body')
                     ->limit(50)
                     ->wrap(),
+                TextColumn::make('correct_option')
+                    ->label('Correct Option')
+                    ->limit(50)
+                    ->wrap(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
