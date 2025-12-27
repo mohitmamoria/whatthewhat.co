@@ -12,7 +12,7 @@ const props = defineProps({
 const form = useForm({
     totems: props.totems.map((totem) => ({
         id: totem.id,
-        progress: totem.progress,
+        progress: [],
     })),
 });
 
