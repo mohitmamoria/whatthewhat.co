@@ -20,27 +20,27 @@ const faqs = [
     {
         id: 1,
         question: 'When will I get my book?',
-        answer: 'We will start shipping from 19 November 2025. Based on your location, it may take 5-6 days to reach you. In most cases, you will get the book by 25 November 2025.',
+        answer: 'We ship all orders within 24 business hours of receiving your order. Depending on your location, delivery usually takes 3-7 business days within India. You will receive a tracking link via email and WhatsApp once your order is shipped.',
     },
     {
         id: 2,
-        question: 'How do I know if I got the goodies?',
-        answer: 'If you were able to place an order on this website, you are <strong>100000%</strong> getting the goodies. Whenever we will be unable to get more goodies, we will stop accepting orders. So, if you were able to place an order, you are definitely getting the goodies.',
+        question: 'Are the free goodies still available?',
+        answer: 'No. They were exclusive to pre-orders before the book was released.',
     },
     {
         id: 3,
-        question: 'I have not received the pre-order link yet. Why?',
-        answer: 'Perhaps due to WhatsApp limitations. You can email us at community@areypatahai.com with your phone number and we will send you the link.',
+        question: 'Do you ship internationally?',
+        answer: 'No, we do not ship internationally.',
     },
     {
         id: 4,
         question: 'Can I change my shipping address after placing the order?',
-        answer: 'You can request a change in shipping address by filling out this <a href="https://forms.gle/tuBYe4K3rxUSpgvSA" class="font-bold underline">form</a> within 24 hours of placing your order.',
+        answer: 'No. Please ensure that your shipping address is correct before placing the order as we are unable to make any changes once the order is placed, and it should have an Indian phone number to receive OTP during the delivery.',
     },
     {
         id: 5,
         question: 'Can I cancel my order?',
-        answer: 'We are procuring the books and goodies based on the orders we receive, and are directly processed by our suppliers automatically. Hence, we are unable to cancel any orders.',
+        answer: 'No, we do not accept cancellations. Once an order is placed, it is processed immediately for shipping.',
     },
     {
         id: 6,
