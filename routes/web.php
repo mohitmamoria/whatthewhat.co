@@ -75,6 +75,7 @@ Route::middleware('auth:player')->group(function () {
  */
 Route::middleware('auth:player')->group(function () {
     Route::get('/totems', [TotemController::class, 'index'])->name('totems.index');
+    Route::put('/totems/{totem}/progress', [TotemController::class, 'updateProgress'])->name('totems.update-progress');
 });
 
 /**

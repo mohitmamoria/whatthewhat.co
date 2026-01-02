@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Actions\Gamification\ProcessTransactionsForAnActivity;
+use App\Actions\Totems\MarkTotemAsCollected;
 use App\Models\Gamification\Activity;
 use App\Models\Gamification\ActivityType;
 use App\Models\Gamification\HasGamification;
@@ -77,15 +78,28 @@ class Player extends Authenticatable
             ->withTimestamps();
     }
 
-    public function updateTotemProgress(Totem $totem, array $progress): void
+    public function updateTotemProgress(Totem $totem, int $page): void
     {
-        // make sure that the items in progress are part of the totem's pages array
+        $progress = [];
+
+        $existing = $this->totems()->where('totem_id', $totem->id)->first();
+        if ($existing) {
+            $progress = json_decode($existing->pivot->progress, true) ?? [];
+            if (!in_array($page, $progress)) {
+                $progress[] = $page;
+            }
+        }
+
+        // ensure progress only contains valid pages from the totem
         $progress = collect($progress)->intersect($totem->pages)->values();
 
         $this->totems()->syncWithoutDetaching([
             $totem->id => ['progress' => json_encode($progress)]
         ]);
+
+        (new MarkTotemAsCollected)($this, $totem);
     }
+
 
     public function getQotdCurrentStreakString()
     {

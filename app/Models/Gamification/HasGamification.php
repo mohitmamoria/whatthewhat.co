@@ -16,6 +16,6 @@ trait HasGamification
 
     public function transactions()
     {
-        return $this->through('wallet')->has('transactions');
+        return $this->through('wallet')->has('transactions')->latest();
     }
 }

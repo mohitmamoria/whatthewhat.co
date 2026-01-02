@@ -26,4 +26,17 @@ class TotemController extends Controller
             'totems' => TotemResource::collection($totems),
         ]);
     }
+
+    public function updateProgress(Request $request, Totem $totem)
+    {
+        $player = $request->user('player');
+
+        $validated = $request->validate([
+            'page' => 'required|integer',
+        ]);
+
+        $player->updateTotemProgress($totem, $validated['page']);
+
+        return back();
+    }
 }
