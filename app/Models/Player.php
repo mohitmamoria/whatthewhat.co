@@ -85,9 +85,10 @@ class Player extends Authenticatable
         $existing = $this->totems()->where('totem_id', $totem->id)->first();
         if ($existing) {
             $progress = json_decode($existing->pivot->progress, true) ?? [];
-            if (!in_array($page, $progress)) {
-                $progress[] = $page;
-            }
+        }
+
+        if (!in_array($page, $progress)) {
+            $progress[] = $page;
         }
 
         // ensure progress only contains valid pages from the totem

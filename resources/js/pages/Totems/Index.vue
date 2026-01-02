@@ -30,6 +30,11 @@ function updateProgress(totemId, page) {
 
 <template>
     <Narrow>
+        <div class="text-center">
+            <p class="mt-2 font-serif text-2xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-3xl">Totems</p>
+            <p class="mt-6 text-lg/8 text-gray-700">Collect them as you read the book. Can you collect them all?</p>
+        </div>
+
         <ul role="list" class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
             <li
                 v-for="totem in totems"
@@ -38,11 +43,7 @@ function updateProgress(totemId, page) {
             >
                 <div class="p-6 pb-0">
                     <div class="flex flex-1 flex-col p-8">
-                        <img
-                            class="mx-auto size-32 shrink-0 rounded-full bg-gray-300 outline -outline-offset-1 outline-black/5"
-                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
-                            alt=""
-                        />
+                        <img class="mx-auto size-32 shrink-0" src="/images/totems/badge.png" alt="Totem Badge" />
                         <dd class="mt-3">
                             <span
                                 v-if="totem.is_collected"
