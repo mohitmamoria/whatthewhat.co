@@ -25,10 +25,10 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->redirectGuestsTo(function (Request $request) {
             if (str($request->route()->getName())->startsWith('admin.')) {
-                return route('auth.login', ['next' => $request->path()]);
+                return route('auth.login', ['next' => $request->url()]);
             }
 
-            return route('auth.player.login', ['next' => $request->path()]);
+            return route('auth.player.login', ['next' => $request->url()]);
         });
 
         $middleware->redirectUsersTo(function (Request $request) {

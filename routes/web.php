@@ -6,6 +6,10 @@ use App\Enums\MessageStatus;
 use App\Http\Controllers\GiftCodeController;
 use App\Http\Controllers\GiftController;
 use App\Http\Controllers\GiftingController;
+use App\Http\Controllers\Markbook\BookSearchController;
+use App\Http\Controllers\Markbook\MarkbookFeedController;
+use App\Http\Controllers\Markbook\MarkbookLeaderboardController;
+use App\Http\Controllers\Markbook\ReadingController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\QotdController;
 use App\Http\Controllers\QR\ComingSoonController;
@@ -79,8 +83,17 @@ Route::middleware('auth:player')->group(function () {
 Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
 Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
 Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
-
 Route::post('/webhooks/shopify', ShopifyWebhookController::class);
+
+/**
+ * MARKBOOK
+ */
+Route::middleware('auth:player')->group(function () {
+    Route::get('/markbook', [MarkbookFeedController::class, 'index'])->name('markbook.feed');
+    Route::post('/markbook/readings', [ReadingController::class, 'store'])->name('markbook.readings.store');
+
+    Route::get('/markbook/leaderboard/{duration}', [MarkbookLeaderboardController::class, 'index'])->name('markbook.leaderboard'); // weekly, monthly, all-time
+});
 
 
 /**

@@ -6,6 +6,7 @@ use App\Actions\Gamification\ProcessTransactionsForAnActivity;
 use App\Models\Gamification\Activity;
 use App\Models\Gamification\ActivityType;
 use App\Models\Gamification\HasGamification;
+use App\Models\Markbook\UsesMarkbook;
 use App\Services\Idempotency\Idempotency;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -16,7 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Player extends Authenticatable
 {
-    use SoftDeletes, HasGamification;
+    use SoftDeletes, HasGamification, UsesMarkbook;
 
     const DEFAULT_NAME = 'Player';
 
