@@ -13,16 +13,10 @@ class Reading extends Model
     protected $table = 'markbook_readings';
 
     protected $fillable = [
-        'book_id',
         'player_id',
         'pages_read',
         'notes',
     ];
-
-    public function book()
-    {
-        return $this->belongsTo(Book::class);
-    }
 
     public function player()
     {

@@ -27,6 +27,8 @@ class ProcessShopifyOrders
                 }
 
                 $after = data_get($response, 'orders.pageInfo.endCursor');
+
+                sleep(1); // To avoid rate limiting
             } while (data_get($response, 'orders.pageInfo.hasNextPage'));
         }
     }

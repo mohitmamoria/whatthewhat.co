@@ -24,14 +24,7 @@ const props = defineProps({
                         ></span>
                         <div class="relative flex items-start space-x-3">
                             <div class="relative">
-                                <img
-                                    v-if="reading.book.cover_image_url"
-                                    class="flex size-10 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white outline -outline-offset-1 outline-black/5"
-                                    :src="reading.book.cover_image_url"
-                                    :alt="reading.book.title"
-                                />
                                 <div
-                                    v-else
                                     class="flex size-10 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white outline -outline-offset-1 outline-black/5"
                                 >
                                     <BookOpenIcon class="size-8 text-pink-400" aria-hidden="true"></BookOpenIcon>
@@ -44,12 +37,13 @@ const props = defineProps({
                             <div class="min-w-0 flex-1">
                                 <div>
                                     <div class="flex items-center justify-between text-sm">
-                                        <p class="font-medium text-gray-900">What The What?!</p>
+                                        <p class="font-medium text-gray-900">
+                                            {{ reading.pages_read }} {{ reading.pages_read > 1 ? 'pages' : 'page' }}
+                                        </p>
                                         <time :datetime="reading.created_at" class="flex-none py-0.5 text-xs/5 text-gray-500">{{
                                             reading.created_at
                                         }}</time>
                                     </div>
-                                    <p class="mt-0.5 text-sm text-gray-500">{{ reading.pages_read }} pages</p>
                                 </div>
                                 <div class="mt-2 text-sm text-gray-700">
                                     <p>{{ reading.notes }}</p>

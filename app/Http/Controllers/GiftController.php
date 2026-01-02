@@ -35,6 +35,20 @@ class GiftController extends Controller
         return redirect()->route('gift.show', $gift);
     }
 
+    public function luckyOne(Request $request)
+    {
+        $gift = Gift::availableForAll()->whereHas('giftCodes', function ($query) {
+            return $query->ready();
+        })->inRandomOrder()->first();
+
+        if (!is_null($gift)) {
+            $giftCode = $gift->giftCodes()->ready()->first();
+            return route('gift_code.show', ['gift' => $gift, 'giftCode' => $giftCode]);
+        }
+
+        return 'NONE AVAILABLE';
+    }
+
     public function reserve(Request $request, Gift $gift)
     {
         $player = $request->user('player');

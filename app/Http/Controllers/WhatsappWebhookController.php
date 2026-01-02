@@ -9,6 +9,7 @@ use App\Enums\MessageStatus;
 use App\Models\Gamification\ActivityType;
 use App\Models\Message;
 use App\Models\Player;
+use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
@@ -46,7 +47,7 @@ class WhatsappWebhookController extends Controller
     {
         $name = data_get($request->input(), 'from_name', 'Player');
         $number = data_get($request->input(), 'from', '919716313713');
-        $body = data_get($request->input(), 'body', 'WTW Bonus Pages');
+        $body = data_get($request->input(), 'body', 'QOTD');
         Log::info('WEBHOOK_PAYLOAD', [$name, $number, $body]);
         $this->sendRequiredInfo($name, $number, $body, Str::random(11));
 
@@ -101,6 +102,10 @@ class WhatsappWebhookController extends Controller
         $body = data_get($value, 'messages.0.text.body');
         if (is_null($body)) {
             $body = data_get($value, 'messages.0.button.text');
+        }
+
+        if (is_null($body)) {
+            $body = data_get($value, 'messages.0.interactive.button_reply.title');
         }
 
         Log::info('WEBHOOK_PAYLOAD', [$name, $messageId, $number, $body]);
@@ -207,6 +212,39 @@ class WhatsappWebhookController extends Controller
         // When sending waitlist status
         if ($body->startsWith('Check Status')) {
             Artisan::call('app:invite-to-preorder', ['phone' => $player->number, 'count' => 1]);
+
+            return;
+        }
+
+        // PLAY QOTD (regular command)
+        // PLAY QOTD [MOMO3713] (referral command)
+        if ($body->lower()->startsWith('play qotd')) {
+            $ref = null;
+            if ($body->containsAll(['[', ']'])) {
+                $ref = $body->between('[', ']')->toString();
+            }
+
+            $url = $player->directLoginUrlTo(route('qotd.index', ['ref' => $ref]));
+            $message = "Today's QOTD (Question Of The Day) is ready to play.\n\nPlay now, earn points, and maintain your streak.👇";
+
+            (new SendMessageOnWhatsapp)($player, Message::INTERACTIVE_PREFIX . $message, [
+                'type' => 'cta_url',
+                'action' => [
+                    'name' => 'cta_url',
+                    'parameters' => [
+                        'display_text' => "Answer today's QOTD",
+                        'url' => $url,
+                    ]
+                ]
+            ]);
+
+            return;
+        }
+
+        if ($body->startsWith('REMIND ME')) {
+            $message = "Alrighty! I'll remind you to play QOTD tomorrow.";
+
+            (new SendMessageOnWhatsapp)($player, $message);
 
             return;
         }

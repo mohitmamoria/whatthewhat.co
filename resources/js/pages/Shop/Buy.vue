@@ -3,7 +3,6 @@ import Shop from '@/layouts/Shop.vue';
 import AboutBook from '@/partials/AboutBook.vue';
 import BookVariantsV2 from '@/partials/BookVariantsV2.vue';
 import FAQ from '@/partials/FAQ.vue';
-import GoodiesV1 from '@/partials/GoodiesV1.vue';
 
 var props = defineProps({
     product: {
@@ -15,12 +14,13 @@ var props = defineProps({
 
 <template>
     <Shop>
+        <!-- <SoldOut></SoldOut> -->
         <AboutBook></AboutBook>
 
         <!-- <Goodies></Goodies> -->
-        <GoodiesV1></GoodiesV1>
+        <!-- <GoodiesV1></GoodiesV1> -->
 
-        <div class="aspect-video">
+        <!-- <div class="aspect-video">
             <iframe
                 class="h-full w-full"
                 src="https://www.youtube.com/embed/v-QqGdc0Bao?si=xToHMf3oC2ssKj9a"
@@ -30,7 +30,7 @@ var props = defineProps({
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen
             ></iframe>
-        </div>
+        </div> -->
 
         <div id="buy">
             <BookVariantsV2 :variants="product.variants"></BookVariantsV2>
@@ -52,5 +52,7 @@ var props = defineProps({
                 </div>
             </div>
         </div>
+
+        <!-- <Sticky /> -->
     </Shop>
 </template>

@@ -11,6 +11,10 @@ use App\Http\Controllers\Markbook\MarkbookFeedController;
 use App\Http\Controllers\Markbook\MarkbookLeaderboardController;
 use App\Http\Controllers\Markbook\ReadingController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\QotdController;
+use App\Http\Controllers\QR\ComingSoonController;
+use App\Http\Controllers\QR\HelloAuthorsController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopifyWebhookController;
 use App\Http\Controllers\WebhookController;
@@ -41,12 +45,26 @@ Route::post('/checkout', [ShopController::class, 'checkout'])->name('shop.checko
 /**
  * GIFTING
  */
+Route::get('/g', [GiftController::class, 'luckyOne'])->middleware(QuickHttpBasicAuth::class);
 Route::get('/gifts/lucky/{code}', [GiftController::class, 'lucky'])->name('gift.lucky');
 Route::get('/gifts/{gift:name}', [GiftController::class, 'show'])->name('gift.show');
 Route::middleware('auth:player')->group(function () {
     Route::post('/gifts/{gift:name}/reserve', [GiftController::class, 'reserve'])->name('gift.reserve');
     Route::get('/gifts/{gift:name}/codes/{giftCode:name}', [GiftCodeController::class, 'show'])->name('gift_code.show');
     Route::post('/gifts/{gift:name}/codes/{giftCode:name}/checkout', [GiftCodeController::class, 'checkout'])->name('gift_code.checkout');
+});
+
+/**
+ * QOTD
+ */
+Route::get('/qotd', [QotdController::class, 'index'])->name('qotd.index');
+Route::middleware('auth:player')->group(function () {
+    Route::post('/qotd/join', [QotdController::class, 'join'])->name('qotd.join');
+    Route::get('/qotd/stats', [QotdController::class, 'stats'])->name('qotd.stats');
+    Route::post('/qotd/{question:name}/attempts', [QotdController::class, 'attempt'])->name('qotd.attempts');
+    Route::get('/qotd/attempts/{attempt:name}', [QotdController::class, 'play'])->name('qotd.play');
+    Route::post('/qotd/attempts/{attempt:name}/answers', [QotdController::class, 'answer'])->name('qotd.answer');
+    Route::post('/qotd/attempts/{attempt:name}/timedout', [QotdController::class, 'timeout'])->name('qotd.timeout');
 });
 
 /**
@@ -62,13 +80,22 @@ Route::post('/webhooks/shopify', ShopifyWebhookController::class);
  */
 Route::middleware('auth:player')->group(function () {
     Route::get('/markbook', [MarkbookFeedController::class, 'index'])->name('markbook.feed');
-    Route::get('/markbook/books', BookSearchController::class)->name('markbook.book-search');
-
     Route::post('/markbook/readings', [ReadingController::class, 'store'])->name('markbook.readings.store');
 
     Route::get('/markbook/leaderboard/{duration}', [MarkbookLeaderboardController::class, 'index'])->name('markbook.leaderboard'); // weekly, monthly, all-time
 });
 
+
+/**
+ * QR CODES
+ */
+Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware(['auth:player']);
+
+Route::get('/hello-authors', [HelloAuthorsController::class, 'show'])->name('qr.hello_authors');
+
+Route::get('/qr/coming-soon', [ComingSoonController::class, 'show'])->name('qr.coming_soon');
+Route::post('/qr/coming-soon/subscription', [ComingSoonController::class, 'subscribe'])->name('qr.coming_soon.subscribe')->middleware('auth:player');
 
 if (app()->environment('local')) {
     Route::get('/webhooks/shopify/test', ShopifyWebhookController::class);

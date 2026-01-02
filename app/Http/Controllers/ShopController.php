@@ -53,6 +53,10 @@ class ShopController extends Controller
             throw ValidationException::withMessages(['variant' => 'Invalid variant selected']);
         }
 
+        if ($product->isVariantSoldOut($validated['variant'])) {
+            throw ValidationException::withMessages(['variant' => 'Selected variant is sold out']);
+        }
+
         $cachedCart = Cache::get($this->getCartCacheKey());
         if ($cachedCart) {
             $cachedCart = json_decode($cachedCart, true);

@@ -5,10 +5,6 @@ import ReadingForm from '@/partials/Markbook/ReadingForm.vue';
 import ReadingStats from '@/partials/Markbook/ReadingStats.vue';
 
 const props = defineProps({
-    last_reading_book: {
-        type: Object,
-        required: true,
-    },
     stats: {
         type: Object,
         required: true,
@@ -22,7 +18,7 @@ const props = defineProps({
 
 <template>
     <Markbook>
-        <ReadingForm :selected="last_reading_book" />
+        <ReadingForm />
 
         <ReadingStats :stats="stats" />
 

@@ -32,6 +32,16 @@ class Whatsapp
         ]);
     }
 
+    public static function sendInteractive(string $number, array $interactive): Response
+    {
+        return (new static)->client()->post('messages', [
+            "messaging_product" => "whatsapp",
+            "to" => $number,
+            "type" => "interactive",
+            "interactive" => $interactive,
+        ]);
+    }
+
     public static function sendText(string $number, string $message): Response
     {
         return (new static)->client()->post('messages', [

@@ -19,10 +19,9 @@ class MarkbookFeedController extends Controller
 
         $lastReading = $player->readings()->latest()->first();
 
-        $readings = $player->readings()->with('book')->latest()->paginate(20);
+        $readings = $player->readings()->latest()->paginate(20);
 
         return inertia('Markbook/Feed', [
-            'last_reading_book' => $lastReading ? new BookResource($lastReading->book) : null,
             'stats' => $stats,
             'readings' => inertia()->scroll(ReadingResource::collection($readings)),
         ]);

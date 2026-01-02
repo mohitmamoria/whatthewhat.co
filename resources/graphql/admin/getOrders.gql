@@ -11,9 +11,11 @@ query OrdersByVariantQuery($query: String!, $first: Int = 100, $after: String) {
                 }
                 shippingAddress {
                     phone
+                    zip
                 }
                 billingAddress {
                     phone
+                    zip
                 }
                 customer {
                     id

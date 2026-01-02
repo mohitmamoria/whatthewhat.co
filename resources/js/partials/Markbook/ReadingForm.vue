@@ -1,48 +1,17 @@
 <script setup>
-import Combobox from '@/components/Combobox.vue';
 import { useForm } from '@inertiajs/vue3';
 
-const props = defineProps({
-    selected: {
-        type: Object,
-        default: null,
-    },
-    books: {
-        type: Array,
-        default: () => [],
-    },
-});
-
 const form = useForm({
-    book: props.selected,
     pages_read: 1,
     notes: '',
 });
 
 const submit = () => {
-    form.transform((data) => ({
-        book_id: data.book.id,
-        pages_read: data.pages_read,
-        notes: data.notes,
-    })).post(route('markbook.readings.store'), {
+    form.post(route('markbook.readings.store'), {
         onSuccess: () => {
             form.reset('pages_read', 'notes');
         },
     });
-};
-
-const searchBooks = async (query) => {
-    if (query.length < 3) {
-        return [];
-    }
-
-    const response = await fetch(route('markbook.book-search', { q: query }));
-    if (!response.ok) {
-        console.error('Failed to fetch books');
-        return [];
-    }
-
-    return await response.json();
 };
 </script>
 
@@ -52,10 +21,7 @@ const searchBooks = async (query) => {
         <div class="px-4 py-5 sm:p-6">
             <form @submit.prevent="submit" class="mx-auto max-w-xl">
                 <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-8">
-                    <div class="sm:col-span-6">
-                        <Combobox v-model="form.book" label="Book" :search="searchBooks" />
-                    </div>
-                    <div class="sm:col-span-2">
+                    <div class="sm:col-span-8">
                         <label for="pages" class="block text-sm/6 font-semibold text-gray-900">Pages</label>
                         <div class="mt-2.5">
                             <input

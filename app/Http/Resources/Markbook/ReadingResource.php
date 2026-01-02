@@ -19,7 +19,6 @@ class ReadingResource extends JsonResource
             'pages_read' => $this->pages_read,
             'notes' => $this->notes,
             'created_at' => $this->created_at->toDayDateTimeString(),
-            'book' => new BookResource($this->whenLoaded('book')),
         ];
     }
 }

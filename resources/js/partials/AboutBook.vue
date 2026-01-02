@@ -6,15 +6,17 @@ import { Link } from '@inertiajs/vue3';
     <div class="rounded-xl bg-linear-to-b from-yellow-200 to-yellow-100 text-center">
         <img src="/images/what-the-what-logo.svg" alt="What The What?! Logo" class="mx-auto h-16 w-auto py-2 sm:h-24" />
 
-        <img src="/images/mockup-1.png" alt="What The What?!" class="mx-auto w-xs rounded-md" />
-        <span
+        <img src="/images/what-the-what-national-bestseller.png" alt="What The What?!" class="mx-auto w-xs rounded-md" />
+
+        <!-- <span
             class="mx-auto mt-2 inline-flex items-center gap-x-1.5 rounded-full bg-white px-4 py-1 text-sm font-medium text-gray-900 inset-ring inset-ring-gray-200"
         >
             <svg class="size-1.5 animate-pulse fill-green-500" viewBox="0 0 6 6" aria-hidden="true">
                 <circle cx="3" cy="3" r="3" />
             </svg>
-            Releasing on 25.11.25
-        </span>
+            #1 National Bestseller
+        </span> -->
+
         <div class="relative mx-auto w-full text-center">
             <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
                 <div class="px-4 pt-4 pb-12 font-serif text-xl font-bold sm:px-10">

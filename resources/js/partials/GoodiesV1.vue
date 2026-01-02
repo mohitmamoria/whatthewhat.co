@@ -60,7 +60,7 @@
                         <p
                             class="mx-auto inline max-w-xl rounded-full bg-yellow-300 px-4 py-2 font-serif text-sm font-bold text-pretty text-gray-900"
                         >
-                            🚨 SELLING OUT FAAAAAAST
+                            🚨 LAST 100 PACKS LEFT!
                         </p>
                     </div>
                 </div>
