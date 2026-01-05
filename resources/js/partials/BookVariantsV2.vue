@@ -82,7 +82,7 @@ const cutoutPrice = {
                     <ul role="list" class="divide-y divide-gray-200 xl:col-span-3">
                         <template v-for="(variant, index) in variants" :key="variant.id">
                             <li v-if="!variant.sku.endsWith('duo')" class="flex flex-col gap-10 py-12 first:pt-0 last:pb-0 sm:flex-row">
-                                <!-- <img
+                                <img
                                     class="hidden w-full flex-none rounded object-cover outline-1 -outline-offset-1 outline-black/5 sm:inline-block sm:w-32"
                                     :src="'/images/' + variant.sku + '-desktop.jpg'"
                                     :alt="variant.title"
@@ -91,13 +91,13 @@ const cutoutPrice = {
                                     class="w-full flex-none rounded object-cover outline-1 -outline-offset-1 outline-black/5 sm:hidden sm:w-32"
                                     :src="'/images/' + variant.sku + '-mobile.jpg'"
                                     :alt="variant.title"
-                                /> -->
+                                />
 
-                                <img
+                                <!-- <img
                                     class="w-full flex-none rounded object-cover outline-1 -outline-offset-1 outline-black/5 sm:w-32"
                                     :src="variant.image_src"
                                     :alt="variant.title"
-                                />
+                                /> -->
                                 <div class="max-w-xl flex-auto">
                                     <span
                                         v-if="badges[variant.sku]"
