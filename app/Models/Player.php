@@ -109,9 +109,9 @@ class Player extends Authenticatable
         }
 
         $challenges = [
-            ['from' => 0, 'to' => 3, 'challenge' => 3],
-            ['from' => 4, 'to' => 10, 'challenge' => 10],
-            ['from' => 11, 'to' => 21, 'challenge' => 21],
+            ['from' => 0, 'to' => 2, 'challenge' => 3],
+            ['from' => 3, 'to' => 9, 'challenge' => 10],
+            ['from' => 10, 'to' => 20, 'challenge' => 21],
         ];
 
         $from = $this->qotd->currentStreakStartAttempt->created_at;
