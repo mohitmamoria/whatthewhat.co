@@ -10,6 +10,7 @@ use App\Http\Resources\AttemptResource;
 use App\Http\Resources\PlayerResource;
 use App\Http\Resources\QotdGameResource;
 use App\Http\Resources\QuestionResource;
+use App\Http\Resources\WalletResource;
 use App\Models\Attempt;
 use App\Models\Gamification\ActivityType;
 use App\Models\Player;
@@ -41,6 +42,7 @@ class QotdController extends Controller
     {
         $player = $request->user('player');
         $game = $player?->qotd;
+        $wallet = $player?->wallet;
 
         if (is_null($game)) {
             return redirect()->route('qotd.index');
@@ -51,6 +53,7 @@ class QotdController extends Controller
         return inertia('Qotd/Stats', [
             'qotd_game' => QotdGameResource::make($game),
             'todays_attempt' => $todaysAttempt ? AttemptResource::make($todaysAttempt) : null,
+            'wallet' => WalletResource::make($wallet),
         ]);
     }
 

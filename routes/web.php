@@ -3,6 +3,7 @@
 use App\Actions\GetShopifyOrders;
 use App\Actions\CalculateAdminStats;
 use App\Enums\MessageStatus;
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\GiftCodeController;
 use App\Http\Controllers\GiftController;
 use App\Http\Controllers\GiftingController;
@@ -79,21 +80,19 @@ Route::middleware('auth:player')->group(function () {
 });
 
 /**
- * WEBHOOKS
- */
-Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
-Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
-Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
-Route::post('/webhooks/shopify', ShopifyWebhookController::class);
-
-/**
  * MARKBOOK
  */
 Route::middleware('auth:player')->group(function () {
     Route::get('/markbook', [MarkbookFeedController::class, 'index'])->name('markbook.feed');
     Route::post('/markbook/readings', [ReadingController::class, 'store'])->name('markbook.readings.store');
-
     Route::get('/markbook/leaderboard/{duration}', [MarkbookLeaderboardController::class, 'index'])->name('markbook.leaderboard'); // weekly, monthly, all-time
+});
+
+/**
+ * CURIOSITY GAME
+ */
+Route::middleware('auth:player')->group(function () {
+    Route::get('/game', [GameController::class, 'index'])->name('game.index');
 });
 
 
@@ -107,6 +106,15 @@ Route::get('/hello-authors', [HelloAuthorsController::class, 'show'])->name('qr.
 
 Route::get('/qr/coming-soon', [ComingSoonController::class, 'show'])->name('qr.coming_soon');
 Route::post('/qr/coming-soon/subscription', [ComingSoonController::class, 'subscribe'])->name('qr.coming_soon.subscribe')->middleware('auth:player');
+
+/**
+ * WEBHOOKS
+ */
+Route::get('/webhooks/whatsapp', [WhatsappWebhookController::class, 'verify']);
+Route::post('/webhooks/whatsapp', [WhatsappWebhookController::class, 'handle']);
+Route::post('/webhooks/whatsapp/force-send', [WhatsappWebhookController::class, 'forceSend']);
+Route::post('/webhooks/shopify', ShopifyWebhookController::class);
+
 
 if (app()->environment('local')) {
     Route::get('login-as-player/{player}', function (Player $player) {

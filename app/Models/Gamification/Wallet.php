@@ -49,6 +49,7 @@ class Wallet extends Model
             }
 
             $transaction = $this->transactions()->create([
+                'activity_id' => data_get($meta, 'activity_id'),
                 'idempotency_key' => $idempotencyKey,
                 'direction' => $direction,
                 'amount' => $points,

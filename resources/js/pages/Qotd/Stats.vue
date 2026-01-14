@@ -11,6 +11,10 @@ const props = defineProps({
         type: Object,
         default: null,
     },
+    wallet: {
+        type: Object,
+        default: null,
+    },
 });
 
 const stats = [
@@ -43,7 +47,23 @@ const { text, copy, copied, isSupported } = useClipboard();
             </div>
         </div>
 
-        <div class="mt-12">
+        <div class="mt-2 overflow-hidden rounded-lg bg-gray-900 shadow-sm">
+            <div class="px-4 py-5 sm:p-6">
+                <div class="prose text-white prose-h1:text-white">
+                    <h1 class="text-xl font-bold">Curiosity Game</h1>
+                    <p>You are a part of the Curiosity Game!</p>
+                    <p>
+                        Through your curious explorations, you currently hold a balance of:<br />
+                        <strong class="text-white">{{ wallet.balance }} {{ wallet.currency_symbol }} ({{ wallet.currency }})</strong>
+                    </p>
+                    <p>
+                        <a :href="route('game.index')" class="text-white underline">Learn more</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8">
             <h3 class="text-base font-semibold text-gray-900">Your QOTD Stats</h3>
             <dl class="mt-5 grid grid-cols-1 divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm md:grid-cols-3 md:divide-x md:divide-y-0">
                 <div v-for="item in stats" :key="item.name" class="px-4 py-5 sm:p-6">
