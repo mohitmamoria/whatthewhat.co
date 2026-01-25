@@ -104,8 +104,8 @@ class Player extends Authenticatable
 
     public function getQotdCurrentStreakString()
     {
-        if ($this->qotd->current_streak > 21) {
-            return '🔥 ×' . $this->qotd->current_streak . ' days';
+        if ($this->qotd->current_streak >= 21) {
+            return '🔥 × ' . $this->qotd->current_streak . ' days';
         }
 
         $challenges = [
