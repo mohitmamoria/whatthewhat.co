@@ -10,12 +10,12 @@ const props = defineProps({
 });
 
 const badges = {
-    // 'wtw-book-solo': {
-    //     label: '🎉 Best Value',
-    //     color: 'bg-green-50 text-green-700 ',
-    // },
-    'wtw-book-calendar': {
+    'wtw-book-solo': {
         label: '🎉 Best Value',
+        color: 'bg-yellow-50 text-yellow-700 ',
+    },
+    'wtw-book-calendar': {
+        label: '🚨 Last 10 bundles left!',
         color: 'bg-green-50 text-green-700 ',
     },
     // 'wtw-book-calendar-duo': {
