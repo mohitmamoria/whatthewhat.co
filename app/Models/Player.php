@@ -149,6 +149,7 @@ class Player extends Authenticatable
 
     public static function sync($name, $number, $shouldOverride = false): Player
     {
+        dump($number);
         $number = normalize_phone($number);
 
         return DB::transaction(function () use ($name, $number, $shouldOverride) {

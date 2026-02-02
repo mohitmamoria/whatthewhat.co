@@ -1,0 +1,16 @@
+query CustomerList($query: String!, $first: Int = 200) {
+    customers(query: $query, first: $first) {
+        nodes {
+            id
+            email
+            phone
+            firstName
+            lastName
+            defaultAddress {
+                city
+                country
+                phone
+            }
+        }
+    }
+}
