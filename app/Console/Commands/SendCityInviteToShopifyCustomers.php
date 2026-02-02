@@ -40,7 +40,7 @@ class SendCityInviteToShopifyCustomers extends Command
 
         $this->info(sprintf('Found %d players to remind', $customers->count()));
         foreach ($customers as $index => $customer) {
-            $player = Player::sync('Player', data_get($customer, 'phone'));
+            $player = Player::sync('Player', phone_e164(data_get($customer, 'defaultAddress.phone')));
 
             $this->info(sprintf('[%d of %d] Sending to player %s', $index + 1, $customers->count(), $player->number));
 
