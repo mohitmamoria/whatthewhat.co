@@ -263,7 +263,11 @@ if (app()->environment('local')) {
                     ->join(' OR ')
             ]);
 
-            dd($response);
+            $phones = collect(data_get($response, 'customers.nodes', []))
+                ->map(fn($customer) => data_get($customer, 'defaultAddress.phone'))
+                ->map(fn($phone) => normalize_phone(phone_e164($phone)))
+                ->join(',');
+            dd($phones);
         } catch (ShopifyException $e) {
             dd($e->context());
         }
