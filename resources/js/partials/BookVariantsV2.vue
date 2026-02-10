@@ -15,7 +15,7 @@ const badges = {
         color: 'bg-yellow-50 text-yellow-700 ',
     },
     'wtw-book-calendar': {
-        label: '🚨 Last 10 bundles left!',
+        label: '🚨 Last 4 bundles left!',
         color: 'bg-green-50 text-green-700 ',
     },
     // 'wtw-book-calendar-duo': {
