@@ -3,6 +3,7 @@ import Shop from '@/layouts/Shop.vue';
 import AboutBook from '@/partials/AboutBook.vue';
 import BookVariantsV2 from '@/partials/BookVariantsV2.vue';
 import FAQ from '@/partials/FAQ.vue';
+import StickyShow from '@/partials/StickyShow.vue';
 
 var props = defineProps({
     product: {
@@ -53,6 +54,6 @@ var props = defineProps({
             </div>
         </div>
 
-        <!-- <Sticky /> -->
+        <StickyShow />
     </Shop>
 </template>
