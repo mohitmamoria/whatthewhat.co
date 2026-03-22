@@ -20,9 +20,9 @@ import { Link } from '@inertiajs/vue3';
         <div class="relative mx-auto w-full text-center">
             <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
                 <div class="px-4 pt-4 pb-12 font-serif text-xl font-bold sm:px-10">
-                    <p>It's not a quiz book. It's not a fact book.</p>
+                    <p>The ultimate book to fight against brainrot!</p>
 
-                    <p class="mt-4">It's both&mdash;and more!</p>
+                    <p class="mt-4 text-base font-thin">Learn things you didn't know about the things you know very well.</p>
 
                     <div class="mt-4 flex items-center justify-center gap-2">
                         <a
