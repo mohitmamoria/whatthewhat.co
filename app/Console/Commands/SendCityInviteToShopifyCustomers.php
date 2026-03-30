@@ -61,7 +61,7 @@ class SendCityInviteToShopifyCustomers extends Command
                     "parameters" => [
                         [
                             "type" => "text",
-                            "text" => 'wian-kolkata-feb-8', // this will be applied after aph.to/<here> by Meta
+                            "text" => 'show', // this will be applied after aph.to/<here> by Meta
                         ],
                     ],
                 ],
