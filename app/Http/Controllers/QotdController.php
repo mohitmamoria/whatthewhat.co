@@ -32,7 +32,7 @@ class QotdController extends Controller
             : null;
 
         return inertia('Qotd/Index', [
-            'question' => QuestionResource::make($question),
+            'question' => $question ? QuestionResource::make($question) : null,
             'referrer' => $referrer ? PlayerResource::make($referrer) : null,
             'qotd_game' => $game ? QotdGameResource::make($game) : null,
         ]);

@@ -1,5 +1,6 @@
 <script setup>
 import Qotd from '@/layouts/Qotd.vue';
+import QotdDiscontinued from '@/partials/Qotd/QotdDiscontinued.vue';
 import QotdForGuest from '@/partials/Qotd/QotdForGuest.vue';
 import QotdJoin from '@/partials/Qotd/QotdJoin.vue';
 import QotdPreGame from '@/partials/Qotd/QotdPreGame.vue';
@@ -25,7 +26,10 @@ const loggedInPlayer = usePage().props.auth.player;
 
 <template>
     <Qotd>
-        <div v-if="!loggedInPlayer" class="mt-10 flex items-center justify-center gap-x-6">
+        <div v-if="!question" class="mt-10 flex items-center justify-center gap-x-6">
+            <QotdDiscontinued />
+        </div>
+        <div v-else-if="!loggedInPlayer" class="mt-10 flex items-center justify-center gap-x-6">
             <QotdForGuest />
         </div>
         <div v-else-if="!qotd_game">
