@@ -77,7 +77,7 @@ const quotes = [
 </script>
 
 <template>
-    <Head title="A Field Guide to Curious Things">
+    <Head title="The antidote to brainrot">
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
