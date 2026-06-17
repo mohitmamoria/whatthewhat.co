@@ -7,7 +7,7 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
         <!-- Title -->
         <div class="mx-auto mb-16 max-w-2xl text-center">
             <SectionBadge color="bg-sun" rotation="rotate-2">Direct from authors</SectionBadge>
-            <h2 class="mt-5 font-fraunces text-5xl font-semibold tracking-tight leading-tight md:text-6xl">A huge thank you</h2>
+            <h2 class="mt-5 font-fraunces text-5xl leading-tight font-semibold tracking-tight md:text-6xl">A huge thank you</h2>
         </div>
 
         <div class="relative mx-auto w-full max-w-2xl">
@@ -17,8 +17,8 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
                     class="bubble-left relative max-w-[220px] flex-1 rounded-2xl border-2 border-ink bg-cream px-5 py-4 shadow-stickersm"
                     style="--bubble-bg: #faf8f2"
                 >
-                    <p class="text-sm font-medium leading-relaxed md:text-base">
-                        Thank you for believing in us and buying directly. It means everything to keep publishing independently.
+                    <p class="text-sm leading-relaxed font-medium md:text-base">
+                        Thank you for buying directly from authors. It means everything to keep publishing independent.
                     </p>
                     <p class="mt-2 font-fraunces text-sm font-bold">— Nipun</p>
                 </div>
@@ -26,8 +26,8 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
                     class="bubble-right relative max-w-[220px] flex-1 rounded-2xl border-2 border-ink bg-lime px-5 py-4 shadow-stickersm"
                     style="--bubble-bg: #c8f169"
                 >
-                    <p class="text-sm font-medium leading-relaxed md:text-base">
-                        Every order funds our next project. You're not just buying a book — you're supporting our dream. Love you.
+                    <p class="text-sm leading-relaxed font-medium md:text-base">
+                        Every order funds our next curious project. You're not just buying a book — you're supporting a dream. Love you!
                     </p>
                     <p class="mt-2 font-fraunces text-sm font-bold">— Mohit</p>
                 </div>
@@ -41,7 +41,7 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
 
             <!-- 100% note underneath -->
             <p class="mt-6 text-center text-base text-muted">
-                No middlemen. No publisher cut. <span class="font-bold text-ink">100% of every rupee goes directly to us.</span>
+                <span class="font-bold text-ink">100% of profit goes directly into the next curious project.</span>
             </p>
         </div>
     </section>

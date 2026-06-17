@@ -4,12 +4,12 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
 const faqs = [
     {
         question: 'When will I get my book?',
-        answer: "We ship all orders within 24 business hours of receiving them. Depending on your location, delivery usually takes 3–5 business days. You'll get a tracking link by email and WhatsApp once your order ships.",
+        answer: "We ship all orders within 1-2 business days of receiving them. Depending on your location, delivery usually takes 3–5 business days. You'll get a tracking link by email once your order ships.",
         open: true,
     },
     {
-        question: 'Are the free goodies still available?',
-        answer: 'Yes. The signed first edition and letterpress bookmark are included with every order while this print run lasts.',
+        question: 'Are the free pre-order goodies still available?',
+        answer: 'The free pre-order goodies were available during the pre-order period exclusively. But, the signed edition and a bookmark are still included with every order while the stock lasts.',
         open: false,
     },
     {
@@ -19,7 +19,18 @@ const faqs = [
     },
     {
         question: 'Can I change my shipping address?',
-        answer: "Please make sure your address is correct before placing the order, as we're unable to change it once a copy has shipped. A valid phone number helps us reach you for delivery.",
+        answer: "No. Please make sure your address is correct before placing the order, as we're unable to change it once a copy has shipped. A valid Indian phone number that can receive OTP during the delivery is mandatory for a successful delivery.",
+        open: false,
+    },
+    {
+        question: 'What happens if I enter the wrong address?',
+        answer: "If the order is undelivered, it gets returned to us. We'll reach out to you to confirm the correct address and ship it again (for an additional shipping fee). If the order is delivered to the wrong address, we can't be responsible for it. Please double-check your address before placing the order.",
+        open: false,
+    },
+
+    {
+        question: 'What happens if I am unable to receive the order for any reason?',
+        answer: "At least two delivery attempts are made for every order. If the order is undelivered, it gets returned to us. We'll reach out to you to confirm the correct address and ship it again (for an additional shipping fee). If you would rather cancel the order, we can do that too, but shipping fee + returning fee (approx. ₹150) will be deducted from the refund amount.",
         open: false,
     },
     {
@@ -28,8 +39,8 @@ const faqs = [
         open: false,
     },
     {
-        question: 'Why did the chicken cross the road?',
-        answer: 'To tell its friends that the book is awesome. (The real answer is on page 144.)',
+        question: 'What came first – chicken or egg?',
+        answer: 'Whatever you ordered first, haha. (The real answer is on page 167.)',
         open: false,
     },
 ];
@@ -40,7 +51,7 @@ const faqs = [
         <div class="grid gap-8 md:grid-cols-[0.8fr_1.2fr]">
             <div>
                 <SectionBadge color="bg-sun" rotation="rotate-2">Good to know</SectionBadge>
-                <h2 class="mt-5 font-fraunces text-4xl font-semibold tracking-tight leading-tight md:text-5xl">Frequently asked questions</h2>
+                <h2 class="mt-5 font-fraunces text-4xl leading-tight font-semibold tracking-tight md:text-5xl">Frequently asked questions</h2>
                 <p class="mt-5 text-base text-muted">Have a question? Here are the answers to the things readers ask us most.</p>
             </div>
             <div class="space-y-3">

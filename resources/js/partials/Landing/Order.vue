@@ -24,13 +24,12 @@ const cutoutPrice: Record<string, number> = {
 <template>
     <section id="order" class="mx-auto max-w-6xl scroll-mt-24 px-5 py-12 md:py-16">
         <div class="mx-auto max-w-2xl text-center">
-            <SectionBadge color="bg-lime" rotation="-rotate-2">Signed first edition</SectionBadge>
+            <SectionBadge color="bg-lime" rotation="-rotate-2">Signed Edition</SectionBadge>
             <h2 class="mt-5 font-fraunces text-4xl leading-tight font-semibold tracking-tight md:text-5xl">
                 A signed copy — plus a <Highlight color="#a8d8ff">free bookmark</Highlight>
             </h2>
             <p class="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted md:text-lg">
-                Every copy in this run is hand-signed by the author and ships with a letterpress bookmark. Priced to fit any pocket, students
-                included.
+                Every copy is hand-signed by the authors and ships with a special bookmark. Priced to fit any pocket, students included.
             </p>
         </div>
 
@@ -45,6 +44,8 @@ const cutoutPrice: Record<string, number> = {
             </template>
         </div>
 
-        <p class="mt-6 text-center text-xs font-bold tracking-wide text-muted uppercase">Free shipping across India · Cash on delivery available</p>
+        <p class="mt-6 text-center text-base font-bold tracking-wide text-muted uppercase">
+            Free shipping across India · Ships within 2 business days
+        </p>
     </section>
 </template>

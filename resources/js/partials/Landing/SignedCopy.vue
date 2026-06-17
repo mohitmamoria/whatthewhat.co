@@ -8,12 +8,14 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
         <div class="grid items-center gap-10 md:grid-cols-2">
             <div>
                 <SectionBadge color="bg-bubble" rotation="-rotate-2">Special touches</SectionBadge>
-                <h2 class="mt-5 font-fraunces text-4xl font-semibold tracking-tight leading-tight md:text-5xl">
-                    Hand-signed by both <Highlight color="#c8f169">authors</Highlight>
+                <h2 class="mt-5 font-fraunces text-4xl leading-tight font-semibold tracking-tight md:text-5xl">
+                    Hand-signed by both <Highlight color="#c8f169">authors</Highlight> + free bookmark
                 </h2>
                 <p class="mt-6 text-base leading-relaxed text-muted md:text-lg">
-                    Every copy shipped from us carries personal signatures from both Nipun and Mohit on the title page. Plus, you get a beautifully
-                    designed free letterpress bookmark tucked inside — made to last as long as the memories you'll make with this book.
+                    Every copy ordered on this website carries signatures from both Nipun and Mohit on the title page.
+                </p>
+                <p class="mt-6 text-base leading-relaxed text-muted md:text-lg">
+                    Plus, you get a beautifully designed free custom bookmark tucked inside — featuring a special trivia on it.
                 </p>
                 <a
                     href="#order"
@@ -23,7 +25,11 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
                 </a>
             </div>
             <div class="rotate-1 overflow-hidden rounded-3xl border-2 border-ink bg-cream p-3 shadow-pop">
-                <img src="/images/bookmarks.jpg" alt="Hand-signed book with letterpress bookmark" class="h-full w-full rounded-2xl object-cover" />
+                <img
+                    src="/images/mockups/free-bookmarks.jpg"
+                    alt="Hand-signed book with letterpress bookmark"
+                    class="h-full w-full rounded-2xl object-cover"
+                />
             </div>
         </div>
     </section>

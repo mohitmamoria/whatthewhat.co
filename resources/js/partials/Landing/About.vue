@@ -9,18 +9,14 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
             <div>
                 <SectionBadge color="bg-sun" rotation="-rotate-2">What it's about</SectionBadge>
                 <h2 class="mt-5 font-fraunces text-4xl leading-tight font-semibold tracking-tight md:text-5xl">
-                    The little facts behind the big <Highlight color="#ffb3d1">shrug</Highlight>
+                    The antidote to <Highlight color="#ffb3d1">brainrot</Highlight>
                 </h2>
                 <div class="mt-6 space-y-4 text-base leading-relaxed text-muted md:text-lg">
                     <p>
-                        <span class="font-bold text-ink">What The What?!</span> is a book full of curious stories, strange facts, delightful
-                        discoveries, and tiny pieces of the world that make you stop and go, “Wait… what?”
+                        <span class="font-bold text-ink">What The What?!</span> is a book of curious stories, strange facts, forgotten histories, odd
+                        inventions, bizarre coincidences, and everyday things that are far weirder than they seem.
                     </p>
-                    <p>
-                        It takes everyday things, forgotten histories, odd inventions, bizarre coincidences, and surprising ideas — then turns them
-                        into short, addictive pages you’ll want to read out loud. Open it anywhere, and you’ll probably find something worth telling
-                        someone else.
-                    </p>
+                    <p>Open it anywhere, and you’ll find something surprising enough to tell someone else.</p>
                 </div>
                 <a
                     href="#order"

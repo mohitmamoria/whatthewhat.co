@@ -27,30 +27,12 @@ import Highlight from '@/partials/Landing/Highlight.vue';
         </div>
 
         <!-- collage -->
-        <div class="relative mx-auto mt-14 max-w-4xl">
-            <div class="absolute top-6 -left-2 z-20 -rotate-6 md:left-4">
-                <span class="inline-block rounded-xl border-2 border-ink bg-sun px-3 py-2 text-[0.7rem] leading-tight font-bold shadow-stickersm"
-                    >No.1 National<br />Bestseller!</span
-                >
-            </div>
-            <div class="absolute top-2 -right-2 z-20 rotate-6 md:right-6">
-                <span class="inline-block rounded-xl border-2 border-ink bg-grape px-3 py-2 text-[0.7rem] leading-tight font-bold shadow-stickersm"
-                    >280 pages of<br />“wait, what?!”</span
-                >
-            </div>
-            <div class="absolute bottom-8 left-2 z-20 -rotate-3 md:left-10">
-                <span class="inline-block rounded-xl border-2 border-ink bg-bubble px-3 py-2 text-[0.7rem] leading-tight font-bold shadow-stickersm"
-                    >Signed copy +<br />Free bookmark</span
-                >
-            </div>
-
-            <div class="flex justify-center rounded-3xl border-2 border-ink bg-cream px-6 py-10 shadow-pop">
-                <img
-                    src="/images/what-the-what-national-bestseller.png"
-                    alt="What the What book, standing upright"
-                    class="h-auto w-56 -rotate-2 md:w-72"
-                />
-            </div>
+        <div class="relative mx-auto mt-14 w-fit">
+            <img
+                src="/images/what-the-what-national-bestseller.png"
+                alt="What the What book, standing upright"
+                class="mx-auto h-auto w-64 -rotate-2 drop-shadow-2xl sm:w-80 md:w-[26rem]"
+            />
         </div>
 
         <!-- stat row -->
