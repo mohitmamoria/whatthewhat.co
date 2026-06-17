@@ -55,7 +55,7 @@ const checkout = (): void => {
         class="mx-auto w-full max-w-xl overflow-hidden rounded-3xl border-2 border-ink bg-cream shadow-pop md:flex-1"
         :class="{ 'opacity-75': !variant.is_available }"
     >
-        <div class="flex items-center gap-5 border-b-2 border-ink bg-lime p-6">
+        <div class="flex items-center gap-5 border-b-2 border-ink bg-sun p-6">
             <img
                 :src="variant.image_src"
                 :alt="variant.title"
