@@ -26,7 +26,7 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
             </div>
             <div class="rotate-1 overflow-hidden rounded-3xl border-2 border-ink bg-cream p-3 shadow-pop">
                 <img
-                    src="/images/mockups/free-bookmarks.jpg"
+                    src="/images/landing/wtw-free-bookmarks.png"
                     alt="Hand-signed book with letterpress bookmark"
                     class="h-full w-full rounded-2xl object-cover"
                 />

@@ -16,7 +16,7 @@ import Highlight from '@/partials/Landing/Highlight.vue';
                 href="#order"
                 class="rounded-full border-2 border-ink bg-lime px-7 py-3 text-sm font-bold tracking-wide uppercase shadow-sticker transition hover:-translate-y-0.5 hover:shadow-pop"
             >
-                Buy the book → ₹299
+                Buy the book →
             </a>
             <a
                 href="#sample"
@@ -29,7 +29,7 @@ import Highlight from '@/partials/Landing/Highlight.vue';
         <!-- collage -->
         <div class="relative mx-auto mt-14 w-fit">
             <img
-                src="/images/what-the-what-national-bestseller.png"
+                src="/images/landing/wtw-hero.png"
                 alt="What the What book, standing upright"
                 class="mx-auto h-auto w-64 -rotate-2 drop-shadow-2xl sm:w-80 md:w-[26rem]"
             />

@@ -2,11 +2,18 @@
 import SectionBadge from '@/partials/Landing/SectionBadge.vue';
 
 const thread = [
-    { user: 'u/curious_reader', text: 'Just spotted something odd on page 127 — the numbering skips. Is that the clue??' },
-    { user: 'u/page_detective', text: 'Has anyone checked the inside of the bookmark? Mine has something faint printed on the back...' },
-    { user: 'u/bookworm_squad', text: "I've read this thing 3 times now. Page 79 content has to be hidden somewhere in chapters 6-9." },
-    { user: 'u/mystery_solver', text: "Everyone's been looking in the wrong place. Think about what 7+9 equals..." },
-    { user: 'u/author_nipun [verified]', verified: true, text: "You're all on the right track. Keep going. The money is real and waiting." },
+    { user: 'u/Mysterious-Year-3384', text: 'I saw some letters at random places, and perhaps they can spell out POLARIS. This could be something!' },
+    { user: 'u/rest_in_war', text: 'Biggest hint got dropped today, which is the answer is NOT one word or sentence. It is a full page.' },
+    { user: 'u/Ok-Mycologist-7816', text: "Feels like 'The secret is hiding in plain sight (i.e. PLAN SITE)'" },
+    {
+        user: 'u/bhavesh_ss1729',
+        text: "For 6 whole days, I have been doing this and I have got nothing, I haven't watched a film or read a book. I sacrificed everything for 6 whole days, and I have got nothing. I AM DONE WITH THIS.",
+    },
+    {
+        user: 'u/mohitmamoria [author]',
+        verified: true,
+        text: 'You all have figured out every individual piece of the puzzle; someone just needs to connect them in the right direction...',
+    },
 ];
 </script>
 
@@ -29,7 +36,7 @@ const thread = [
                 <!-- Big prize announcement -->
                 <div class="mb-12 text-center">
                     <p class="mb-4 text-xs font-bold tracking-[0.2em] text-lime uppercase">Real cash prize. No catch.</p>
-                    <h2 class="font-fraunces text-6xl font-semibold tracking-tight text-cream leading-tight md:text-8xl">
+                    <h2 class="font-fraunces text-6xl leading-tight font-semibold tracking-tight text-cream md:text-8xl">
                         Page 79 is<br /><span class="text-sun">missing.</span>
                     </h2>
                     <div class="relative mt-8 inline-block max-w-full rounded-2xl border-2 border-sun bg-sun/10 px-6 py-5 sm:px-10 sm:py-6">

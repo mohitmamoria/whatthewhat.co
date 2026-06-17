@@ -9,7 +9,7 @@
                 href="#order"
                 class="mt-8 inline-flex rounded-full border-2 border-ink bg-ink px-7 py-3 text-sm font-bold tracking-wide text-lime uppercase transition hover:-translate-y-0.5 hover:shadow-sticker"
             >
-                Buy the book → ₹299
+                Buy the book →
             </a>
             <p class="mt-8 text-xs font-bold text-ink/70">
                 For bulk orders (100+ books), write to
