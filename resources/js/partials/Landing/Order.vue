@@ -22,7 +22,7 @@ const cutoutPrice: Record<string, number> = {
 </script>
 
 <template>
-    <section id="offer" class="mx-auto max-w-6xl px-5 py-12 md:py-16">
+    <section id="order" class="mx-auto max-w-6xl scroll-mt-24 px-5 py-12 md:py-16">
         <div class="mx-auto max-w-2xl text-center">
             <SectionBadge color="bg-lime" rotation="-rotate-2">Signed first edition</SectionBadge>
             <h2 class="mt-5 font-fraunces text-4xl leading-tight font-semibold tracking-tight md:text-5xl">
@@ -34,7 +34,7 @@ const cutoutPrice: Record<string, number> = {
             </p>
         </div>
 
-        <div id="order" class="mt-12 flex scroll-mt-24 flex-col gap-8 md:flex-row md:items-stretch md:justify-center">
+        <div class="mt-12 flex flex-col gap-8 md:flex-row md:items-stretch md:justify-center">
             <template v-for="variant in variants" :key="variant.id">
                 <OrderCard
                     v-if="!variant.sku.endsWith('duo')"

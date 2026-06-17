@@ -57,7 +57,7 @@ const checkout = (): void => {
     >
         <div class="flex items-center gap-5 border-b-2 border-ink bg-lime p-6">
             <img
-                :src="`/images/${variant.sku}-desktop.jpg`"
+                :src="variant.image_src"
                 :alt="variant.title"
                 class="h-24 w-24 shrink-0 rounded-xl border-2 border-ink object-cover"
                 :class="{ grayscale: !variant.is_available }"
@@ -74,7 +74,6 @@ const checkout = (): void => {
                     >{{ badge }}</span
                 >
                 <h3 class="mt-1.5 font-fraunces text-2xl font-bold">For {{ variant.title }}</h3>
-                <p class="text-sm text-ink/70">The signed book + free bookmark.</p>
             </div>
         </div>
         <div class="flex flex-1 flex-col p-6">
@@ -139,18 +138,12 @@ const checkout = (): void => {
 }
 
 .variant-desc :deep(li)::before {
-    content: '✓';
+    content: '✅';
     position: absolute;
     top: 0.05rem;
     left: 0;
-    display: grid;
-    place-items: center;
-    height: 1.25rem;
-    width: 1.25rem;
-    border: 2px solid var(--color-ink);
-    border-radius: 9999px;
-    background: var(--color-lime);
-    font-size: 0.7rem;
+    font-size: 0.9rem;
+    line-height: 1.25rem;
 }
 
 .variant-desc :deep(p) {

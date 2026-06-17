@@ -20,7 +20,7 @@
             class="mx-auto mt-6 flex max-w-6xl flex-col items-center justify-between gap-2 px-1 text-[0.7rem] font-bold tracking-wide text-muted uppercase md:flex-row"
         >
             <p class="font-fraunces text-sm tracking-normal text-ink normal-case">What the What</p>
-            <p>© 2026 What the What. All rights reserved.</p>
+            <p>Copyright &copy; {{ new Date().getFullYear() }} What the What. All rights reserved.</p>
         </div>
     </footer>
 </template>

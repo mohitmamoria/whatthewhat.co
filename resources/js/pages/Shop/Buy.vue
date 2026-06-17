@@ -18,6 +18,10 @@ defineProps({
         type: Object,
         required: true,
     },
+    reviews: {
+        type: Array,
+        default: () => [],
+    },
 });
 </script>
 
@@ -46,7 +50,7 @@ defineProps({
             <TreasureHunt />
             <SignedCopy />
             <Order :variants="product.variants" />
-            <Ticker />
+            <Ticker v-if="reviews.length" :reviews="reviews" />
             <Authors />
             <Faq />
         </main>

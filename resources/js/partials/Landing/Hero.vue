@@ -8,8 +8,8 @@ import Highlight from '@/partials/Landing/Highlight.vue';
             The strange-but-true facts hiding in <Highlight color="#ffd84d">plain sight</Highlight>.
         </h1>
         <p class="mx-auto mt-6 max-w-xl text-center text-base leading-relaxed text-muted md:text-lg">
-            Meet <span class="font-bold text-ink">What the What</span> — a witty little field guide to the curious facts tucked inside the most
-            ordinary corners of the world.
+            Meet <span class="font-bold text-ink">What the What</span> — a witty little book of the curious facts and trivia tucked inside the most
+            ordinary things and people of the world.
         </p>
         <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
@@ -45,7 +45,11 @@ import Highlight from '@/partials/Landing/Highlight.vue';
             </div>
 
             <div class="flex justify-center rounded-3xl border-2 border-ink bg-cream px-6 py-10 shadow-pop">
-                <img src="/images/mockup-1.png" alt="The What the What book, standing upright" class="h-auto w-56 -rotate-2 md:w-72" />
+                <img
+                    src="/images/what-the-what-national-bestseller.png"
+                    alt="What the What book, standing upright"
+                    class="h-auto w-56 -rotate-2 md:w-72"
+                />
             </div>
         </div>
 
