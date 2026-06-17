@@ -24,7 +24,7 @@ const form = useForm({
 });
 
 const discount = computed<number | null>(() => {
-    if (!props.cutoutPrice) {
+    if (!props.cutoutPrice || props.cutoutPrice <= props.variant.price) {
         return null;
     }
 
@@ -81,7 +81,7 @@ const checkout = (): void => {
 
             <div class="mt-auto flex items-end gap-3 pt-6">
                 <span class="font-fraunces text-4xl font-bold">₹{{ variant.price }}</span>
-                <span v-if="cutoutPrice" class="mb-1 text-base text-muted line-through">₹{{ cutoutPrice }}</span>
+                <span v-if="discount" class="mb-1 text-base text-muted line-through">₹{{ cutoutPrice }}</span>
                 <span v-if="discount" class="mb-1 rounded-full border-2 border-ink bg-sun px-2 py-0.5 text-xs font-bold">{{ discount }}% off</span>
             </div>
 
