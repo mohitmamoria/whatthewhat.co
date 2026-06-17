@@ -5,11 +5,11 @@ import Highlight from '@/partials/Landing/Highlight.vue';
 <template>
     <section class="mx-auto max-w-6xl px-5 pt-32 pb-8 md:pt-40">
         <h1 class="mx-auto max-w-4xl text-center font-fraunces text-5xl leading-[1.02] font-semibold tracking-tight md:text-7xl">
-            The strange-but-true facts hiding in <Highlight color="#ffd84d">plain sight</Highlight>.
+            The antidote to <Highlight color="#ffd84d">brainrot</Highlight>
         </h1>
         <p class="mx-auto mt-6 max-w-xl text-center text-base leading-relaxed text-muted md:text-lg">
-            Meet <span class="font-bold text-ink">What the What</span> — a witty little book of the curious facts and trivia tucked inside the most
-            ordinary things and people of the world.
+            Keeping you away from screens, <span class="font-bold text-ink">What the What</span> reveals the extraodrinary stories about the most
+            ordinary things and people.
         </p>
         <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
@@ -27,7 +27,7 @@ import Highlight from '@/partials/Landing/Highlight.vue';
         </div>
 
         <!-- collage -->
-        <div class="relative mx-auto mt-14 w-fit">
+        <div class="relative mx-auto w-fit">
             <img
                 src="/images/landing/wtw-hero.png"
                 alt="What the What book, standing upright"
@@ -36,7 +36,7 @@ import Highlight from '@/partials/Landing/Highlight.vue';
         </div>
 
         <!-- stat row -->
-        <div class="mx-auto mt-12 grid max-w-3xl grid-cols-3 gap-3">
+        <div class="mx-auto mb-14 grid max-w-3xl grid-cols-3 gap-3">
             <div class="rounded-2xl border-2 border-ink bg-cream p-4 text-center shadow-stickersm">
                 <p class="font-fraunces text-3xl font-bold">280</p>
                 <p class="mt-1 text-[0.65rem] tracking-wide text-muted uppercase">curious pages</p>

@@ -15,9 +15,8 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
                     Not sure what to expect? <Highlight color="#c8f169">Read it first.</Highlight>
                 </h2>
                 <p class="mt-6 text-base leading-relaxed text-muted md:text-lg">
-                    We'll send you a few <span class="font-bold">deleted pages</span> — the ones that
-                    <span class="font-bold underline">DID NOT</span> make it to the book. Read them on WhatsApp, and if your curiosity isn't hooked,
-                    you've lost nothing but a few delightful minutes.
+                    We'll send you <span class="font-bold">17 deleted pages</span> that <span class="font-bold underline">DID NOT</span> make it to
+                    the book. Read them on WhatsApp, and if your curiosity isn't hooked, you've lost nothing but a few delightful minutes.
                 </p>
                 <div class="mt-7 rounded-2xl border-2 border-ink bg-cream p-6 shadow-sticker">
                     <p class="font-fraunces text-lg font-semibold">Get the free deleted pages</p>

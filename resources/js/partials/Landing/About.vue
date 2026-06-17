@@ -9,7 +9,7 @@ import SectionBadge from '@/partials/Landing/SectionBadge.vue';
             <div>
                 <SectionBadge color="bg-sun" rotation="-rotate-2">What it's about</SectionBadge>
                 <h2 class="mt-5 font-fraunces text-4xl leading-tight font-semibold tracking-tight md:text-5xl">
-                    The antidote to <Highlight color="#ffb3d1">brainrot</Highlight>
+                    Strange-but-true facts hiding in <Highlight color="#ffb3d1">plain sight</Highlight>
                 </h2>
                 <div class="mt-6 space-y-4 text-base leading-relaxed text-muted md:text-lg">
                     <p>
