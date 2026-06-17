@@ -15,16 +15,26 @@ const colors = ['bg-lime', 'bg-sun', 'bg-sky', 'bg-grape', 'bg-bubble'];
 const PREVIEW_LENGTH = 140;
 const TICKER_REVIEW_LIMIT = 20;
 
+// Must match .ticker-card's flex-basis and .ticker-track's gap below.
+const CARD_WIDTH = 320;
+const CARD_GAP = 24;
+
 // Tuned to match the pace that already looked right at ~19 reviews / 60s:
 // 60s / 19 cards ≈ 3.16s per card (rounded to 3.2 for a clean constant).
 const SECONDS_PER_CARD = 3.2;
 
 const tickerReviews = computed(() => props.reviews.slice(0, TICKER_REVIEW_LIMIT));
 
-// Duplicated for the seamless -50% loop.
+// Duplicated for the seamless loop.
 const cards = computed(() => [...tickerReviews.value, ...tickerReviews.value]);
 
 const animationDuration = computed(() => `${(tickerReviews.value.length * SECONDS_PER_CARD).toFixed(2)}s`);
+
+// Computed in pixels (rather than translateX(-50%) of a `width: max-content`
+// track) because mobile WebKit miscalculates the intrinsic width of very wide
+// flex rows with many duplicated children, landing the loop point short and
+// leaving a blank gap for the rest of the cycle.
+const tickerDistance = computed(() => `${tickerReviews.value.length * (CARD_WIDTH + CARD_GAP) - CARD_GAP}px`);
 
 const stars = (rating: number): string => '⭐'.repeat(rating);
 
@@ -48,7 +58,7 @@ const selectedReview = ref(null);
 
         <!-- Full-bleed ticker -->
         <div class="ticker-wrap mt-12 py-4">
-            <div class="ticker-track" :style="{ '--ticker-duration': animationDuration }">
+            <div class="ticker-track" :style="{ '--ticker-duration': animationDuration, '--ticker-distance': tickerDistance }">
                 <figure
                     v-for="(review, index) in cards"
                     :key="index"
@@ -98,7 +108,7 @@ const selectedReview = ref(null);
         transform: translateX(0);
     }
     100% {
-        transform: translateX(-50%);
+        transform: translateX(calc(-1 * var(--ticker-distance, 50%)));
     }
 }
 
