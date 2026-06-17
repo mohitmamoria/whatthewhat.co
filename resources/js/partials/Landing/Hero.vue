@@ -8,8 +8,8 @@ import Highlight from '@/partials/Landing/Highlight.vue';
             The antidote to <Highlight color="#ffd84d">brainrot</Highlight>
         </h1>
         <p class="mx-auto mt-6 max-w-xl text-center text-base leading-relaxed text-muted md:text-lg">
-            Keeping you away from screens, <span class="font-bold text-ink">What the What</span> reveals the extraodrinary trivia about the most
-            ordinary things and people.
+            Keeping you away from screens, <span class="font-bold text-ink">What the What</span> reveals the unknown trivia about things you know very
+            well.
         </p>
         <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
