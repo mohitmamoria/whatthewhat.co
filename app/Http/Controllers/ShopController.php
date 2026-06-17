@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\GiftResource;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ReviewResource;
 use App\Models\Gift;
 use App\Models\Player;
 use App\Models\Product;
+use App\Models\Review;
 use App\Services\Shopify\Shopify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -22,6 +24,9 @@ class ShopController extends Controller
 
         return inertia('Shop/Buy', [
             'product' => ProductResource::make($product),
+            'reviews' => ReviewResource::collection(
+                Review::featured()->with('player')->latest()->limit(30)->get()
+            ),
         ]);
     }
 
@@ -62,9 +67,11 @@ class ShopController extends Controller
             $cachedCart = json_decode($cachedCart, true);
 
             $checkoutUrl = $this->reuseCachedCart($cachedCart, $validated['variant'], $validated['quantity']);
+
             return Inertia::location($checkoutUrl);
         } else {
             $checkoutUrl = $this->createFreshCart($validated['variant'], $validated['quantity'], $referrer?->referrer_code);
+
             return Inertia::location($checkoutUrl);
         }
     }
@@ -109,10 +116,10 @@ class ShopController extends Controller
                 'lines' => [
                     [
                         'merchandiseId' => $variantId,
-                        'quantity' => $quantity
+                        'quantity' => $quantity,
                     ],
                 ],
-            ]
+            ],
         ]);
 
         // Cache the cart
@@ -143,12 +150,12 @@ class ShopController extends Controller
 
     private function getCartCacheKey()
     {
-        return 'cart:' . $this->getVisitorId();
+        return 'cart:'.$this->getVisitorId();
     }
 
     private function getVisitorId()
     {
-        if (!session()->has('visitor_id')) {
+        if (! session()->has('visitor_id')) {
             session()->put('visitor_id', (string) Str::uuid());
         }
 

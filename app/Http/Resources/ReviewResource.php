@@ -14,6 +14,11 @@ class ReviewResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'title' => $this->title,
+            'quote' => $this->body,
+            'author' => $this->player?->name ?? 'A reader',
+            'rating' => $this->rating,
+        ];
     }
 }

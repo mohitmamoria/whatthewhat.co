@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,6 +16,14 @@ class Review extends Model
         'title',
         'body',
     ];
+
+    public function scopeFeatured(Builder $query): void
+    {
+        $query->whereNotNull('body')
+            ->whereNotNull('title')
+            ->where('rating', '>=', 4)
+            ->orderBy('rating', 'desc');
+    }
 
     public function player()
     {
