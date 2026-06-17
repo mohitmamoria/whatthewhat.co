@@ -48,7 +48,7 @@ const selectedReview = ref(null);
 
         <!-- Full-bleed ticker -->
         <div class="ticker-wrap mt-12 py-4">
-            <div class="ticker-track" :style="{ animationDuration }">
+            <div class="ticker-track" :style="{ '--ticker-duration': animationDuration }">
                 <figure
                     v-for="(review, index) in cards"
                     :key="index"
@@ -86,7 +86,7 @@ const selectedReview = ref(null);
     display: flex;
     gap: 1.5rem;
     width: max-content;
-    animation: ticker linear infinite;
+    animation: ticker var(--ticker-duration, 60s) linear infinite;
 }
 
 .ticker-track:hover {
