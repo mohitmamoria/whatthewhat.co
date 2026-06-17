@@ -21,6 +21,7 @@ class Review extends Model
     {
         $query->whereNotNull('body')
             ->whereNotNull('title')
+            ->whereRaw('CHAR_LENGTH(body) <= ?', [150])
             ->where('rating', '>=', 4)
             ->orderBy('rating', 'desc');
     }
