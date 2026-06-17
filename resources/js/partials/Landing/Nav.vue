@@ -5,7 +5,7 @@
         >
             <a href="#top" class="flex items-center gap-2">
                 <img src="/images/landing/wtw-logo.svg" alt="What the What" class="h-7 w-auto md:h-8" />
-                <span class="hidden text-[0.6rem] font-bold tracking-wide text-muted uppercase md:inline">The ultimate book of curiosities.</span>
+                <span class="hidden text-xs font-bold tracking-wide text-gray-700 uppercase md:inline">The ultimate book of curiosities.</span>
             </a>
             <a
                 href="#order"
