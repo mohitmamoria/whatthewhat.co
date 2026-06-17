@@ -24,11 +24,11 @@ const badges = {
     // },
 };
 
-const cutoutPrice = {
-    'wtw-book-solo': 399,
-    'wtw-book-calendar': 899,
-    'wtw-book-calendar-duo': 1798,
-};
+// const cutoutPrice = {
+//     'wtw-book-solo': 399,
+//     'wtw-book-calendar': 899,
+//     'wtw-book-calendar-duo': 1798,
+// };
 </script>
 
 <template>
@@ -61,13 +61,8 @@ const cutoutPrice = {
                             >
                                 ₹599
                             </p>
-                            <p
-                                class="mx-auto mt-6 max-w-xl font-serif text-2xl font-bold text-pretty text-gray-900 line-through decoration-red-500 sm:text-3xl"
-                            >
-                                ₹399
-                            </p>
                             <div class="-rotate-6">
-                                <p class="mx-auto mt-6 max-w-xl font-serif text-6xl font-bold text-pretty text-gray-900 sm:text-8xl">₹299</p>
+                                <p class="mx-auto mt-6 max-w-xl font-serif text-6xl font-bold text-pretty text-gray-900 sm:text-8xl">₹399</p>
                                 <p class="mx-auto mt-2 max-w-xl font-serif text-2xl font-bold text-pretty text-gray-900">ONLY</p>
                             </div>
                         </div>
@@ -107,9 +102,9 @@ const cutoutPrice = {
                                     >
                                     <h3 class="text-lg/8 font-semibold tracking-tight text-gray-900">For {{ variant.title }}</h3>
                                     <p class="font-xs font-bold text-gray-700">
-                                        <span class="font-normal line-through decoration-gray-500" v-if="cutoutPrice[variant.sku]"
+                                        <!-- <span class="font-normal line-through decoration-gray-500" v-if="cutoutPrice[variant.sku]"
                                             >₹{{ cutoutPrice[variant.sku] }}</span
-                                        >
+                                        > -->
                                         ₹{{ variant.price }} only
                                     </p>
                                     <article class="prose prose-sm mt-2" v-html="variant.description"></article>
