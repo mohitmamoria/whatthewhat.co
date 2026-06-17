@@ -1,10 +1,19 @@
 <script setup lang="ts">
-import Shop from '@/layouts/Shop.vue';
-import AboutBook from '@/partials/AboutBook.vue';
-import BookVariantsV2 from '@/partials/BookVariantsV2.vue';
-import FAQ from '@/partials/FAQ.vue';
+import { Head } from '@inertiajs/vue3';
+import Nav from '@/partials/Landing/Nav.vue';
+import Hero from '@/partials/Landing/Hero.vue';
+import Quote from '@/partials/Landing/Quote.vue';
+import About from '@/partials/Landing/About.vue';
+import Sample from '@/partials/Landing/Sample.vue';
+import TreasureHunt from '@/partials/Landing/TreasureHunt.vue';
+import SignedCopy from '@/partials/Landing/SignedCopy.vue';
+import Order from '@/partials/Landing/Order.vue';
+import Ticker from '@/partials/Landing/Ticker.vue';
+import Authors from '@/partials/Landing/Authors.vue';
+import Faq from '@/partials/Landing/Faq.vue';
+import Footer from '@/partials/Landing/Footer.vue';
 
-var props = defineProps({
+defineProps({
     product: {
         type: Object,
         required: true,
@@ -13,46 +22,44 @@ var props = defineProps({
 </script>
 
 <template>
-    <Shop>
-        <!-- <SoldOut></SoldOut> -->
-        <AboutBook></AboutBook>
+    <Head title="A Field Guide to Curious Things">
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+    </Head>
 
-        <!-- <Goodies></Goodies> -->
-        <!-- <GoodiesV1></GoodiesV1> -->
-
-        <!-- <div class="aspect-video">
-            <iframe
-                class="h-full w-full"
-                src="https://www.youtube.com/embed/v-QqGdc0Bao?si=xToHMf3oC2ssKj9a"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-            ></iframe>
-        </div> -->
-
-        <div id="buy">
-            <BookVariantsV2 :variants="product.variants"></BookVariantsV2>
-        </div>
-
-        <FAQ />
-
-        <div class="bg-white">
-            <div class="px-6 py-24 lg:px-8">
-                <div class="mx-auto max-w-2xl text-center">
-                    <h2 class="font-serif text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">Thank You!</h2>
-                    <p class="mx-auto mt-6 max-w-xl font-serif text-lg/8 text-pretty text-gray-600">
-                        Buying this book doesn't just support us—it fuels the hope that curiosity can light up the world again.
-                    </p>
-                    <p class="mx-auto mt-6 max-w-xl font-serif text-lg/8 text-pretty text-gray-600">
-                        For bulk orders (100+ books), please write to us at
-                        <a href="mailto:community@areypatahai.com" class="underline" target="_blank">community@areypatahai.com</a>.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- <StickyShow /> -->
-    </Shop>
+    <div class="wtw-landing min-h-screen font-space-mono text-ink antialiased selection:bg-ink selection:text-lime">
+        <Nav />
+        <main id="top">
+            <Hero />
+            <Quote color="bg-grape" rotation="-rotate-1" author="Aarav Mehta · Reader, Mumbai">
+                “I picked it up to read one page and looked up an hour later. It ruins small talk forever — in the best way.”
+            </Quote>
+            <About />
+            <Quote color="bg-sun" rotation="rotate-1" author="Priya Nair · Reader, Bengaluru">
+                “Equal parts clever and ridiculous. I've quoted it at three dinners and counting.”
+            </Quote>
+            <Sample />
+            <TreasureHunt />
+            <SignedCopy />
+            <Order :variants="product.variants" />
+            <Ticker />
+            <Authors />
+            <Faq />
+        </main>
+        <Footer />
+    </div>
 </template>
+
+<style scoped>
+.wtw-landing {
+    background-color: var(--color-paper);
+    background-image:
+        linear-gradient(to right, rgba(28, 26, 23, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(28, 26, 23, 0.05) 1px, transparent 1px);
+    background-size: 26px 26px;
+}
+</style>

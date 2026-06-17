@@ -9,3 +9,24 @@
     --font-brand: 'Boogaloo', sans-serif;
     --font-serif: 'Averia Serif Libre', serif;
 }
+
+/* Design tokens for the new landing page (Shop/Buy). Utilities only; component styles live in their SFCs. */
+@theme {
+    --color-paper: #f4f1e9;
+    --color-cream: #faf8f2;
+    --color-ink: #1c1a17;
+    --color-muted: #5f5a51;
+    --color-lime: #c8f169;
+    --color-limedark: #aee049;
+    --color-sun: #ffd84d;
+    --color-grape: #d9b8ff;
+    --color-bubble: #ffb3d1;
+    --color-sky: #a8d8ff;
+
+    --font-fraunces: 'Fraunces', ui-serif, Georgia, serif;
+    --font-space-mono: 'Space Mono', ui-monospace, monospace;
+
+    --shadow-sticker: 4px 4px 0 0 #1c1a17;
+    --shadow-stickersm: 3px 3px 0 0 #1c1a17;
+    --shadow-pop: 6px 6px 0 0 #1c1a17;
+}
