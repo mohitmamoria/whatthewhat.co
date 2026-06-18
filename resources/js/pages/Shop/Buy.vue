@@ -86,7 +86,7 @@ const quotes = [
         />
     </Head>
 
-    <div class="wtw-landing min-h-screen font-space-mono text-ink antialiased selection:bg-ink selection:text-lime">
+    <div class="min-h-screen font-space-mono text-ink antialiased selection:bg-ink selection:text-lime">
         <Nav />
         <main id="top">
             <Hero />
@@ -120,13 +120,3 @@ const quotes = [
         <Footer />
     </div>
 </template>
-
-<style scoped>
-.wtw-landing {
-    background-color: var(--color-paper);
-    background-image:
-        linear-gradient(to right, rgba(28, 26, 23, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(28, 26, 23, 0.05) 1px, transparent 1px);
-    background-size: 26px 26px;
-}
-</style>
